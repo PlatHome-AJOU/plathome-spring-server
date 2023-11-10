@@ -9,6 +9,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnTransformer;
 
+import java.time.LocalDateTime;
+
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(indexes = {@Index(columnList = "userId", unique = true)})
@@ -45,6 +47,8 @@ public class Member {
         this.auditingFields = new AuditingFields();
         this.auditingFields.setCreatedBy(createdBy);
         this.auditingFields.setModifiedBy(modifiedBy);
+        this.auditingFields.setCreatedAt(LocalDateTime.now());
+        this.auditingFields.setModifiedAt(LocalDateTime.now());
     }
 
     public static MemberBuilder of() {
