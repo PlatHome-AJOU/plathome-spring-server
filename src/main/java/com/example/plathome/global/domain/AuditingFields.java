@@ -16,6 +16,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.time.LocalDateTime;
 
 @Getter
+@Setter
 @ToString
 @EntityListeners(AuditingEntityListener.class)
 @Embeddable
@@ -28,7 +29,7 @@ public class AuditingFields {
 
     @CreatedBy
     @Column(nullable = false, length = 100, updatable = false)
-    @Setter protected String createdBy;
+    protected String createdBy;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     @LastModifiedDate
@@ -37,5 +38,5 @@ public class AuditingFields {
 
     @LastModifiedBy
     @Column(nullable = false, length = 100)
-    @Setter protected String modifiedBy;
+    protected String modifiedBy;
 }
