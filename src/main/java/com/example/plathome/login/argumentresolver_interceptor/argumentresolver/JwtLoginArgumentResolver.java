@@ -14,7 +14,7 @@ public class JwtLoginArgumentResolver implements HandlerMethodArgumentResolver {
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        log.info("JwtLoginArgumentResolverV2 supportsParameter 실행");
+        log.info("JwtLoginArgumentResolver supportsParameter 실행");
         boolean hasLoginAnnotation = parameter.hasParameterAnnotation(Login.class);
         boolean hasMemberSessionType = MemberSession.class.isAssignableFrom(parameter.getParameterType());
         return hasLoginAnnotation && hasMemberSessionType;
@@ -22,7 +22,7 @@ public class JwtLoginArgumentResolver implements HandlerMethodArgumentResolver {
 
     @Override
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
-        log.info("JwtLoginArgumentResolverV2 resolveArgument 실행");
+        log.info("JwtLoginArgumentResolver resolveArgument 실행");
         HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
 
         return request.getAttribute("MemberSession");

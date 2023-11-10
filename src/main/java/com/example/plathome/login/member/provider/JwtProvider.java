@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.UUID;
 
-import static com.example.plathome.login.member.common.JwtStaticField.BEARER;
+import static com.example.plathome.login.member.common.JwtStaticField.*;
 
 
 @RequiredArgsConstructor
@@ -22,15 +22,14 @@ public class JwtProvider {
     private final SecretKey secretKey;
 
     private final RefreshTokenRepository refreshTokenRepository;
-    private final long accessTokenExpiration = 1000L * 60 * 15; // Access token is 15 minutes.
-    private final long refreshTokenExpiration = 1000L * 60 * 60 * 24; // Refresh token is one day.
+
 
     public String createAccessToken(String userId) {
         byte[] decodedSecretKey = secretKey.getDecoded();
         return Jwts.builder()
                 .setSubject(userId)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + accessTokenExpiration))
+                .setExpiration(new Date(System.currentTimeMillis() + ACCESS_TOKEN_EXPIRATION))
                 .signWith(Keys.hmacShaKeyFor(decodedSecretKey))
                 .compact();
     }
@@ -41,7 +40,7 @@ public class JwtProvider {
                 .setSubject(userId)
                 .setId(UUID.randomUUID().toString()) // Unique ID for refresh token
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + refreshTokenExpiration))
+                .setExpiration(new Date(System.currentTimeMillis() + REFRESH_TOKEN_EXPIRATION))
                 .signWith(Keys.hmacShaKeyFor(decodedSecretKey))
                 .compact();
 

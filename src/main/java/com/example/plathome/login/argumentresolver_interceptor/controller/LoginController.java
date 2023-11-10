@@ -7,7 +7,7 @@ import com.example.plathome.login.member.dto.request.LoginForm;
 import com.example.plathome.login.member.dto.response.MemberWithTokenResponse;
 import com.example.plathome.login.member.dto.request.SignUpForm;
 import com.example.plathome.login.member.service.JwtLoginService;
-import com.example.plathome.member.service.JwtMemberService;
+import com.example.plathome.member.service.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 public class LoginController {
 
     private final JwtLoginService jwtLoginService;
-    private final JwtMemberService memberService;
+    private final MemberService memberService;
 
     @PostMapping("/token")
     public String refresh(

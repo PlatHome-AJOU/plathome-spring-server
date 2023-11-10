@@ -3,7 +3,7 @@ package com.example.plathome.login.member.dto.response;
 import com.example.plathome.login.member.dto.MemberWithTokenDto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
-
+@Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public record MemberWithTokenResponse(
         String username,
@@ -11,8 +11,8 @@ public record MemberWithTokenResponse(
         String refreshToken
 ) {
 
-    @Builder
-    public MemberWithTokenResponse {
+    public static MemberWithTokenResponseBuilder of() {
+        return MemberWithTokenResponse.builder();
     }
 
     public static MemberWithTokenResponse from(MemberWithTokenDto dto) {

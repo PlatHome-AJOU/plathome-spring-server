@@ -30,7 +30,6 @@ public class JwtValidateService {
 
     private final SecretKey secretKey;
     private final RefreshTokenRepository refreshTokenRepository;
-    private final JwtProvider jwtProvider;
 
     public Claims validateAccessToken(HttpServletRequest request) {
         try {
