@@ -13,3 +13,9 @@ spring:
       hibernate.default_batch_fetch_size: 100
 
 jwt.secretKey: ${JWT_SECRET_KEY}
+
+---
+
+spring:
+  config.activate.on-profile: test
+  datasource.url: jdbc:h2:mem:testdb
