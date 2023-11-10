@@ -5,7 +5,7 @@ import lombok.Builder;
 
 import static com.example.plathome.login.member.common.JwtStaticField.BEARER;
 
-
+@Builder
 public record MemberWithTokenDto(
         Long id,
         String username,
@@ -13,8 +13,8 @@ public record MemberWithTokenDto(
         String refreshToken
 ){
 
-    @Builder
-    public MemberWithTokenDto {
+    public static MemberWithTokenDtoBuilder of(){
+        return MemberWithTokenDto.builder();
     }
 
     public static MemberWithTokenDto from(Member entity, String refreshToken) {

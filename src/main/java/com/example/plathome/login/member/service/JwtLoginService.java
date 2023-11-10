@@ -11,7 +11,7 @@ import com.example.plathome.member.exception.MemberNotFoundException;
 import com.example.plathome.member.exception.MemberPasswordNotMatchException;
 import com.example.plathome.login.member.provider.JwtProvider;
 import com.example.plathome.member.repository.MemberRepository;
-import com.example.plathome.member.service.JwtMemberService;
+import com.example.plathome.member.service.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -23,14 +23,14 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 @Service
 public class JwtLoginService {
-    private final JwtMemberService jwtMemberService;
+    private final MemberService memberService;
     private final PasswordEncoder passwordEncoder;
     private final MemberRepository memberRepository;
     private final JwtProvider jwtProvider;
 
     @Transactional
     public MemberWithTokenDto signUp(SignUpForm signUpForm) {
-        return jwtMemberService.save(signUpForm);
+        return memberService.save(signUpForm);
     }
 
     public MemberWithTokenDto login(LoginForm loginForm, HttpServletRequest request, HttpServletResponse response) {

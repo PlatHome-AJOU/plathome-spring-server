@@ -30,7 +30,4 @@ public class RefreshTokenRepository {
     public void clear() {
         validRefreshTokens.clear();
     }
-
-
-
 }
