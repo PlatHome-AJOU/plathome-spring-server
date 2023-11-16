@@ -1,7 +1,7 @@
 package com.example.plathome.login.argumentresolver_interceptor.service;
 
 import com.example.plathome.member.domain.MemberSession;
-import com.example.plathome.member.exception.MemberNotFoundException;
+import com.example.plathome.member.exception.NotFoundMemberException;
 import com.example.plathome.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,6 +16,6 @@ public class JwtMemberService {
     public MemberSession getMemberSessionByUserId(String userId) {
         return memberRepository.findByUserId(userId)
                 .map(MemberSession::from)
-                .orElseThrow(MemberNotFoundException::new);
+                .orElseThrow(NotFoundMemberException::new);
     }
 }
