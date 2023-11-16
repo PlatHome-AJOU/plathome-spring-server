@@ -41,7 +41,7 @@ public class JwtLoginService {
             jwtProvider.setAuthorizationHeader(response, accessToken);
             return MemberWithTokenDto.from(member, refreshToken);
         }
-        throw new MemberPasswordNotMatchException();
+        throw new NotMatchMemberPasswordException();
     }
 
     public void refresh(MemberSession memberSession, HttpServletResponse response) {

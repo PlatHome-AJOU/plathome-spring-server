@@ -5,10 +5,10 @@ import com.example.plathome.global.exception.UnauthorizedException;
 
 import static com.example.plathome.global.error.ErrorStaticField.MEMBER_UNAUTHORIZED;
 
-public class MemberUnauthorizedException extends UnauthorizedException {
+public class UnauthorizedMemberException extends UnauthorizedException {
 
     private static final String MESSAGE = MEMBER_UNAUTHORIZED;
-    public MemberUnauthorizedException() {
+    public UnauthorizedMemberException() {
         super(MESSAGE);
     }
 }
