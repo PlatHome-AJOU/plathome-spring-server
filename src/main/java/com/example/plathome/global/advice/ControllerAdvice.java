@@ -1,5 +1,6 @@
 package com.example.plathome.global.advice;
 
+import com.example.plathome.global.dto.MethodArgumentExceptionResponse;
 import com.example.plathome.global.error.ErrorCode;
 import com.example.plathome.global.exception.*;
 import org.hibernate.TypeMismatchException;
@@ -7,8 +8,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentConversionNotSupportedException;
+
+import java.util.concurrent.ConcurrentHashMap;
 
 import static com.example.plathome.global.error.ErrorStaticField.*;
 
@@ -80,13 +84,18 @@ public class ControllerAdvice {
         return ResponseEntity.status(NOT_MATCH).body(errorCode);
     }
 
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ErrorCode> methodArgumentNotValidExceptionHandler(MethodArgumentNotValidException ex) {
-        ErrorCode errorCode = ErrorCode.builder()
-                .errorCode(BAD_REQUEST)
-                .message(ex.getMessage())
-                .build();
-        return ResponseEntity.status(BAD_REQUEST).body(errorCode);
+    public MethodArgumentExceptionResponse methodArgumentNotValidException(
+            final MethodArgumentNotValidException e) {
+
+        MethodArgumentExceptionResponse exceptionResponse = new MethodArgumentExceptionResponse(
+                BAD_REQUEST,
+                new ConcurrentHashMap<>()
+        );
+
+        e.getFieldErrors().forEach(exceptionResponse::addValidation);
+        return exceptionResponse;
     }
 
     @ExceptionHandler(MethodArgumentConversionNotSupportedException.class)

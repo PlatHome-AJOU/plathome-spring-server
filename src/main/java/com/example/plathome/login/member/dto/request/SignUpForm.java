@@ -1,5 +1,6 @@
 package com.example.plathome.login.member.dto.request;
 
+import com.example.plathome.login.member.dto.request.annotation.AjouEmail;
 import com.example.plathome.member.domain.Member;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Max;
@@ -11,7 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Builder
 public record SignUpForm(
         @NotBlank @Size(max = 20) String username,
-        @Email @Size(max = 100) String userId,
+        @AjouEmail @Size(max = 100) String userId,
         @NotBlank @Size(max = 32) String password
 ) {
 

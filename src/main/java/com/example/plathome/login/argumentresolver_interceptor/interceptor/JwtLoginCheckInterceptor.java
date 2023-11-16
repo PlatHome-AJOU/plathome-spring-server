@@ -25,10 +25,8 @@ public class JwtLoginCheckInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler){
         String requestURI = request.getRequestURI();
-
         log.info("MEMBER 로그인 인증 인터 셉터 실행 [{}]", requestURI);
-        Claims claims = this.getClaims(request);
-        String userId = claims.getSubject();
+        String userId = this.getUserId(request);
         MemberSession memberSession = jwtMemberService.getMemberSessionByUserId(userId);
         request.setAttribute("MemberSession", memberSession);
         UserContext.set(memberSession.username());
@@ -36,7 +34,7 @@ public class JwtLoginCheckInterceptor implements HandlerInterceptor {
         return true;
     }
 
-    private Claims getClaims(HttpServletRequest request){
+    private String getUserId(HttpServletRequest request){
         if (!request.getRequestURI().contains(REFRESH_URL)) {
             return jwtValidateService.validateAccessToken(request);
         }
