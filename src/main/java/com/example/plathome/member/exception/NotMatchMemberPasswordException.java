@@ -5,10 +5,10 @@ import com.example.plathome.global.exception.NotMatchException;
 
 import static com.example.plathome.global.error.ErrorStaticField.INVALID_PASSWORD;
 
-public class MemberPasswordNotMatchException extends NotMatchException {
+public class NotMatchMemberPasswordException extends NotMatchException {
 
     private static final String MESSAGE = INVALID_PASSWORD;
-    public MemberPasswordNotMatchException() {
+    public NotMatchMemberPasswordException() {
         super(MESSAGE);
     }
 }

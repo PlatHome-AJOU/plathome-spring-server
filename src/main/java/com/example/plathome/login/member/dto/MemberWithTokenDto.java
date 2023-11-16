@@ -10,6 +10,7 @@ public record MemberWithTokenDto(
         Long id,
         String username,
         String userId,
+        String accessToken,
         String refreshToken
 ){
 
@@ -17,11 +18,12 @@ public record MemberWithTokenDto(
         return MemberWithTokenDto.builder();
     }
 
-    public static MemberWithTokenDto from(Member entity, String refreshToken) {
+    public static MemberWithTokenDto from(Member entity, String accessToken, String refreshToken) {
         return MemberWithTokenDto.builder()
                 .id(entity.getId())
                 .username(entity.getUsername())
                 .userId(entity.getUserId())
+                .accessToken(BEARER + accessToken)
                 .refreshToken(BEARER + refreshToken).build();
     }
 

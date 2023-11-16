@@ -7,8 +7,9 @@ import static com.example.plathome.global.error.ErrorStaticField.EXPIRED_ACCESS_
 
 public class ExpiredAccessTokenException extends UnauthorizedException {
     public static final String MESSAGE = EXPIRED_ACCESS_TOKEN;
-
     public ExpiredAccessTokenException() {
         super(MESSAGE);
     }
 }
+
+

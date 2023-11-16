@@ -1,7 +1,6 @@
 package com.example.plathome.login.member.provider;
 
 import com.example.plathome.login.member.domain.SecretKey;
-import com.example.plathome.login.member.repository.RefreshTokenRepository;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.HttpServletResponse;
@@ -21,9 +20,6 @@ public class JwtProvider {
 
     private final SecretKey secretKey;
 
-    private final RefreshTokenRepository refreshTokenRepository;
-
-
     public String createAccessToken(String userId) {
         byte[] decodedSecretKey = secretKey.getDecoded();
         return Jwts.builder()
@@ -36,22 +32,12 @@ public class JwtProvider {
 
     public String createRefreshToken(String userId) {
         byte[] decodedSecretKey = secretKey.getDecoded();
-        String refreshToken = Jwts.builder()
+        return Jwts.builder()
                 .setSubject(userId)
                 .setId(UUID.randomUUID().toString()) // Unique ID for refresh token
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + REFRESH_TOKEN_EXPIRATION))
                 .signWith(Keys.hmacShaKeyFor(decodedSecretKey))
                 .compact();
-
-        return refreshTokenRepository.save(userId, refreshToken);
-    }
-
-    public void setAuthorizationHeader(HttpServletResponse response, String accessToken) {
-        response.setHeader(HttpHeaders.AUTHORIZATION, BEARER + accessToken);
-    }
-
-    public void expiredRefreshToken(String userId) {
-        refreshTokenRepository.invalidate(userId);
     }
 }

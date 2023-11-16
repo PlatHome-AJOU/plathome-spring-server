@@ -23,11 +23,10 @@ public class LoginController {
     private final MemberService memberService;
 
     @PostMapping("/token")
-    public String refresh(
+    public MemberWithTokenResponse refresh(
             @Login MemberSession memberSession,
             HttpServletResponse response) {
-        jwtLoginService.refresh(memberSession, response);
-        return "success";
+        return MemberWithTokenResponse.from(jwtLoginService.refresh(memberSession, response));
     }
 
     @GetMapping("/get")
