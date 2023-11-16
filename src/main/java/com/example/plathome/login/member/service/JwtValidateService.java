@@ -1,14 +1,9 @@
 package com.example.plathome.login.member.service;
 
 
-import com.example.plathome.login.member.domain.RefreshToken;
 import com.example.plathome.login.member.domain.SecretKey;
-import com.example.plathome.login.member.exception.ExpiredAccessTokenException;
-import com.example.plathome.login.member.exception.ExpiredRefreshTokenException;
-import com.example.plathome.login.member.exception.InvalidAccessTokenException;
-import com.example.plathome.login.member.exception.InvalidRefreshTokenException;
-import com.example.plathome.login.member.provider.JwtProvider;
-import com.example.plathome.login.member.repository.RefreshTokenRepository;
+import com.example.plathome.login.member.exception.*;
+import com.example.plathome.login.member.service.redis.RefreshTokenRedisService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
@@ -18,9 +13,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 
-import java.util.Map;
-import java.util.Set;
-
 import static com.example.plathome.login.member.common.JwtStaticField.BEARER;
 
 
@@ -29,13 +21,16 @@ import static com.example.plathome.login.member.common.JwtStaticField.BEARER;
 public class JwtValidateService {
 
     private final SecretKey secretKey;
-    private final RefreshTokenRepository refreshTokenRepository;
+    private final RefreshTokenRedisService refreshTokenRedisService;
 
-    public Claims validateAccessToken(HttpServletRequest request) {
+    public String validateAccessToken(HttpServletRequest request) {
         try {
             String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
             String token = authHeader.substring(BEARER.length());
-            return this.validateToken(token);
+            Claims claims = this.validateToken(token);
+            String userId = claims.getSubject();
+            this.validateIsNotInRedisRefreshToken(userId, token);
+            return userId;
         } catch (ExpiredJwtException e) {
             throw new ExpiredAccessTokenException();
         } catch (Exception e) {
@@ -43,12 +38,14 @@ public class JwtValidateService {
         }
     }
 
-    public Claims validateRefreshToken(HttpServletRequest request) {
+    public String validateRefreshToken(HttpServletRequest request) {
         try {
             String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
             String token = authHeader.substring(BEARER.length());
-            this.verifyValidRefreshToken(token);
-            return this.validateToken(token);
+            Claims claims = this.validateToken(token);
+            String userId = claims.getSubject();
+            this.validateIsInRedisRefreshToken(userId, token);
+            return userId;
         } catch (ExpiredJwtException e) {
             throw new ExpiredRefreshTokenException();
         } catch (Exception e) {
@@ -67,9 +64,19 @@ public class JwtValidateService {
                 .getPayload();
     }
 
-    private void verifyValidRefreshToken(String refreshToken) {
-        Map<String, Set<RefreshToken>> validRefreshTokens = refreshTokenRepository.getValidRefreshTokens();
-        if (validRefreshTokens.values().stream().noneMatch(set -> set.contains(RefreshToken.of(refreshToken)))) {
+    private void validateIsNotInRedisRefreshToken(String userId, String token) {
+        String data = refreshTokenRedisService.getData(userId);
+        if (data == null) {
+            throw new ExpiredRefreshTokenException();
+        } else if (data.equals(token)) {
+            throw new InvalidAccessTokenException();
+        }
+    }
+
+    private void validateIsInRedisRefreshToken(String userId, String token) {
+        if (!refreshTokenRedisService.checkExistValue(userId)) {
+            throw new ExpiredRefreshTokenException();
+        } else if (!refreshTokenRedisService.getData(userId).equals(token)) {
             throw new InvalidRefreshTokenException();
         }
     }

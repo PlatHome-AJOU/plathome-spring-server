@@ -25,9 +25,12 @@ public class ErrorStaticField {
     public static final String EXPIRED_REFRESH_TOKEN = "Refresh 토큰만료! 재로그인 하세요.";
     public static final String EXPIRED_ACCESS_TOKEN = "Access 토큰만료! 재시도 하세요.";
     public static final String CONVERSION_ERROR = "변환 불가능한 타입이 URL에 입력되었습니다";
+    public static final String EMAIL_FORM_ERROR = "Email should end with @ajou.ac.kr";
 
     //chat
     public static final String ROOM_NOT_FOUND = "채팅방을 찾을 수 없습니다.";
     public static final String INVALID_SOCKET_SESSION = "소켓 세션이 유효하지 않습니다.";
+
+
 
 }
