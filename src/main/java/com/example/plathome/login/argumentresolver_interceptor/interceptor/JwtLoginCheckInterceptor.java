@@ -2,17 +2,16 @@ package com.example.plathome.login.argumentresolver_interceptor.interceptor;
 
 
 import com.example.plathome.login.argumentresolver_interceptor.service.JwtMemberService;
-import com.example.plathome.login.member.domain.UserContext;
-import com.example.plathome.login.member.service.JwtValidateService;
+import com.example.plathome.login.jwt.domain.UserContext;
+import com.example.plathome.login.jwt.service.JwtValidateService;
 import com.example.plathome.member.domain.MemberSession;
-import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.servlet.HandlerInterceptor;
 
-import static com.example.plathome.login.member.common.JwtStaticField.REFRESH_URL;
+import static com.example.plathome.login.jwt.common.JwtStaticField.REFRESH_URL;
 
 
 @Slf4j

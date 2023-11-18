@@ -3,10 +3,10 @@ package com.example.plathome.login.argumentresolver_interceptor.controller;
 
 import com.example.plathome.login.argumentresolver_interceptor.argumentresolver.Login;
 import com.example.plathome.member.domain.MemberSession;
-import com.example.plathome.login.member.dto.request.LoginForm;
-import com.example.plathome.login.member.dto.response.MemberWithTokenResponse;
-import com.example.plathome.login.member.dto.request.SignUpForm;
-import com.example.plathome.login.member.service.JwtLoginService;
+import com.example.plathome.login.jwt.dto.request.LoginForm;
+import com.example.plathome.login.jwt.dto.response.MemberWithTokenResponse;
+import com.example.plathome.login.jwt.dto.request.SignUpForm;
+import com.example.plathome.login.jwt.service.JwtLoginService;
 import com.example.plathome.member.service.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

@@ -1,21 +1,14 @@
 package com.example.plathome.member.service;
 
 
-import com.example.plathome.login.member.domain.UserContext;
-import com.example.plathome.login.member.dto.MemberWithTokenDto;
-import com.example.plathome.login.member.dto.request.SignUpForm;
-import com.example.plathome.member.domain.Member;
+import com.example.plathome.login.jwt.dto.MemberWithTokenDto;
 import com.example.plathome.member.domain.MemberSession;
-import com.example.plathome.member.exception.DuplicationMemberException;
 import com.example.plathome.member.exception.NotFoundMemberException;
 import com.example.plathome.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
 
 @Slf4j
 @RequiredArgsConstructor

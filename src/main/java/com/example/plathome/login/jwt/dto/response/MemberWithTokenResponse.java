@@ -1,0 +1,32 @@
+package com.example.plathome.login.jwt.dto.response;
+
+import com.example.plathome.login.jwt.dto.MemberWithTokenDto;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.Builder;
+@Builder
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public record MemberWithTokenResponse(
+        String username,
+        String userId,
+        String accessToken,
+        String refreshToken
+) {
+
+    public static MemberWithTokenResponseBuilder of() {
+        return MemberWithTokenResponse.builder();
+    }
+
+    public static MemberWithTokenResponse from(MemberWithTokenDto dto) {
+        return MemberWithTokenResponse.builder()
+                .username(dto.username())
+                .userId(dto.userId())
+                .accessToken(dto.accessToken())
+                .refreshToken(dto.refreshToken()).build();
+    }
+
+    public static MemberWithTokenResponse withoutToken(MemberWithTokenDto dto) {
+        return MemberWithTokenResponse.builder()
+                .username(dto.username())
+                .userId(dto.userId()).build();
+    }
+}

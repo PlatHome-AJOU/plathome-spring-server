@@ -26,6 +26,8 @@ public class ErrorStaticField {
     public static final String EXPIRED_ACCESS_TOKEN = "Access 토큰만료! 재시도 하세요.";
     public static final String CONVERSION_ERROR = "변환 불가능한 타입이 URL에 입력되었습니다";
     public static final String EMAIL_FORM_ERROR = "Email should end with @ajou.ac.kr";
+    public static final String EXPIRED_AUTH_CODE = "인증번호 만료! 재인증 하세요.";
+    public static final String INVALID_AUTH_CODE = "이메일 인증번호 인증에 실패하였습니다.";
 
     //chat
     public static final String ROOM_NOT_FOUND = "채팅방을 찾을 수 없습니다.";

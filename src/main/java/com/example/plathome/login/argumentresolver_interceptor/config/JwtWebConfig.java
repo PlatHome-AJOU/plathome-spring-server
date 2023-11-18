@@ -4,7 +4,7 @@ package com.example.plathome.login.argumentresolver_interceptor.config;
 import com.example.plathome.login.argumentresolver_interceptor.argumentresolver.JwtLoginArgumentResolver;
 import com.example.plathome.login.argumentresolver_interceptor.interceptor.JwtLoginCheckInterceptor;
 import com.example.plathome.login.argumentresolver_interceptor.service.JwtMemberService;
-import com.example.plathome.login.member.service.JwtValidateService;
+import com.example.plathome.login.jwt.service.JwtValidateService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
