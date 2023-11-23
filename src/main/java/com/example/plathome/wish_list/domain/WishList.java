@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class WishList {
+public class WishList extends AuditingFields{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,9 +20,6 @@ public class WishList {
     private Long memberId;
 
     private Long estateId;
-
-    @Embedded
-    private AuditingFields auditingFields;
 
     @Builder
     public WishList(Long memberId, Long estateId) {

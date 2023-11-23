@@ -1,8 +1,9 @@
-package com.example.plathome.requested.domain;
+package com.example.plathome.estate.real.domain;
 
+import com.example.plathome.estate.Option;
+import com.example.plathome.estate.constant.RentalType;
+import com.example.plathome.estate.converter.OptionsConverter;
 import com.example.plathome.global.domain.AuditingFields;
-import com.example.plathome.requested.domain.constant.RentalType;
-import com.example.plathome.requested.domain.converter.OptionsConverter;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -16,11 +17,11 @@ import java.util.Set;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class Requested {
+public class Estate extends AuditingFields{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "requested_id")
+    @Column(name = "estate_id")
     private Long id;
 
     private Long memberId;
@@ -35,21 +36,19 @@ public class Requested {
 
     private LocalDate contractDate;
 
-
     @Convert(converter = OptionsConverter.class)
     private Set<Option> options = new LinkedHashSet<>();
 
     private double squareFeet;
+    private double lng;
+    private double lat;
 
     private int maintenanceFee;
 
     private int monthlyRent;
 
-    @Embedded
-    private AuditingFields auditingFields;
-
     @Builder
-    public Requested(Long memberId, String location, RentalType rentalType, String contractPath, Set<Option> options, int maintenanceFee, int monthlyRent) {
+    public Estate(Long memberId, String location, RentalType rentalType, String contractPath, Set<Option> options, int maintenanceFee, int monthlyRent) {
         this.memberId = memberId;
         this.location = location;
         this.rentalType = rentalType;

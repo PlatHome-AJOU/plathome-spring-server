@@ -7,7 +7,7 @@ import lombok.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class UserReport {
+public class UserReport extends AuditingFields{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_report_id")
@@ -19,9 +19,6 @@ public class UserReport {
 
     @Column(columnDefinition = "MEDIUMTEXT")
     private String context;
-
-    @Embedded
-    private AuditingFields auditingFields;
 
     @Builder
     public UserReport(Long reportUserId, Long targetUserId, String context) {
