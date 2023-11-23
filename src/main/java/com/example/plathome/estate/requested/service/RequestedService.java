@@ -24,9 +24,9 @@ public class RequestedService {
     private final RequestedRepository requestedRepository;
 
     @Transactional
-    public void saveFile(MemberSession memberSession, MultipartFile multipartFile) {
+    public void saveFile(MemberSession memberSession, MultipartFile file) {
         this.validDupReq(memberSession.userId());
-        s3Service.upload(memberSession, multipartFile);
+        s3Service.upload(memberSession, file);
     }
 
     @Transactional
@@ -51,8 +51,8 @@ public class RequestedService {
     }
 
     @Transactional
-    public void updateFile(MemberSession memberSession, MultipartFile multipartFile) {
-        s3Service.upload(memberSession, multipartFile);
+    public void updateFile(MemberSession memberSession, MultipartFile file) {
+        s3Service.upload(memberSession, file);
     }
 
     @Transactional
@@ -73,5 +73,6 @@ public class RequestedService {
     @Transactional
     public void delete(String userId) {
         s3Service.deleteFile(userId);
+        requestedRepository.deleteByUserId(userId);
     }
 }

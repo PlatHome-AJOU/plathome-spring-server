@@ -24,7 +24,7 @@ public class Estate extends AuditingFields{
     @Column(name = "estate_id")
     private Long id;
 
-    private Long memberId;
+    private String userId;
 
     private String location;
 
@@ -32,9 +32,9 @@ public class Estate extends AuditingFields{
     private RentalType rentalType;
 
     @Column(length = 100)
-    private String contractPath;
+    private String contractUrl;
 
-    private LocalDate contractDate;
+    private LocalDate contractTerm;
 
     @Convert(converter = OptionsConverter.class)
     private Set<Option> options = new LinkedHashSet<>();
@@ -48,12 +48,16 @@ public class Estate extends AuditingFields{
     private int monthlyRent;
 
     @Builder
-    public Estate(Long memberId, String location, RentalType rentalType, String contractPath, Set<Option> options, int maintenanceFee, int monthlyRent) {
-        this.memberId = memberId;
+    public Estate(String userId, String location, RentalType rentalType, String contractUrl, LocalDate contractTerm, Set<Option> options, double squareFeet, double lng, double lat, int maintenanceFee, int monthlyRent) {
+        this.userId = userId;
         this.location = location;
         this.rentalType = rentalType;
-        this.contractPath = contractPath;
+        this.contractUrl = contractUrl;
+        this.contractTerm = contractTerm;
         this.options = options;
+        this.squareFeet = squareFeet;
+        this.lng = lng;
+        this.lat = lat;
         this.maintenanceFee = maintenanceFee;
         this.monthlyRent = monthlyRent;
     }

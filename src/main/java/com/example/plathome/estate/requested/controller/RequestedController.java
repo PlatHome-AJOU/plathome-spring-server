@@ -12,23 +12,23 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
-@RequestMapping("/requested")
+@RequestMapping("/api/requested")
 @RequiredArgsConstructor
 @RestController
 public class RequestedController {
 
     private final RequestedService requestedService;
 
-    @PostMapping("/save/file")
+    @PostMapping("/file")
     public String saveFile(
             @Login MemberSession memberSession,
-            @RequestParam("file") MultipartFile multipartFile
+            @RequestPart MultipartFile file
     ) {
-        requestedService.saveFile(memberSession, multipartFile);
+        requestedService.saveFile(memberSession, file);
         return "success";
     }
 
-    @PostMapping("/save/form")
+    @PostMapping("/form")
     public String saveForm(
             @Login MemberSession memberSession,
             @RequestBody RequestedForm requestedForm
@@ -44,16 +44,16 @@ public class RequestedController {
         return requestedService.getAll();
     }
 
-    @PostMapping("/update/file")
+    @PatchMapping("/file")
     public String updateFile(
             @Login MemberSession memberSession,
-            @RequestParam("file") MultipartFile multipartFile
+            @RequestPart MultipartFile file
     ) {
-        requestedService.updateFile(memberSession, multipartFile);
+        requestedService.updateFile(memberSession, file);
         return "success";
     }
 
-    @PostMapping("/update/form")
+    @PatchMapping("/form")
     public String updateForm(
             @Login MemberSession memberSession,
             @RequestBody RequestedForm requestedForm
@@ -62,7 +62,7 @@ public class RequestedController {
         return "success";
     }
 
-    @PostMapping("/{userId}")
+    @DeleteMapping("/{userId}")
     public String delete(
             @Admin MemberSession memberSession,
             @PathVariable String userId

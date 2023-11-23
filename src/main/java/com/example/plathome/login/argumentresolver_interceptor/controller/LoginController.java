@@ -15,7 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
-@RequestMapping("/jwt")
+@RequestMapping("/api/jwt")
 @RestController
 public class LoginController {
 
@@ -29,7 +29,7 @@ public class LoginController {
         return MemberWithTokenResponse.from(jwtLoginService.refresh(memberSession, response));
     }
 
-    @GetMapping("/get")
+    @GetMapping
     public MemberWithTokenResponse get(@Login MemberSession memberSession) {
         return MemberWithTokenResponse.from(memberService.getBySession(memberSession));
     }
