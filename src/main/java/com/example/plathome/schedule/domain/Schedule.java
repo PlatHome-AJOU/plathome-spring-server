@@ -15,7 +15,7 @@ import java.util.Set;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class Schedule {
+public class Schedule extends AuditingFields{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,9 +32,6 @@ public class Schedule {
 
     @Column(name = "member2_id")
     private Long member2Id;
-
-    @Embedded
-    private AuditingFields auditingFields;
 
     @Builder
     public Schedule(Set<AvailableDate> availableDateSet, LocalDate selectedDate, Long member1Id, Long member2Id) {

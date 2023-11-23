@@ -3,6 +3,7 @@ package com.example.plathome.global.domain;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.EntityListeners;
+import jakarta.persistence.MappedSuperclass;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -19,24 +20,24 @@ import java.time.LocalDateTime;
 @Setter
 @ToString
 @EntityListeners(AuditingEntityListener.class)
-@Embeddable
-public class AuditingFields {
+@MappedSuperclass
+public abstract class AuditingFields {
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    @CreatedDate
     @Column(nullable = false, updatable = false)
+    @CreatedDate
     protected LocalDateTime createdAt;
 
-    @CreatedBy
     @Column(nullable = false, length = 100, updatable = false)
+    @CreatedBy
     protected String createdBy;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    @LastModifiedDate
     @Column(nullable = false)
+    @LastModifiedDate
     protected LocalDateTime modifiedAt;
 
-    @LastModifiedBy
     @Column(nullable = false, length = 100)
+    @LastModifiedBy
     protected String modifiedBy;
 }

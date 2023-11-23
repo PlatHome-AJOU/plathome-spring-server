@@ -7,15 +7,12 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.ColumnTransformer;
-
-import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(indexes = {@Index(columnList = "userId", unique = true)})
 @Entity
-public class Member {
+public class Member extends AuditingFields{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,21 +31,15 @@ public class Member {
     @Enumerated(EnumType.STRING)
     private RoleType roleType;
 
-    @Embedded
-    private AuditingFields auditingFields;
-
     @Builder
-    private Member(Long id, String username, String userId, String password, String createdBy, String modifiedBy) {
+    private Member(Long id, String username, String userId, String password, RoleType roleType, String createdBy, String modifiedBy) {
         this.id = id;
         this.username = username;
         this.userId = userId;
         this.password = password;
-        this.roleType = RoleType.USER;
-        this.auditingFields = new AuditingFields();
-        this.auditingFields.setCreatedBy(createdBy);
-        this.auditingFields.setModifiedBy(modifiedBy);
-        this.auditingFields.setCreatedAt(LocalDateTime.now());
-        this.auditingFields.setModifiedAt(LocalDateTime.now());
+        this.roleType = roleType;
+        this.createdBy = createdBy;
+        this.modifiedBy = modifiedBy;
     }
 
     public static MemberBuilder of() {

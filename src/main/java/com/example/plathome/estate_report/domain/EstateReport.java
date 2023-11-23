@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class EstateReport {
+public class EstateReport extends AuditingFields{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "estate_report_id")
@@ -23,14 +23,10 @@ public class EstateReport {
     @Column(columnDefinition = "MEDIUMTEXT")
     private String context;
 
-    @Embedded
-    private AuditingFields auditingFields;
-
     @Builder
-    public EstateReport(Long reportUserId, Long targetEstateId, String context, AuditingFields auditingFields) {
+    public EstateReport(Long reportUserId, Long targetEstateId, String context) {
         this.reportUserId = reportUserId;
         this.targetEstateId = targetEstateId;
         this.context = context;
-        this.auditingFields = auditingFields;
     }
 }
