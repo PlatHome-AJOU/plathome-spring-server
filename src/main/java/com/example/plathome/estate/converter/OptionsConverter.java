@@ -1,15 +1,13 @@
-package com.example.plathome.estate.domain.converter;
+package com.example.plathome.estate.converter;
 
-import com.example.plathome.estate.domain.Option;
+import com.example.plathome.estate.Option;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Converter
 public class OptionsConverter implements AttributeConverter<Set<Option>, String> {
