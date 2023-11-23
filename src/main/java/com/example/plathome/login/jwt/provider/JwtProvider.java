@@ -1,6 +1,7 @@
 package com.example.plathome.login.jwt.provider;
 
-import com.example.plathome.login.jwt.domain.SecretKey;
+import com.example.plathome.login.jwt.domain.AccessSecretKey;
+import com.example.plathome.login.jwt.domain.RefreshSecretKey;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
@@ -16,10 +17,11 @@ import static com.example.plathome.login.jwt.common.JwtStaticField.*;
 @Service
 public class JwtProvider {
 
-    private final SecretKey secretKey;
+    private final AccessSecretKey accessSecretKey;
+    private final RefreshSecretKey refreshSecretKey;
 
     public String createAccessToken(String userId) {
-        byte[] decodedSecretKey = secretKey.getDecoded();
+        byte[] decodedSecretKey = accessSecretKey.getDecoded();
         return Jwts.builder()
                 .setSubject(userId)
                 .setIssuedAt(new Date())
@@ -29,7 +31,7 @@ public class JwtProvider {
     }
 
     public String createRefreshToken(String userId) {
-        byte[] decodedSecretKey = secretKey.getDecoded();
+        byte[] decodedSecretKey = refreshSecretKey.getDecoded();
         return Jwts.builder()
                 .setSubject(userId)
                 .setId(UUID.randomUUID().toString()) // Unique ID for refresh token

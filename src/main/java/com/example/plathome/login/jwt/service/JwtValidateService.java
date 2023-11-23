@@ -1,7 +1,8 @@
 package com.example.plathome.login.jwt.service;
 
 
-import com.example.plathome.login.jwt.domain.SecretKey;
+import com.example.plathome.login.jwt.domain.AccessSecretKey;
+import com.example.plathome.login.jwt.domain.RefreshSecretKey;
 import com.example.plathome.login.jwt.exception.*;
 import com.example.plathome.login.jwt.service.redis.RefreshTokenRedisService;
 import io.jsonwebtoken.Claims;
@@ -13,24 +14,23 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 
-import static com.example.plathome.login.jwt.common.JwtStaticField.BEARER;
+import static com.example.plathome.login.jwt.common.JwtStaticField.*;
 
 
 @RequiredArgsConstructor
 @Service
 public class JwtValidateService {
 
-    private final SecretKey secretKey;
+    private final AccessSecretKey accessSecretKey;
+    private final RefreshSecretKey refreshSecretKey;
     private final RefreshTokenRedisService refreshTokenRedisService;
 
     public String validateAccessToken(HttpServletRequest request) {
         try {
-            String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
+            String authHeader = request.getHeader(ACCESS_HEADER);
             String token = authHeader.substring(BEARER.length());
-            Claims claims = this.validateToken(token);
-            String userId = claims.getSubject();
-            this.validateIsNotInRedisRefreshToken(userId, token);
-            return userId;
+            Claims claims = this.validateToken(token, accessSecretKey.getDecoded());
+            return claims.getSubject();
         } catch (ExpiredJwtException e) {
             throw new ExpiredAccessTokenException();
         } catch (Exception e) {
@@ -40,9 +40,9 @@ public class JwtValidateService {
 
     public String validateRefreshToken(HttpServletRequest request) {
         try {
-            String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
+            String authHeader = request.getHeader(REFRESH_HEADER);
             String token = authHeader.substring(BEARER.length());
-            Claims claims = this.validateToken(token);
+            Claims claims = this.validateToken(token, refreshSecretKey.getDecoded());
             String userId = claims.getSubject();
             this.validateIsInRedisRefreshToken(userId, token);
             return userId;
@@ -53,8 +53,7 @@ public class JwtValidateService {
         }
     }
 
-    private Claims validateToken(String token) {
-        byte[] decodedSecretKey = secretKey.getDecoded();
+    private Claims validateToken(String token, byte[] decodedSecretKey) {
         javax.crypto.SecretKey key = Keys.hmacShaKeyFor(decodedSecretKey);
 
         return Jwts.parser()
@@ -62,15 +61,6 @@ public class JwtValidateService {
                 .build()
                 .parseSignedClaims(token)
                 .getPayload();
-    }
-
-    private void validateIsNotInRedisRefreshToken(String userId, String token) {
-        String data = refreshTokenRedisService.getData(userId);
-        if (data == null) {
-            throw new ExpiredRefreshTokenException();
-        } else if (data.equals(token)) {
-            throw new InvalidAccessTokenException();
-        }
     }
 
     private void validateIsInRedisRefreshToken(String userId, String token) {
