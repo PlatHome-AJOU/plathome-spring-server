@@ -1,5 +1,6 @@
 package com.example.plathome.member.domain;
 
+import com.example.plathome.member.domain.constant.RoleType;
 import lombok.Builder;
 
 @Builder
@@ -7,7 +8,8 @@ public record MemberSession(
         Long id,
         String username,
         String userId,
-        String password
+        String password,
+        RoleType roleType
         ){
 
     public static final String MEMBER_SESSION = "MemberSession";
@@ -21,8 +23,7 @@ public record MemberSession(
                 .id(member.getId())
                 .username(member.getUsername())
                 .userId(member.getUserId())
-                .password(member.getPassword()).build();
+                .password(member.getPassword())
+                .roleType(member.getRoleType()).build();
     }
-
-
 }

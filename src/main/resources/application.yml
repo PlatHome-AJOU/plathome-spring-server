@@ -36,7 +36,7 @@ spring:
     auth-code-expiration-millis: 1800000 # 30 * 60 * 1000 = 30분
 
 
-jwt.secretKey: ${JWT_SECRET_KEY}
+springdoc:
 jwt.access.secret-key: ${JWT_ACCESS_SECRET_KEY}
 jwt.refresh.secret-key: ${JWT_REFRESH_SECRET_KEY}
 

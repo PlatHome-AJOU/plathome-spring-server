@@ -6,9 +6,9 @@ import org.springframework.stereotype.Component;
 import java.util.Base64;
 
 @Component
-public record SecretKey(@Value("${jwt.secretKey}") String value) {
+public record AccessSecretKey(@Value("${jwt.access.secret-key}") String value) {
 
-    public static final String KEY_PATH = "jwt.secretKey";
+    public static final String ACCESS_KEY_PATH = "jwt.access.secret-key";
     public byte[] getDecoded() {
         return Base64.getDecoder().decode(value);
     }

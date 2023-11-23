@@ -22,7 +22,7 @@ public class LoginController {
     private final JwtLoginService jwtLoginService;
     private final MemberService memberService;
 
-    @PostMapping("/token")
+    @GetMapping("/token")
     public MemberWithTokenResponse refresh(
             @Login MemberSession memberSession,
             HttpServletResponse response) {

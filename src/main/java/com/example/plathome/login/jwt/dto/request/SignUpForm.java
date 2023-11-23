@@ -2,6 +2,7 @@ package com.example.plathome.login.jwt.dto.request;
 
 import com.example.plathome.login.jwt.dto.request.annotation.AjouEmail;
 import com.example.plathome.member.domain.Member;
+import com.example.plathome.member.domain.constant.RoleType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Builder;
@@ -24,8 +25,6 @@ public record SignUpForm(
                 .username(this.username)
                 .userId(this.userId)
                 .password(encoder.encode(this.password))
-                .createdBy(this.username)
-                .modifiedBy(this.username)
-                .build();
+                .roleType(RoleType.USER).build();
     }
 }
