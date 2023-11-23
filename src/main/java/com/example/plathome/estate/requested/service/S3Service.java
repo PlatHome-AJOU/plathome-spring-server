@@ -37,6 +37,6 @@ public class S3Service {
     }
 
     public void deleteFile(String userId) {
-        amazonS3Client.deleteObject(bucket, userId);
+        amazonS3Client.deleteObject(bucket, CONTRACT_FOLDER + userId);
     }
 }

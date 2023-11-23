@@ -25,8 +25,8 @@ public class JwtWebConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new JwtLoginCheckInterceptor(jwtMemberService, jwtValidateService))
                 .order(1)
-                .addPathPatterns("/jwt/**", "/requested/**")
-                .excludePathPatterns("/jwt/sign-up", "/jwt/login");
+                .addPathPatterns("/api/jwt/**", "/api/requested/**")
+                .excludePathPatterns("/api/jwt/sign-up", "/api/jwt/login");
     }
 
     @Override

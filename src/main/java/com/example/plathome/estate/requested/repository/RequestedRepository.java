@@ -7,4 +7,5 @@ import java.util.Optional;
 
 public interface RequestedRepository extends JpaRepository<Requested, Long> {
     Optional<Requested> findByUserId(String userId);
+    void deleteByUserId(String userId);
 }
