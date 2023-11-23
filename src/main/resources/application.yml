@@ -11,9 +11,6 @@ spring:
     properties:
       hibernate.format_sql: true
       hibernate.default_batch_fetch_size: 100
-  sql:
-    init:
-      mode: always
   data:
     redis:
       host: localhost
@@ -37,6 +34,11 @@ spring:
 
 
 springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+
 jwt.access.secret-key: ${JWT_ACCESS_SECRET_KEY}
 jwt.refresh.secret-key: ${JWT_REFRESH_SECRET_KEY}
 
