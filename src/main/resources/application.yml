@@ -37,6 +37,18 @@ spring:
 
 
 jwt.secretKey: ${JWT_SECRET_KEY}
+jwt.access.secret-key: ${JWT_ACCESS_SECRET_KEY}
+jwt.refresh.secret-key: ${JWT_REFRESH_SECRET_KEY}
+
+member:
+  test:
+    username: ${TEST_USERNAME}
+    user-id: ${TEST_USERID}
+    raw-password: ${TEST_RAW_PASSWORD}
+  admin:
+    username: ${ADMIN_USERNAME}
+    user-id: ${ADMIN_USERID}
+    raw-password: ${ADMIN_RAW_PASSWORD}
 
 ---
 

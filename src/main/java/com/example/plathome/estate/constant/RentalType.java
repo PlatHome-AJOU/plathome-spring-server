@@ -1,4 +1,4 @@
-package com.example.plathome.requested.domain.constant;
+package com.example.plathome.estate.constant;
 
 import lombok.Getter;
 
