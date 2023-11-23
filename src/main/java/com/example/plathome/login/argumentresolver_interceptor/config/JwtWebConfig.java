@@ -1,6 +1,7 @@
 package com.example.plathome.login.argumentresolver_interceptor.config;
 
 
+import com.example.plathome.login.argumentresolver_interceptor.argumentresolver.JwtAdminArgumentResolver;
 import com.example.plathome.login.argumentresolver_interceptor.argumentresolver.JwtLoginArgumentResolver;
 import com.example.plathome.login.argumentresolver_interceptor.interceptor.JwtLoginCheckInterceptor;
 import com.example.plathome.login.argumentresolver_interceptor.service.JwtMemberService;
@@ -24,12 +25,13 @@ public class JwtWebConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new JwtLoginCheckInterceptor(jwtMemberService, jwtValidateService))
                 .order(1)
-                .addPathPatterns("/jwt/**")
+                .addPathPatterns("/jwt/**", "/requested/**")
                 .excludePathPatterns("/jwt/sign-up", "/jwt/login");
     }
 
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
         resolvers.add(new JwtLoginArgumentResolver());
+        resolvers.add(new JwtAdminArgumentResolver());
     }
 }
