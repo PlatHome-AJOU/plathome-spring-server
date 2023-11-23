@@ -31,7 +31,20 @@ spring:
           timeout: 5000
           writetimeout: 5000
     auth-code-expiration-millis: 1800000 # 30 * 60 * 1000 = 30분
+  servlet:
+    multipart:
+      max-request-size: 10MB
+      max-file-size: 10MB
 
+cloud:
+  aws:
+    s3:
+      bucket: ${BUCKET_NAME}
+    stack.auto: false
+    region.static: ap-northeast-2
+    credentials:
+      access-key: ${AWS_USER_ACCESS_KEY}
+      secret-key: ${AWS_USER_SECRET_KEY}
 
 springdoc:
   api-docs:

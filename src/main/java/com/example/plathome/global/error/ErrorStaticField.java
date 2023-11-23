@@ -28,6 +28,9 @@ public class ErrorStaticField {
     public static final String EMAIL_FORM_ERROR = "Email should end with @ajou.ac.kr";
     public static final String EXPIRED_AUTH_CODE = "인증번호 만료! 재인증 하세요.";
     public static final String INVALID_AUTH_CODE = "이메일 인증번호 인증에 실패하였습니다.";
+    public static final String MEMBER_FORBIDDEN = "접근권한이 없는 회원입니다.";
+    public static final String DUP_REQUESTED = "한번에 하나의 매물만 등록요청이 가능합니다.";
+    public static final String REQUESTED_NOT_FOUND = "오류: 요청 매물을 찾을 수 없습니다.";
 
     //chat
     public static final String ROOM_NOT_FOUND = "채팅방을 찾을 수 없습니다.";
