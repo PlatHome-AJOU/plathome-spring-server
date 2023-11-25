@@ -2,6 +2,7 @@ package com.example.plathome.member.service;
 
 
 import com.example.plathome.login.jwt.dto.MemberWithTokenDto;
+import com.example.plathome.member.domain.Member;
 import com.example.plathome.member.domain.MemberSession;
 import com.example.plathome.member.exception.NotFoundMemberException;
 import com.example.plathome.member.repository.MemberRepository;
@@ -21,6 +22,12 @@ public class MemberService {
     public MemberWithTokenDto getBySession(MemberSession session) {
         return memberRepository.findByUserId(session.userId())
                 .map(MemberWithTokenDto::withoutToken)
+                .orElseThrow(NotFoundMemberException::new);
+    }
+
+    public String getUsername(Long memberId) {
+        return memberRepository.findById(memberId)
+                .map(Member::getUsername)
                 .orElseThrow(NotFoundMemberException::new);
     }
 
