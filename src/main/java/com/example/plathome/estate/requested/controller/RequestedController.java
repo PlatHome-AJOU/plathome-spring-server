@@ -6,6 +6,7 @@ import com.example.plathome.estate.requested.service.RequestedService;
 import com.example.plathome.login.argumentresolver_interceptor.argumentresolver.Admin;
 import com.example.plathome.login.argumentresolver_interceptor.argumentresolver.Login;
 import com.example.plathome.member.domain.MemberSession;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,7 +20,7 @@ public class RequestedController {
 
     private final RequestedService requestedService;
 
-    @PostMapping("/file")
+    @PostMapping("/auth/file")
     public String saveFile(
             @Login MemberSession memberSession,
             @RequestPart MultipartFile file
@@ -28,23 +29,23 @@ public class RequestedController {
         return "success";
     }
 
-    @PostMapping("/form")
+    @PostMapping("/auth/form")
     public String saveForm(
             @Login MemberSession memberSession,
-            @RequestBody RequestedForm requestedForm
+            @RequestBody @Valid RequestedForm requestedForm
     ) {
         requestedService.saveForm(memberSession, requestedForm);
         return "success";
     }
 
-    @GetMapping
+    @GetMapping("/auth")
     public List<RequestedResponse> getAll(
             @Admin MemberSession memberSession
     ) {
         return requestedService.getAll();
     }
 
-    @PatchMapping("/file")
+    @PatchMapping("/auth/file")
     public String updateFile(
             @Login MemberSession memberSession,
             @RequestPart MultipartFile file
@@ -53,16 +54,16 @@ public class RequestedController {
         return "success";
     }
 
-    @PatchMapping("/form")
+    @PatchMapping("/auth/form")
     public String updateForm(
             @Login MemberSession memberSession,
-            @RequestBody RequestedForm requestedForm
+            @RequestBody @Valid RequestedForm requestedForm
     ) {
         requestedService.updateForm(memberSession, requestedForm);
         return "success";
     }
 
-    @DeleteMapping("/{userId}")
+    @DeleteMapping("/auth/{userId}")
     public String delete(
             @Admin MemberSession memberSession,
             @PathVariable String userId

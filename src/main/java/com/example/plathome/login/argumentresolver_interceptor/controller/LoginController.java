@@ -22,24 +22,24 @@ public class LoginController {
     private final JwtLoginService jwtLoginService;
     private final MemberService memberService;
 
-    @GetMapping("/token")
+    @GetMapping("/auth/token")
     public MemberWithTokenResponse refresh(
             @Login MemberSession memberSession,
             HttpServletResponse response) {
         return MemberWithTokenResponse.from(jwtLoginService.refresh(memberSession, response));
     }
 
-    @GetMapping
+    @GetMapping("/auth")
     public MemberWithTokenResponse get(@Login MemberSession memberSession) {
         return MemberWithTokenResponse.from(memberService.getBySession(memberSession));
     }
 
-    @PostMapping("/sign-up")
+    @PostMapping("/no-auth/sign-up")
     public MemberWithTokenResponse signUp(@RequestBody @Valid SignUpForm signUpForm) {
         return MemberWithTokenResponse.withoutToken(jwtLoginService.signUp(signUpForm));
     }
 
-    @PostMapping("/login")
+    @PostMapping("/no-auth/login")
     public MemberWithTokenResponse login(
             @RequestBody @Valid LoginForm loginForm,
             HttpServletRequest request,
@@ -49,7 +49,7 @@ public class LoginController {
         return memberWithTokenResponse;
     }
 
-    @GetMapping("/logout")
+    @GetMapping("/auth/logout")
     public String logout(@Login MemberSession memberSession, HttpServletRequest request) {
         jwtLoginService.logout(memberSession);
         return "success";
