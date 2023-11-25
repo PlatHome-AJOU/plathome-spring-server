@@ -1,4 +1,4 @@
-package com.example.plathome.estate.constant;
+package com.example.plathome.estate.common;
 
 import lombok.Getter;
 

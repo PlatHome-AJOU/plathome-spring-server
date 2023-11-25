@@ -62,17 +62,19 @@ public class RequestedService {
 
         requested.updateForm(
                 requestedForm.location(),
+                requestedForm.roomType(),
                 requestedForm.rentalType(),
+                requestedForm.floor(),
                 requestedForm.contractTerm(),
-                requestedForm.options(),
+                requestedForm.option(),
                 requestedForm.squareFeet(),
+                requestedForm.deposit(),
                 requestedForm.maintenanceFee(),
                 requestedForm.monthlyRent());
     }
 
     @Transactional
     public void delete(String userId) {
-        s3Service.deleteFile(userId);
         requestedRepository.deleteByUserId(userId);
     }
 }
