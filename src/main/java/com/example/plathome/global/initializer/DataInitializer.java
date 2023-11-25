@@ -48,7 +48,11 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
                 .createdBy(admin_username)
                 .modifiedBy(admin_username).build();
 
-        memberRepository.save(admin);
-        memberRepository.save(tester);
+        if (memberRepository.findByUserId(admin_userId).isEmpty()) {
+            memberRepository.save(admin);
+        }
+        if (memberRepository.findByUserId(test_userId).isEmpty()) {
+            memberRepository.save(tester);
+        }
     }
 }
