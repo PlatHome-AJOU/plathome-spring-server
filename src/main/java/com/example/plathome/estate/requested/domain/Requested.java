@@ -1,9 +1,10 @@
 package com.example.plathome.estate.requested.domain;
 
-import com.example.plathome.estate.Option;
-import com.example.plathome.estate.constant.RentalType;
+import com.example.plathome.estate.common.Option;
+import com.example.plathome.estate.common.Floor;
+import com.example.plathome.estate.common.RentalType;
+import com.example.plathome.estate.common.RoomType;
 import com.example.plathome.global.domain.AuditingFields;
-import com.example.plathome.estate.converter.OptionsConverter;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -11,8 +12,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.util.LinkedHashSet;
-import java.util.Set;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -29,41 +28,52 @@ public class Requested extends AuditingFields{
     private String location;
 
     @Enumerated(EnumType.STRING)
+    private RoomType roomType;
+
+    @Enumerated(EnumType.STRING)
     private RentalType rentalType;
+
+    @Enumerated(EnumType.STRING)
+    private Floor floor;
 
     @Column(length = 100)
     private String contractUrl;
 
     private LocalDate contractTerm;
 
-    @Convert(converter = OptionsConverter.class)
-    private Set<Option> options = new LinkedHashSet<>();
+    @Embedded
+    private Option option;
 
     private double squareFeet;
-
+    private int deposit;
     private int maintenanceFee;
-
     private int monthlyRent;
 
     @Builder
-    public Requested(String userId, String location, RentalType rentalType, String contractUrl, LocalDate contractTerm, Set<Option> options, double squareFeet, int maintenanceFee, int monthlyRent) {
+    public Requested(String userId, String location, RoomType roomType, RentalType rentalType, Floor floor, String contractUrl, LocalDate contractTerm, Option option, double squareFeet, int deposit, int maintenanceFee, int monthlyRent) {
         this.userId = userId;
         this.location = location;
+        this.roomType = roomType;
         this.rentalType = rentalType;
+        this.floor = floor;
         this.contractUrl = contractUrl;
         this.contractTerm = contractTerm;
-        this.options = options;
+        this.option = option;
         this.squareFeet = squareFeet;
+        this.deposit = deposit;
         this.maintenanceFee = maintenanceFee;
         this.monthlyRent = monthlyRent;
     }
 
-    public void updateForm(String location, RentalType rentalType, LocalDate contractTerm, Set<Option> options, double squareFeet, int maintenanceFee, int monthlyRent) {
+    public void updateForm(String location, RoomType roomType, RentalType rentalType, Floor floor, LocalDate contractTerm, Option option, double squareFeet, int deposit, int maintenanceFee, int monthlyRent) {
         this.location = location;
+        this.roomType = roomType;
         this.rentalType = rentalType;
+        this.floor = floor;
         this.contractTerm = contractTerm;
-        this.options = options;
+        this.option = option;
         this.squareFeet = squareFeet;
+        this.deposit = deposit;
         this.maintenanceFee = maintenanceFee;
         this.monthlyRent = monthlyRent;
     }

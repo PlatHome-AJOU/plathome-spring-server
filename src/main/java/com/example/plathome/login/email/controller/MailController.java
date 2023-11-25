@@ -17,7 +17,7 @@ import static com.example.plathome.login.email.common.EmailStaticField.SEND_MESS
 public class MailController {
     private final MailMemberService mailMemberService;
 
-    @PostMapping("/send-email")
+    @PostMapping("/no-auth/send-email")
     public String sendMessage(@RequestBody @Valid MailForm mailForm) throws Exception {
         mailMemberService.sendCodeToEmail(mailForm);
         return SEND_MESSAGE;
