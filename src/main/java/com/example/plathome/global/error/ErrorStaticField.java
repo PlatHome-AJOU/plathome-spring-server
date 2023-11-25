@@ -30,7 +30,9 @@ public class ErrorStaticField {
     public static final String INVALID_AUTH_CODE = "이메일 인증번호 인증에 실패하였습니다.";
     public static final String MEMBER_FORBIDDEN = "접근권한이 없는 회원입니다.";
     public static final String DUP_REQUESTED = "한번에 하나의 매물만 등록요청이 가능합니다.";
-    public static final String REQUESTED_NOT_FOUND = "오류: 요청 매물을 찾을 수 없습니다.";
+    public static final String REQUESTED_NOT_FOUND = "오류: 요청된 매물을 찾을 수 없습니다.";
+    public static final String ESTATE_NOT_FOUND = "오류: 등록된 매물을 찾을 수 없습니다.";
+    public static final String DUP_ESTATE = "오류: 회원은 하나의 매물만 등록할 수 있습니다.";
 
     //chat
     public static final String ROOM_NOT_FOUND = "채팅방을 찾을 수 없습니다.";
