@@ -6,7 +6,7 @@ spring:
   jpa:
     open-in-view: false
     defer-datasource-initialization: true
-    hibernate.ddl-auto: update
+    hibernate.ddl-auto: create
     show-sql: true
     properties:
       hibernate.format_sql: true
@@ -59,12 +59,12 @@ jwt.refresh.secret-key: ${JWT_REFRESH_SECRET_KEY}
 
 member:
   test:
-    username: ${TEST_USERNAME}
-    user-id: ${TEST_USERID}
+    nickname: ${TEST_NICKNAME}
+    email: ${TEST_EMAIL}
     raw-password: ${TEST_RAW_PASSWORD}
   admin:
-    username: ${ADMIN_USERNAME}
-    user-id: ${ADMIN_USERID}
+    nickname: ${ADMIN_NICKNAME}
+    email: ${ADMIN_EMAIL}
     raw-password: ${ADMIN_RAW_PASSWORD}
 
 ---

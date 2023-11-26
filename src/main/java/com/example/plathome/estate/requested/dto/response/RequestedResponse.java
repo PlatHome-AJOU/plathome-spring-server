@@ -11,8 +11,8 @@ import java.time.LocalDate;
 
 @Builder
 public record RequestedResponse(
-        Long id,
-        String userId,
+        long id,
+        long memberId,
         String location,
         RoomType roomType,
         RentalType rentalType,
@@ -33,7 +33,7 @@ public record RequestedResponse(
     public static RequestedResponse from(Requested entity) {
         return RequestedResponse.of()
                 .id(entity.getId())
-                .userId(entity.getUserId())
+                .memberId(entity.getMemberId())
                 .location(entity.getLocation())
                 .roomType(entity.getRoomType())
                 .rentalType(entity.getRentalType())

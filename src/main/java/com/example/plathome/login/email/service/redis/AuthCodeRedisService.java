@@ -21,24 +21,24 @@ public class AuthCodeRedisService implements RedisService {
     }
 
     @Override
-    public void setData(String userId, String authCode) {
-        authCodeRedisTemplate.opsForValue().set(userId, authCode, AUTH_CODE_EXPIRATION, TimeUnit.MILLISECONDS);
+    public void setData(String email, String authCode) {
+        authCodeRedisTemplate.opsForValue().set(email, authCode, AUTH_CODE_EXPIRATION, TimeUnit.MILLISECONDS);
     }
 
     @Transactional(readOnly = true)
     @Override
-    public String getData(String userId) {
-        return authCodeRedisTemplate.opsForValue().get(userId);
+    public String getData(String email) {
+        return authCodeRedisTemplate.opsForValue().get(email);
     }
 
     @Override
-    public void deleteData(String userId) {
-        authCodeRedisTemplate.delete(userId);
+    public void deleteData(String email) {
+        authCodeRedisTemplate.delete(email);
     }
 
     @Transactional(readOnly = true)
     @Override
-    public Boolean checkExistValue(String userId) {
-        return authCodeRedisTemplate.hasKey(userId);
+    public Boolean checkExistValue(String email) {
+        return authCodeRedisTemplate.hasKey(email);
     }
 }

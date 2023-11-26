@@ -26,17 +26,17 @@ public class S3Service {
             ObjectMetadata metadata= new ObjectMetadata();
             metadata.setContentType(file.getContentType());
             metadata.setContentLength(file.getSize());
-            amazonS3Client.putObject(bucket, CONTRACT_FOLDER + memberSession.userId(),file.getInputStream(),metadata);
+            amazonS3Client.putObject(bucket, CONTRACT_FOLDER + memberSession.email(),file.getInputStream(),metadata);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public String getFile(String userId) {
-        return amazonS3Client.getResourceUrl(bucket, CONTRACT_FOLDER + userId);
+    public String getFile(String email) {
+        return amazonS3Client.getResourceUrl(bucket, CONTRACT_FOLDER + email);
     }
 
-    public void deleteFile(String userId) {
-        amazonS3Client.deleteObject(bucket, CONTRACT_FOLDER + userId);
+    public void deleteFile(String email) {
+        amazonS3Client.deleteObject(bucket, CONTRACT_FOLDER + email);
     }
 }

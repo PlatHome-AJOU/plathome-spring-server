@@ -12,7 +12,7 @@ import java.time.LocalDate;
 
 @Builder
 public record EstateResponse(
-        String userId,
+        long memberId,
         String location,
         Area area,
         RoomType roomType,
@@ -32,7 +32,7 @@ public record EstateResponse(
 
     public static EstateResponse from(Estate entity) {
         return EstateResponse.of()
-                .userId(entity.getUserId())
+                .memberId(entity.getMemberId())
                 .location(entity.getLocation())
                 .area(entity.getArea())
                 .roomType(entity.getRoomType())

@@ -14,14 +14,14 @@ public class MailService {
 
     private final JavaMailSender mailSender;
 
-    public void sendEmail(String userId, String authCode) {
-        SimpleMailMessage mailForm = createMailForm(userId, authCode);
+    public void sendEmail(String email, String authCode) {
+        SimpleMailMessage mailForm = createMailForm(email, authCode);
         mailSender.send(mailForm);
     }
 
-    private SimpleMailMessage createMailForm(String userId, String authCode) {
+    private SimpleMailMessage createMailForm(String email, String authCode) {
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
-        simpleMailMessage.setTo(userId);
+        simpleMailMessage.setTo(email);
         simpleMailMessage.setSubject(TITLE);
         simpleMailMessage.setText(authCode);
         return simpleMailMessage;

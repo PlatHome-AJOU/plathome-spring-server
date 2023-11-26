@@ -2,11 +2,12 @@ package com.example.plathome.login.argumentresolver_interceptor.controller;
 
 
 import com.example.plathome.login.argumentresolver_interceptor.argumentresolver.Login;
-import com.example.plathome.member.domain.MemberSession;
 import com.example.plathome.login.jwt.dto.request.LoginForm;
-import com.example.plathome.login.jwt.dto.response.MemberWithTokenResponse;
 import com.example.plathome.login.jwt.dto.request.SignUpForm;
+import com.example.plathome.login.jwt.dto.response.MemberResponse;
+import com.example.plathome.login.jwt.dto.response.TokenResponse;
 import com.example.plathome.login.jwt.service.JwtLoginService;
+import com.example.plathome.member.domain.MemberSession;
 import com.example.plathome.member.service.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -23,30 +24,29 @@ public class LoginController {
     private final MemberService memberService;
 
     @GetMapping("/auth/token")
-    public MemberWithTokenResponse refresh(
+    public TokenResponse refresh(
             @Login MemberSession memberSession,
             HttpServletResponse response) {
-        return MemberWithTokenResponse.from(jwtLoginService.refresh(memberSession, response));
+        return TokenResponse.from(jwtLoginService.refresh(memberSession, response));
     }
 
     @GetMapping("/auth")
-    public MemberWithTokenResponse get(@Login MemberSession memberSession) {
-        return MemberWithTokenResponse.from(memberService.getBySession(memberSession));
+    public MemberResponse get(@Login MemberSession memberSession) {
+        return MemberResponse.from(memberService.getBySession(memberSession));
     }
 
     @PostMapping("/no-auth/sign-up")
-    public MemberWithTokenResponse signUp(@RequestBody @Valid SignUpForm signUpForm) {
-        return MemberWithTokenResponse.withoutToken(jwtLoginService.signUp(signUpForm));
+    public MemberResponse signUp(@RequestBody @Valid SignUpForm signUpForm) {
+        return MemberResponse.from(jwtLoginService.signUp(signUpForm));
     }
 
     @PostMapping("/no-auth/login")
-    public MemberWithTokenResponse login(
+    public TokenResponse login(
             @RequestBody @Valid LoginForm loginForm,
             HttpServletRequest request,
             HttpServletResponse response
             ) {
-        MemberWithTokenResponse memberWithTokenResponse = MemberWithTokenResponse.from(jwtLoginService.login(loginForm, request, response));
-        return memberWithTokenResponse;
+        return TokenResponse.from(jwtLoginService.login(loginForm, request, response));
     }
 
     @GetMapping("/auth/logout")

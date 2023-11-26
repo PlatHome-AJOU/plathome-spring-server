@@ -10,7 +10,10 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(indexes = {@Index(columnList = "userId", unique = true)})
+@Table(indexes = {
+        @Index(columnList = "email", unique = true),
+        @Index(columnList = "nickname", unique = true)
+})
 @Entity
 public class Member extends AuditingFields{
 
@@ -20,10 +23,10 @@ public class Member extends AuditingFields{
     private Long id;
 
     @Column(length = 20)
-    private String username;
+    private String nickname;
 
     @Column (length = 100)
-    private String userId;
+    private String email;
 
     @Column(length = 60)
     private String password;
@@ -32,10 +35,10 @@ public class Member extends AuditingFields{
     private RoleType roleType;
 
     @Builder
-    private Member(Long id, String username, String userId, String password, RoleType roleType, String createdBy, String modifiedBy) {
+    private Member(Long id, String nickname, String email, String password, RoleType roleType, String createdBy, String modifiedBy) {
         this.id = id;
-        this.username = username;
-        this.userId = userId;
+        this.nickname = nickname;
+        this.email = email;
         this.password = password;
         this.roleType = roleType;
         this.createdBy = createdBy;

@@ -5,9 +5,9 @@ import lombok.Builder;
 
 @Builder
 public record MemberSession(
-        Long id,
-        String username,
-        String userId,
+        long id,
+        String nickname,
+        String email,
         String password,
         RoleType roleType
         ){
@@ -21,8 +21,8 @@ public record MemberSession(
     public static MemberSession from(Member member) {
         return MemberSession.builder()
                 .id(member.getId())
-                .username(member.getUsername())
-                .userId(member.getUserId())
+                .nickname(member.getNickname())
+                .email(member.getEmail())
                 .password(member.getPassword())
                 .roleType(member.getRoleType()).build();
     }

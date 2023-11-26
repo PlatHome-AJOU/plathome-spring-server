@@ -20,24 +20,24 @@ public class RefreshTokenRedisService implements RedisService {
     }
 
     @Override
-    public void setData(String userId, String refreshToken) {
-        refreshTokenRedisTemplate.opsForValue().set(userId, refreshToken, REFRESH_TOKEN_EXPIRATION, TimeUnit.MILLISECONDS);
+    public void setData(String email, String refreshToken) {
+        refreshTokenRedisTemplate.opsForValue().set(email, refreshToken, REFRESH_TOKEN_EXPIRATION, TimeUnit.MILLISECONDS);
     }
 
     @Transactional(readOnly = true)
     @Override
-    public String getData(String userId) {
-        return refreshTokenRedisTemplate.opsForValue().get(userId);
+    public String getData(String email) {
+        return refreshTokenRedisTemplate.opsForValue().get(email);
     }
 
     @Override
-    public void deleteData(String userId) {
-        refreshTokenRedisTemplate.delete(userId);
+    public void deleteData(String email) {
+        refreshTokenRedisTemplate.delete(email);
     }
 
     @Transactional(readOnly = true)
     @Override
-    public Boolean checkExistValue(String userId) {
-        return refreshTokenRedisTemplate.hasKey(userId);
+    public Boolean checkExistValue(String email) {
+        return refreshTokenRedisTemplate.hasKey(email);
     }
 }

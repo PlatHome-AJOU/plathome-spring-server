@@ -5,7 +5,7 @@ import lombok.Builder;
 
 @Builder
 public record MapInfoEstateResponse(
-        String userId,
+        long memberId,
         double lng,
         double lat
 ) {
@@ -16,7 +16,7 @@ public record MapInfoEstateResponse(
 
     public static MapInfoEstateResponse from(Estate entity) {
         return MapInfoEstateResponse.of()
-                .userId(entity.getUserId())
+                .memberId(entity.getMemberId())
                 .lng(entity.getLng())
                 .lat(entity.getLat()).build();
     }

@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 public interface RequestedRepository extends JpaRepository<Requested, Long> {
-    Optional<Requested> findByUserId(String userId);
-    void deleteByUserId(String userId);
+    Optional<Requested> findByMemberId(long memberId);
+    void deleteByMemberId(long memberId);
 }

@@ -22,12 +22,13 @@ import java.util.List;
 public class EstateController {
     private final EstateService estateService;
 
-    @PostMapping("/auth")
+    @PostMapping("/auth/{memberId}")
     public String register(
             @Admin MemberSession memberSession,
-            @RequestBody @Valid EstateForm estateForm
+            @RequestBody @Valid EstateForm estateForm,
+            @PathVariable long memberId
     ) {
-        estateService.register(estateForm);
+        estateService.register(estateForm, memberId);
         return "success";
     }
 
@@ -42,14 +43,14 @@ public class EstateController {
     }
 
     @GetMapping("/no-auth/{estateId}")
-    public EstateResponse getDetail(@PathVariable Long estateId) {
+    public EstateResponse getDetail(@PathVariable long estateId) {
         return estateService.getDetail(estateId);
     }
 
     @DeleteMapping("/auth/{estateId}")
     public String delete(
             @Login MemberSession memberSession,
-            @PathVariable Long estateId
+            @PathVariable long estateId
     ) {
         estateService.delete(memberSession, estateId);
         return "success";
@@ -58,8 +59,8 @@ public class EstateController {
     @PatchMapping("/auth/{estateId}")
     public String update(
             @Login MemberSession memberSession,
-            @PathVariable Long estateId,
-            @RequestBody @Valid UpdateEstateForm updateEstateForm
+            @RequestBody @Valid UpdateEstateForm updateEstateForm,
+            @PathVariable long estateId
     ) {
         estateService.update(memberSession, estateId, updateEstateForm);
         return "success";

@@ -16,17 +16,17 @@ public class EstateReport extends AuditingFields{
     @Column(name = "estate_report_id")
     private Long id;
 
-    private Long reportUserId;
+    private Long memberId;
 
-    private Long targetEstateId;
+    private Long estateId;
 
     @Column(columnDefinition = "MEDIUMTEXT")
     private String context;
 
     @Builder
-    public EstateReport(Long reportUserId, Long targetEstateId, String context) {
-        this.reportUserId = reportUserId;
-        this.targetEstateId = targetEstateId;
+    public EstateReport(Long memberId, Long estateId, String context) {
+        this.memberId = memberId;
+        this.estateId = estateId;
         this.context = context;
     }
 }
