@@ -20,17 +20,17 @@
 //
 //public class ControllerObjectBuilder {
 //    protected static final Long ID = 1L;
-//    protected static final String USERNAME = "username";
-//    protected static final String USERID = "userId@ajou.ac.kr";
-//    protected static final String WRONG_USERID = "userId";
+//    protected static final String USERNAME = "nickname";
+//    protected static final String USERID = "email@ajou.ac.kr";
+//    protected static final String WRONG_USERID = "email";
 //    protected static final String PASSWORD = "password";
 //    protected static final String WRONG_PASSWORD = "";
 //
 //    protected static Member createMember() {
 //        return Member.of()
 //                .id(ID)
-//                .username(USERNAME)
-//                .userId(USERID)
+//                .nickname(USERNAME)
+//                .email(USERID)
 //                .password(PASSWORD)
 //                .build();
 //    }
@@ -38,53 +38,53 @@
 //    protected static MemberSession createMemberSession() {
 //        return MemberSession.of()
 //                .id(ID)
-//                .username(USERNAME)
-//                .userId(USERID)
+//                .nickname(USERNAME)
+//                .email(USERID)
 //                .password(PASSWORD)
 //                .build();
 //    }
 //
 //    protected static SignUpForm createSignUpForm() {
 //        return SignUpForm.of()
-//                .username(USERNAME)
-//                .userId(USERID)
+//                .nickname(USERNAME)
+//                .email(USERID)
 //                .password(PASSWORD)
 //                .build();
 //    }
 //
 //    protected static SignUpForm createWrongUserIdSignUpForm() {
 //        return SignUpForm.of()
-//                .username(USERNAME)
-//                .userId(WRONG_USERID)
+//                .nickname(USERNAME)
+//                .email(WRONG_USERID)
 //                .password(PASSWORD)
 //                .build();
 //    }
 //
 //    protected static SignUpForm createWrongPasswordSignUpForm() {
 //        return SignUpForm.of()
-//                .username(USERNAME)
-//                .userId(WRONG_USERID)
+//                .nickname(USERNAME)
+//                .email(WRONG_USERID)
 //                .password(WRONG_PASSWORD)
 //                .build();
 //    }
 //
 //    protected static LoginForm createLoginForm() {
 //        return LoginForm.of()
-//                .userId(USERID)
+//                .email(USERID)
 //                .password(PASSWORD)
 //                .build();
 //    }
 //
 //    protected static LoginForm createWrongUserIdLoginForm() {
 //        return LoginForm.of()
-//                .userId(WRONG_USERID)
+//                .email(WRONG_USERID)
 //                .password(PASSWORD)
 //                .build();
 //    }
 //
 //    protected static LoginForm createWrongPasswordLoginForm() {
 //        return LoginForm.of()
-//                .userId(USERID)
+//                .email(USERID)
 //                .password(WRONG_PASSWORD)
 //                .build();
 //    }
@@ -92,31 +92,31 @@
 //    protected static MemberWithTokenDto createMemberWithoutTokenDto() {
 //        return MemberWithTokenDto.of()
 //                .id(ID)
-//                .username(USERNAME)
-//                .userId(USERID)
+//                .nickname(USERNAME)
+//                .email(USERID)
 //                .build();
 //    }
 //
 //    protected static MemberWithTokenDto createMemberWithTokenDto(String refreshToken) {
 //        return MemberWithTokenDto.of()
 //                .id(ID)
-//                .username(USERNAME)
-//                .userId(USERID)
+//                .nickname(USERNAME)
+//                .email(USERID)
 //                .refreshToken(refreshToken)
 //                .build();
 //    }
 //
 //    protected static MemberWithTokenResponse createMemberWithoutTokenResponse() {
 //        return MemberWithTokenResponse.of()
-//                .username(USERNAME)
-//                .userId(USERID)
+//                .nickname(USERNAME)
+//                .email(USERID)
 //                .build();
 //    }
 //
 //    protected static MemberWithTokenResponse createMemberWithTokenResponse(String refreshToken) {
 //        return MemberWithTokenResponse.of()
-//                .username(USERNAME)
-//                .userId(USERID)
+//                .nickname(USERNAME)
+//                .email(USERID)
 //                .refreshToken(refreshToken)
 //                .build();
 //    }

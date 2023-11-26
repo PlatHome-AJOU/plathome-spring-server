@@ -52,8 +52,8 @@
 //                        .contentType(MediaType.APPLICATION_JSON)
 //                        .content(mapper.writeValueAsString(signUpForm)))
 //                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$.username", is(USERNAME)))
-//                .andExpect((jsonPath("$.userId", is(USERID))));
+//                .andExpect(jsonPath("$.nickname", is(USERNAME)))
+//                .andExpect((jsonPath("$.email", is(USERID))));
 //
 //        //then
 //        then(jwtLoginService).should().signUp(signUpForm);
@@ -88,8 +88,8 @@
 //                        .contentType(MediaType.APPLICATION_JSON)
 //                        .content(mapper.writeValueAsString(loginForm)))
 //                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$.username", is(USERNAME)))
-//                .andExpect((jsonPath("$.userId", is(USERID))))
+//                .andExpect(jsonPath("$.nickname", is(USERNAME)))
+//                .andExpect((jsonPath("$.email", is(USERID))))
 //                .andExpect((jsonPath("$.refreshToken", is(refreshToken))));
 //
 //        //then
@@ -127,8 +127,8 @@
 //        mvc.perform(get("/jwt/get")
 //                        .header(HttpHeaders.AUTHORIZATION, BEARER + accessToken))
 //                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$.username", is(USERNAME)))
-//                .andExpect((jsonPath("$.userId", is(USERID))));
+//                .andExpect(jsonPath("$.nickname", is(USERNAME)))
+//                .andExpect((jsonPath("$.email", is(USERID))));
 //
 //        //then
 //        then(memberService).should().getBySession(any());
