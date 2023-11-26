@@ -13,6 +13,7 @@ import java.time.LocalDate;
 
 @Builder
 public record EstateForm(
+        @NotNull long memberId,
         @NotBlank @Size(max = 255) String location,
         @NotNull Area area,
         @NotNull RoomType roomType,
@@ -33,9 +34,9 @@ public record EstateForm(
         return EstateForm.builder();
     }
 
-    public Estate toEntity(long memberId) {
+    public Estate toEntity() {
         return Estate.builder()
-                .memberId(memberId)
+                .memberId(this.memberId())
                 .location(this.location())
                 .area(this.area())
                 .roomType(this.roomType())

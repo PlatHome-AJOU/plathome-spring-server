@@ -27,10 +27,10 @@ public class EstateService {
     private final RequestedRepository requestedRepository;
 
     @Transactional
-    public void register(EstateForm estateForm, long memberId) {
-        this.validDupEstate(memberId);
-        estateRepository.save(estateForm.toEntity(memberId));
-        requestedRepository.deleteByMemberId(memberId);
+    public void register(EstateForm estateForm) {
+        this.validDupEstate(estateForm.memberId());
+        estateRepository.save(estateForm.toEntity());
+        requestedRepository.deleteByMemberId(estateForm.memberId());
     }
 
     private void validDupEstate(long memberId) {

@@ -30,14 +30,22 @@ public class JwtWebConfig implements WebMvcConfigurer {
                         "/api/email/auth/**",
                         "/api/requested/auth/**",
                         "/api/estate/auth/**",
-                        "/api/member/auth/**"
+                        "/api/member/auth/**",
+                        "/api/chat/user-report/auth/**",
+                        "/api/estate-report/auth/**",
+                        "/api/wish-list/auth/**",
+                        "/api/schedule/auth/**"
                 )
                 .excludePathPatterns(
                         "/api/jwt/no-auth/**",
                         "/api/email/no-auth/**",
                         "/api/requested/no-auth/**",
                         "/api/estate/no-auth/**",
-                        "/api/member/no-auth/**"
+                        "/api/member/no-auth/**",
+                        "/api/chat/user-report/no-auth/**",
+                        "/api/estate-report/no-auth/**",
+                        "/api/wish-list/no-auth/**",
+                        "/api/schedule/no-auth/**"
                 );
     }
 

@@ -35,6 +35,7 @@ public class ErrorStaticField {
     public static final String ESTATE_NOT_FOUND = "오류: 등록된 매물을 찾을 수 없습니다.";
     public static final String DUP_ESTATE = "오류: 회원은 하나의 매물만 등록할 수 있습니다.";
     public static final String USER_REPORT_NOT_FOUND = "오류: 회원 신고 내역을 찾을 수 없습니다.";
+    public static final String ESTATE_REPORT_NOT_FOUND = "오류: 매물 신고 내역을 찾을 수 없습니다.";
 
     //chat
     public static final String ROOM_NOT_FOUND = "채팅방을 찾을 수 없습니다.";
