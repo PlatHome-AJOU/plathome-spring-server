@@ -11,8 +11,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Builder
 public record SignUpForm(
         @NotBlank @Size(min = 6, max = 6) String authCode,
-        @NotBlank @Size(max = 20) String username,
-        @AjouEmail @Size(max = 100) String userId,
+        @NotBlank @Size(max = 20) String nickname,
+        @AjouEmail @Size(max = 100) String email,
         @NotBlank @Size(max = 32) String password
 ) {
 
@@ -22,9 +22,9 @@ public record SignUpForm(
 
     public Member toEntity(PasswordEncoder encoder) {
         return Member.of()
-                .username(this.username)
-                .userId(this.userId)
-                .password(encoder.encode(this.password))
+                .nickname(this.nickname())
+                .email(this.email())
+                .password(encoder.encode(this.password()))
                 .roleType(RoleType.USER).build();
     }
 }

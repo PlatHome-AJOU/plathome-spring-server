@@ -16,10 +16,10 @@ public class MemberController {
     private final MemberService memberService;
 
     @GetMapping("/auth/{memberId}")
-    public String getUsername(
+    public String getNickname(
             @Login MemberSession memberSession,
-            @PathVariable Long memberId
+            @PathVariable long memberId
     ) {
-        return memberService.getUsername(memberId);
+        return memberService.getNickname(memberId);
     }
 }

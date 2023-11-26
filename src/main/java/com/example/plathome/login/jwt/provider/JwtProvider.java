@@ -20,20 +20,20 @@ public class JwtProvider {
     private final AccessSecretKey accessSecretKey;
     private final RefreshSecretKey refreshSecretKey;
 
-    public String createAccessToken(String userId) {
+    public String createAccessToken(String memberId) {
         byte[] decodedSecretKey = accessSecretKey.getDecoded();
         return Jwts.builder()
-                .setSubject(userId)
+                .setSubject(memberId)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + ACCESS_TOKEN_EXPIRATION))
                 .signWith(Keys.hmacShaKeyFor(decodedSecretKey))
                 .compact();
     }
 
-    public String createRefreshToken(String userId) {
+    public String createRefreshToken(String memberId) {
         byte[] decodedSecretKey = refreshSecretKey.getDecoded();
         return Jwts.builder()
-                .setSubject(userId)
+                .setSubject(memberId)
                 .setId(UUID.randomUUID().toString()) // Unique ID for refresh token
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + REFRESH_TOKEN_EXPIRATION))

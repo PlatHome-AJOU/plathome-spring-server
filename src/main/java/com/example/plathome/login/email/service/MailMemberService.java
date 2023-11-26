@@ -14,13 +14,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.management.InstanceAlreadyExistsException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-import java.time.LocalDateTime;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.Random;
+
+import static com.example.plathome.global.error.ErrorStaticField.DUP_EMAIL;
 
 
 @Slf4j
@@ -35,17 +34,17 @@ public class MailMemberService {
 
     @Transactional
     public void sendCodeToEmail(MailForm mailForm) throws Exception {
-        String userId = mailForm.userId();
-        this.validDupUserId(userId);
+        String email = mailForm.email();
+        this.validDupEmail(email);
         String authCode = this.createCode();
-        mailService.sendEmail(userId, authCode);
-        authCodeRedisService.setData(userId, authCode);
+        mailService.sendEmail(email, authCode);
+        authCodeRedisService.setData(email, authCode);
     }
 
-    private void validDupUserId(String userId) {
-        Optional<Member> optionalUser = memberRepository.findByUserId(userId);
-        if (optionalUser.isPresent()) {
-            throw new DuplicationMemberException();
+    private void validDupEmail(String email) {
+        Optional<Member> optionalMember = memberRepository.findByEmail(email);
+        if (optionalMember.isPresent()) {
+            throw new DuplicationMemberException(DUP_EMAIL);
         }
     }
 
@@ -55,12 +54,12 @@ public class MailMemberService {
         return String.valueOf(authCode);
     }
 
-    public void verifyCode(String userId, String authCode) {
-        if (!authCodeRedisService.checkExistValue(userId)) {
+    public void verifyCode(String email, String authCode) {
+        if (!authCodeRedisService.checkExistValue(email)) {
             throw new ExpiredAuthCodeException();
-        } else if (!authCodeRedisService.getData(userId).equals(authCode)) {
+        } else if (!authCodeRedisService.getData(email).equals(authCode)) {
             throw new InvalidAuthCodeException();
         }
-        authCodeRedisService.deleteData(userId);
+        authCodeRedisService.deleteData(email);
     }
 }

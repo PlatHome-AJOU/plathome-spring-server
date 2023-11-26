@@ -23,7 +23,7 @@ public class Requested extends AuditingFields{
     @Column(name = "requested_id")
     private Long id;
 
-    private String userId;
+    private Long memberId;
 
     private String location;
 
@@ -50,8 +50,8 @@ public class Requested extends AuditingFields{
     private int monthlyRent;
 
     @Builder
-    public Requested(String userId, String location, RoomType roomType, RentalType rentalType, Floor floor, String contractUrl, LocalDate contractTerm, Option option, double squareFeet, int deposit, int maintenanceFee, int monthlyRent) {
-        this.userId = userId;
+    public Requested(Long memberId, String location, RoomType roomType, RentalType rentalType, Floor floor, String contractUrl, LocalDate contractTerm, Option option, double squareFeet, int deposit, int maintenanceFee, int monthlyRent) {
+        this.memberId = memberId;
         this.location = location;
         this.roomType = roomType;
         this.rentalType = rentalType;

@@ -6,7 +6,6 @@ import com.example.plathome.estate.common.RentalType;
 import com.example.plathome.estate.common.RoomType;
 import com.example.plathome.estate.real.domain.Estate;
 import com.example.plathome.estate.real.domain.constant.Area;
-import com.example.plathome.login.jwt.dto.request.annotation.AjouEmail;
 import jakarta.validation.constraints.*;
 import lombok.Builder;
 
@@ -14,7 +13,6 @@ import java.time.LocalDate;
 
 @Builder
 public record EstateForm(
-        @AjouEmail String userId,
         @NotBlank @Size(max = 255) String location,
         @NotNull Area area,
         @NotNull RoomType roomType,
@@ -35,9 +33,9 @@ public record EstateForm(
         return EstateForm.builder();
     }
 
-    public Estate toEntity() {
+    public Estate toEntity(long memberId) {
         return Estate.builder()
-                .userId(this.userId())
+                .memberId(memberId)
                 .location(this.location())
                 .area(this.area())
                 .roomType(this.roomType())

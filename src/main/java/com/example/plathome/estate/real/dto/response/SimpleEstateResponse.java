@@ -6,7 +6,7 @@ import lombok.Builder;
 
 @Builder
 public record SimpleEstateResponse(
-        String userId,
+        long memberId,
         String location,
         RentalType rentalType
 ) {
@@ -17,7 +17,7 @@ public record SimpleEstateResponse(
 
     public static SimpleEstateResponse from(Estate entity) {
         return SimpleEstateResponse.of()
-                .userId(entity.getUserId())
+                .memberId(entity.getMemberId())
                 .location(entity.getLocation())
                 .rentalType(entity.getRentalType()).build();
     }

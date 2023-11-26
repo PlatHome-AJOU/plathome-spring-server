@@ -63,12 +63,12 @@ public class RequestedController {
         return "success";
     }
 
-    @DeleteMapping("/auth/{userId}")
+    @DeleteMapping("/auth/{memberId}")
     public String delete(
             @Admin MemberSession memberSession,
-            @PathVariable String userId
+            @PathVariable long memberId
     ) {
-        requestedService.delete(userId);
+        requestedService.delete(memberId);
         return "success";
     }
 }

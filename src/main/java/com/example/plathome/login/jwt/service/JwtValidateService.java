@@ -43,9 +43,9 @@ public class JwtValidateService {
             String authHeader = request.getHeader(REFRESH_HEADER);
             String token = authHeader.substring(BEARER.length());
             Claims claims = this.validateToken(token, refreshSecretKey.getDecoded());
-            String userId = claims.getSubject();
-            this.validateIsInRedisRefreshToken(userId, token);
-            return userId;
+            String memberId = claims.getSubject();
+            this.validateIsInRedisRefreshToken(memberId, token);
+            return memberId;
         } catch (ExpiredJwtException e) {
             throw new ExpiredRefreshTokenException();
         } catch (Exception e) {
@@ -63,10 +63,10 @@ public class JwtValidateService {
                 .getPayload();
     }
 
-    private void validateIsInRedisRefreshToken(String userId, String token) {
-        if (!refreshTokenRedisService.checkExistValue(userId)) {
+    private void validateIsInRedisRefreshToken(String memberId, String token) {
+        if (!refreshTokenRedisService.checkExistValue(memberId)) {
             throw new ExpiredRefreshTokenException();
-        } else if (!refreshTokenRedisService.getData(userId).equals(token)) {
+        } else if (!refreshTokenRedisService.getData(memberId).equals(token)) {
             throw new InvalidRefreshTokenException();
         }
     }

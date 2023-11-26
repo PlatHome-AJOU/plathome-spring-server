@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
 @Builder
 public record LoginForm (
-        @Email String userId,
+        @Email String email,
         @NotBlank String password
 ){
     public static LoginFormBuilder of() {

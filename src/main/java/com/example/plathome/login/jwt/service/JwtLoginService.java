@@ -23,6 +23,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
+import static com.example.plathome.global.error.ErrorStaticField.DUP_EMAIL;
+import static com.example.plathome.global.error.ErrorStaticField.DUP_NICKNAME;
 import static com.example.plathome.login.jwt.common.JwtStaticField.BEARER;
 
 @RequiredArgsConstructor
@@ -37,26 +39,32 @@ public class JwtLoginService {
 
     @Transactional
     public MemberWithTokenDto signUp(SignUpForm signUpForm) {
-        validDupUserId(signUpForm.userId());
-        mailMemberService.verifyCode(signUpForm.userId(), signUpForm.authCode());
-        UserContext.set(signUpForm.username());
+        verifyValidSignUpdForm(signUpForm);
+        mailMemberService.verifyCode(signUpForm.email(), signUpForm.authCode());
+        UserContext.set(signUpForm.nickname());
         return MemberWithTokenDto.withoutToken(memberRepository.save(signUpForm.toEntity(passwordEncoder)));
     }
 
-    private void validDupUserId(String userId) {
-        Optional<Member> optionalUser = memberRepository.findByUserId(userId);
+    private void verifyValidSignUpdForm(SignUpForm signUpForm) {
+        String email = signUpForm.email();
+        String nickname = signUpForm.nickname();
+        Optional<Member> optionalUser = memberRepository.findByEmailOrNickname(email, nickname);
         if (optionalUser.isPresent()) {
-            throw new DuplicationMemberException();
+            if (optionalUser.get().getEmail().equals(email)) {
+                throw new DuplicationMemberException(DUP_EMAIL);
+            } else {
+                throw new DuplicationMemberException(DUP_NICKNAME);
+            }
         }
     }
 
     public MemberWithTokenDto login(LoginForm loginForm, HttpServletRequest request, HttpServletResponse response) {
-        String userId = loginForm.userId();
-        Member member = memberRepository.findByUserId(userId).orElseThrow(NotFoundMemberException::new);
+        String email = loginForm.email();
+        Member member = memberRepository.findByEmail(email).orElseThrow(NotFoundMemberException::new);
         if (passwordEncoder.matches(loginForm.password(), member.getPassword())) {
-            String accessToken = jwtProvider.createAccessToken(userId);
-            String refreshToken = jwtProvider.createRefreshToken(userId);
-            refreshTokenRedisService.setData(userId, refreshToken);
+            String accessToken = jwtProvider.createAccessToken(member.getId().toString());
+            String refreshToken = jwtProvider.createRefreshToken(member.getId().toString());
+            refreshTokenRedisService.setData(member.getId().toString(), refreshToken);
 
             return MemberWithTokenDto.from(member, accessToken, refreshToken);
         }
@@ -64,19 +72,20 @@ public class JwtLoginService {
     }
 
     public MemberWithTokenDto refresh(MemberSession memberSession, HttpServletResponse response) {
-        String accessToken = jwtProvider.createAccessToken(memberSession.userId());
-        String refreshToken = jwtProvider.createRefreshToken(memberSession.userId());
-        refreshTokenRedisService.setData(memberSession.userId(), refreshToken);
+        String accessToken = jwtProvider.createAccessToken(memberSession.id().toString());
+        String refreshToken = jwtProvider.createRefreshToken(memberSession.id().toString());
+        refreshTokenRedisService.setData(memberSession.id().toString(), refreshToken);
 
         return MemberWithTokenDto.of()
-                .username(memberSession.username())
-                .userId(memberSession.userId())
+                .id(memberSession.id())
+                .nickname(memberSession.nickname())
+                .email(memberSession.email())
                 .accessToken(BEARER + accessToken)
                 .refreshToken(BEARER + refreshToken)
                 .build();
     }
 
     public void logout(MemberSession memberSession) {
-        refreshTokenRedisService.deleteData(memberSession.userId());
+        refreshTokenRedisService.deleteData(memberSession.email());
     }
 }

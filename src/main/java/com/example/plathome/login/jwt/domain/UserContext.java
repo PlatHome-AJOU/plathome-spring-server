@@ -3,8 +3,8 @@ package com.example.plathome.login.jwt.domain;
 public class UserContext {
     private static final ThreadLocal<String> userContext = new ThreadLocal<>();
 
-    public static void set(String username) {
-        userContext.set(username);
+    public static void set(String nickname) {
+        userContext.set(nickname);
     }
 
     public static String get() {

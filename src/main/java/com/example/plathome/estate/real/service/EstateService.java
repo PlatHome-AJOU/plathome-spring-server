@@ -27,14 +27,14 @@ public class EstateService {
     private final RequestedRepository requestedRepository;
 
     @Transactional
-    public void register(EstateForm estateForm) {
-        this.validDupEstate(estateForm.userId());
-        estateRepository.save(estateForm.toEntity());
-        requestedRepository.deleteByUserId(estateForm.userId());
+    public void register(EstateForm estateForm, long memberId) {
+        this.validDupEstate(memberId);
+        estateRepository.save(estateForm.toEntity(memberId));
+        requestedRepository.deleteByMemberId(memberId);
     }
 
-    private void validDupEstate(String userId) {
-        Optional<Estate> optionalEstate = estateRepository.findByUserId(userId);
+    private void validDupEstate(long memberId) {
+        Optional<Estate> optionalEstate = estateRepository.findByMemberId(memberId);
         if (optionalEstate.isPresent()) {
             throw new DuplicationEstateException();
         }
@@ -52,23 +52,23 @@ public class EstateService {
                 .toList();
     }
 
-    public EstateResponse getDetail(Long estateId) {
+    public EstateResponse getDetail(long estateId) {
         return estateRepository.findById(estateId)
                 .map(EstateResponse::from)
                 .orElseThrow(NotFoundEstateException::new);
     }
 
     @Transactional
-    public void delete(MemberSession memberSession, Long estateId) {
+    public void delete(MemberSession memberSession, long estateId) {
         Estate estate = estateRepository.findById(estateId).orElseThrow(NotFoundEstateException::new);
-        this.isValidUser(memberSession.userId(), estate.getUserId());
+        this.isValidUser(memberSession.id(), estate.getMemberId());
         estateRepository.deleteById(estateId);
     }
 
     @Transactional
-    public void update(MemberSession memberSession, Long estateId, UpdateEstateForm updateEstateForm) {
+    public void update(MemberSession memberSession, long estateId, UpdateEstateForm updateEstateForm) {
         Estate estate = estateRepository.findById(estateId).orElseThrow(NotFoundEstateException::new);
-        this.isValidUser(memberSession.userId(), estate.getUserId());
+        this.isValidUser(memberSession.id(), estate.getMemberId());
         estate.update(
                 updateEstateForm.contractTerm(),
                 updateEstateForm.option(),
@@ -79,8 +79,8 @@ public class EstateService {
         );
     }
 
-    private void isValidUser(String userId, String expectedUserId) {
-        if (!userId.equals(expectedUserId)) {
+    private void isValidUser(long memberId, long exceptedMemberId) {
+        if (memberId != exceptedMemberId) {
             throw new ForbiddenMemberException();
         }
     }

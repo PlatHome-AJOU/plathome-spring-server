@@ -28,9 +28,9 @@ public record RequestedForm(
         return RequestedForm.builder();
     }
 
-    public Requested toEntity(String userId, String url) {
+    public Requested toEntity(long memberId, String url) {
         return Requested.builder()
-                .userId(userId)
+                .memberId(memberId)
                 .location(this.location())
                 .roomType(this.roomType())
                 .rentalType(this.rentalType())

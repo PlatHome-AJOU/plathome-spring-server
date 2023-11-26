@@ -24,7 +24,7 @@ public class Estate extends AuditingFields{
     @Column(name = "estate_id")
     private Long id;
 
-    private String userId;
+    private Long memberId;
 
     private String location;
 
@@ -57,8 +57,8 @@ public class Estate extends AuditingFields{
     private int monthlyRent;
 
     @Builder
-    public Estate(String userId, String location, Area area, RoomType roomType, RentalType rentalType, Floor floor, String contractUrl, LocalDate contractTerm, Option option, double squareFeet, double lng, double lat, int deposit, int maintenanceFee, int monthlyRent) {
-        this.userId = userId;
+    public Estate(Long memberId, String location, Area area, RoomType roomType, RentalType rentalType, Floor floor, String contractUrl, LocalDate contractTerm, Option option, double squareFeet, double lng, double lat, int deposit, int maintenanceFee, int monthlyRent) {
+        this.memberId = memberId;
         this.location = location;
         this.area = area;
         this.roomType = roomType;

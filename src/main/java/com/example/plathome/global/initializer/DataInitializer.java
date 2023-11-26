@@ -17,42 +17,42 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
 
-    @Value("${member.test.username}")
-    private String test_username;
-    @Value("${member.test.user-id}")
-    private String test_userId;
+    @Value("${member.test.nickname}")
+    private String test_nickname;
+    @Value("${member.test.email}")
+    private String test_email;
     @Value("${member.test.raw-password}")
     private String test_password;
-    @Value("${member.admin.username}")
-    private String admin_username;
-    @Value("${member.admin.user-id}")
-    private String admin_userId;
+    @Value("${member.admin.nickname}")
+    private String admin_nickname;
+    @Value("${member.admin.email}")
+    private String admin_email;
     @Value("${member.admin.raw-password}")
     private String admin_password;
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
-        Member tester = Member.of()
-                .username(test_username)
-                .userId(test_userId)
-                .password(passwordEncoder.encode(test_password))
-                .roleType(RoleType.USER)
-                .createdBy(test_username)
-                .modifiedBy(test_username).build();
-
-        Member admin = Member.of()
-                .username(admin_username)
-                .userId(admin_userId)
-                .password(passwordEncoder.encode(admin_password))
-                .roleType(RoleType.ADMIN)
-                .createdBy(admin_username)
-                .modifiedBy(admin_username).build();
-
-        if (memberRepository.findByUserId(admin_userId).isEmpty()) {
-            memberRepository.save(admin);
-        }
-        if (memberRepository.findByUserId(test_userId).isEmpty()) {
+        if (memberRepository.findByEmail(test_email).isEmpty()) {
+            Member tester = Member.of()
+                    .nickname(test_nickname)
+                    .email(test_email)
+                    .password(passwordEncoder.encode(test_password))
+                    .roleType(RoleType.USER)
+                    .createdBy(test_nickname)
+                    .modifiedBy(test_nickname).build();
             memberRepository.save(tester);
+        }
+
+        if (memberRepository.findByEmail(admin_email).isEmpty()) {
+            Member admin = Member.of()
+                    .nickname(admin_nickname)
+                    .email(admin_email)
+                    .password(passwordEncoder.encode(admin_password))
+                    .roleType(RoleType.ADMIN)
+                    .createdBy(admin_nickname)
+                    .modifiedBy(admin_nickname).build();
+            memberRepository.save(admin);
         }
     }
 }
+

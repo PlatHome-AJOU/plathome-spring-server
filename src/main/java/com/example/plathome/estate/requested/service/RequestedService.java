@@ -25,20 +25,20 @@ public class RequestedService {
 
     @Transactional
     public void saveFile(MemberSession memberSession, MultipartFile file) {
-        this.validDupReq(memberSession.userId());
+        this.validDupReq(memberSession.id());
         s3Service.upload(memberSession, file);
     }
 
     @Transactional
     public void saveForm(MemberSession memberSession, RequestedForm requestedForm) {
-        this.validDupReq(memberSession.userId());
-        String url = s3Service.getFile(memberSession.userId());
-        Requested requested = requestedForm.toEntity(memberSession.userId(), url);
+        this.validDupReq(memberSession.id());
+        String url = s3Service.getFile(memberSession.email());
+        Requested requested = requestedForm.toEntity(memberSession.id(), url);
         requestedRepository.save(requested);
     }
 
-    private void validDupReq(String userId) {
-        Optional<Requested> optionalRequested = requestedRepository.findByUserId(userId);
+    private void validDupReq(long memberId) {
+        Optional<Requested> optionalRequested = requestedRepository.findByMemberId(memberId);
         if (optionalRequested.isPresent()) {
             throw new DuplicationRequestedException();
         }
@@ -57,7 +57,7 @@ public class RequestedService {
 
     @Transactional
     public void updateForm(MemberSession memberSession, RequestedForm requestedForm) {
-        Requested requested = requestedRepository.findByUserId(memberSession.userId())
+        Requested requested = requestedRepository.findByMemberId(memberSession.id())
                 .orElseThrow(NotFoundRequestedException::new);
 
         requested.updateForm(
@@ -74,7 +74,7 @@ public class RequestedService {
     }
 
     @Transactional
-    public void delete(String userId) {
-        requestedRepository.deleteByUserId(userId);
+    public void delete(long memberId) {
+        requestedRepository.deleteByMemberId(memberId);
     }
 }

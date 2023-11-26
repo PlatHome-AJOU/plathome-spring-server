@@ -12,7 +12,8 @@ public class ErrorStaticField {
 
     //member
     public static final String MEMBER_NOT_FOUND = "존재하지 않는 회원입니다.";
-    public static final String DUP_LOGIN_ID = "이미 사용중인 아이디 입니다.";
+    public static final String DUP_EMAIL = "이미 존재하는 이메일 입니다.";
+    public static final String DUP_NICKNAME = "이미 존재하는 닉네임 입니다.";
     public static final String MEMBER_UNAUTHORIZED = "Member 로그인이 필요한 서비스 입니다.";
     public static final String INVALID_ID = "존재하지 않는 아이디 입니다.";
     public static final String INVALID_PASSWORD = "비밀번호가 올바르지 않습니다.";

@@ -13,8 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class JwtMemberService {
     private final MemberRepository memberRepository;
 
-    public MemberSession getMemberSessionByUserId(String userId) {
-        return memberRepository.findByUserId(userId)
+    public MemberSession getMemberSessionById(long memberId) {
+        return memberRepository.findById(memberId)
                 .map(MemberSession::from)
                 .orElseThrow(NotFoundMemberException::new);
     }
