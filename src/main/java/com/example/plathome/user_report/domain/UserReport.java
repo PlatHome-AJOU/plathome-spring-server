@@ -13,17 +13,17 @@ public class UserReport extends AuditingFields{
     @Column(name = "user_report_id")
     private Long id;
 
-    private Long reportUserId;
+    private Long reportMemberId;
 
-    private Long targetUserId;
+    private Long targetMemberId;
 
     @Column(columnDefinition = "MEDIUMTEXT")
     private String context;
 
     @Builder
-    public UserReport(Long reportUserId, Long targetUserId, String context) {
-        this.reportUserId = reportUserId;
-        this.targetUserId = targetUserId;
+    public UserReport(Long reportMemberId, Long targetMemberId, String context) {
+        this.reportMemberId = reportMemberId;
+        this.targetMemberId = targetMemberId;
         this.context = context;
     }
 }
