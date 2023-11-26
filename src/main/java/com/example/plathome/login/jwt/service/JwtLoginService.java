@@ -72,9 +72,9 @@ public class JwtLoginService {
     }
 
     public MemberWithTokenDto refresh(MemberSession memberSession, HttpServletResponse response) {
-        String accessToken = jwtProvider.createAccessToken(memberSession.id().toString());
-        String refreshToken = jwtProvider.createRefreshToken(memberSession.id().toString());
-        refreshTokenRedisService.setData(memberSession.id().toString(), refreshToken);
+        String accessToken = jwtProvider.createAccessToken(String.valueOf(memberSession.id()));
+        String refreshToken = jwtProvider.createRefreshToken(String.valueOf(memberSession.id()));
+        refreshTokenRedisService.setData(String.valueOf(memberSession.id()), refreshToken);
 
         return MemberWithTokenDto.of()
                 .id(memberSession.id())

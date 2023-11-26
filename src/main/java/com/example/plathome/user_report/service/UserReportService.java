@@ -3,7 +3,7 @@ package com.example.plathome.user_report.service;
 import com.example.plathome.member.domain.MemberSession;
 import com.example.plathome.user_report.dto.request.UserReportForm;
 import com.example.plathome.user_report.dto.response.UserReportResponse;
-import com.example.plathome.user_report.exception.NotFoundUserReport;
+import com.example.plathome.user_report.exception.NotFoundUserReportException;
 import com.example.plathome.user_report.repository.UserReportRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,7 +25,7 @@ public class UserReportService {
     public UserReportResponse getById(long userReportId) {
         return userReportRepository.findById(userReportId)
                 .map(UserReportResponse::from)
-                .orElseThrow(NotFoundUserReport::new);
+                .orElseThrow(NotFoundUserReportException::new);
     }
 
     public List<UserReportResponse> getAll() {

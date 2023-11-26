@@ -4,9 +4,9 @@ import com.example.plathome.global.exception.NotFoundException;
 
 import static com.example.plathome.global.error.ErrorStaticField.USER_REPORT_NOT_FOUND;
 
-public class NotFoundUserReport extends NotFoundException {
+public class NotFoundUserReportException extends NotFoundException {
     private static final String MESSAGE = USER_REPORT_NOT_FOUND;
-    public NotFoundUserReport() {
+    public NotFoundUserReportException() {
         super(MESSAGE);
     }
 }

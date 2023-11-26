@@ -22,13 +22,12 @@ import java.util.List;
 public class EstateController {
     private final EstateService estateService;
 
-    @PostMapping("/auth/{memberId}")
+    @PostMapping("/auth")
     public String register(
             @Admin MemberSession memberSession,
-            @RequestBody @Valid EstateForm estateForm,
-            @PathVariable long memberId
+            @RequestBody @Valid EstateForm estateForm
     ) {
-        estateService.register(estateForm, memberId);
+        estateService.register(estateForm);
         return "success";
     }
 
