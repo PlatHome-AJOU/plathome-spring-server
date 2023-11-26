@@ -51,6 +51,8 @@ springdoc:
     path: /api-docs
   swagger-ui:
     path: /swagger-ui.html
+    operationsSorter: method
+    deepLinking: true
 
 jwt.access.secret-key: ${JWT_ACCESS_SECRET_KEY}
 jwt.refresh.secret-key: ${JWT_REFRESH_SECRET_KEY}
