@@ -1,5 +1,6 @@
 package com.example.plathome.member.controller;
 
+import com.example.plathome.login.jwt.dto.response.MemberResponse;
 import com.example.plathome.member.domain.Member;
 import com.example.plathome.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +18,7 @@ public class MemberController {
     private final MemberService memberService;
 
     @GetMapping("/no-auth/{memberId}")
-    public Member findUserById(
+    public MemberResponse findUserById(
             @PathVariable long memberId
     ) {
         return memberService.findUserById(memberId);
