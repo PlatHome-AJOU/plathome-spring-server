@@ -28,9 +28,15 @@ public class MemberService {
                 .orElseThrow(NotFoundMemberException::new);
     }
 
-    public Member findUserById(long memberId) {
-        return memberRepository.findById(memberId)
+    public MemberResponse findUserById(long memberId) {
+        Member member =  memberRepository.findById(memberId)
                 .orElseThrow(() -> new NotFoundMemberException());
+
+        return MemberResponse.builder()
+                .nickname(member.getNickname())
+                .email(member.getEmail())
+                .id(member.getId())
+                .build();
     }
 
     @Transactional
