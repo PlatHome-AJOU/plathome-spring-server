@@ -9,6 +9,7 @@ import com.example.plathome.estate.real.service.EstateService;
 import com.example.plathome.login.argumentresolver_interceptor.argumentresolver.Admin;
 import com.example.plathome.login.argumentresolver_interceptor.argumentresolver.Login;
 import com.example.plathome.member.domain.MemberSession;
+import com.example.plathome.wish_list.service.WishListService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -64,4 +65,6 @@ public class EstateController {
         estateService.update(memberSession, estateId, updateEstateForm);
         return "success";
     }
+
+
 }

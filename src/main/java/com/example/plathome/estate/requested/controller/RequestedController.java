@@ -71,4 +71,6 @@ public class RequestedController {
         requestedService.delete(memberId);
         return "success";
     }
+
+
 }

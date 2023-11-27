@@ -17,6 +17,7 @@ public class WishList extends AuditingFields{
     @Column(name = "wish_list_id")
     private Long id;
 
+
     private Long memberId;
 
     private Long estateId;
