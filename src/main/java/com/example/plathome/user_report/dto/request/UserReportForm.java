@@ -8,7 +8,7 @@ import lombok.Builder;
 
 @Builder
 public record UserReportForm (
-        @NotNull long targetMemberId,
+        @NotNull Long targetMemberId,
         @NotBlank @Size(max = 16777215) String context  // MEDIUMTEXT의 최대 길이는 약 16MB
 ){
     public static UserReportFormBuilder of() {

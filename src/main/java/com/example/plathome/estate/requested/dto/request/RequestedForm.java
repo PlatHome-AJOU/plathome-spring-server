@@ -18,10 +18,10 @@ public record RequestedForm(
         @NotNull Floor floor,
         @NotNull LocalDate contractTerm,
         @NotNull Option option,
-        @NotNull @DecimalMin("0.0") @Digits(integer=3, fraction=2) double squareFeet,
-        @NotNull @Min(0) int deposit,
-        @NotNull @Min(0) int maintenanceFee,
-        @NotNull @Min(0) int monthlyRent
+        @NotNull @DecimalMin("0.0") @Digits(integer=3, fraction=2) Double squareFeet,
+        @NotNull @Min(0) Integer deposit,
+        @NotNull @Min(0) Integer maintenanceFee,
+        @NotNull @Min(0) Integer monthlyRent
 ) {
 
     public static RequestedFormBuilder of(){

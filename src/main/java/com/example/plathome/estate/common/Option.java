@@ -2,7 +2,6 @@ package com.example.plathome.estate.common;
 
 import jakarta.persistence.Embeddable;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
 
 @ToString
@@ -15,8 +14,8 @@ public class Option {
     private Boolean doorLock;
     private Boolean pet;
     private Boolean veranda;
-    private String bunner; // "induction" | "gas" | "none"
-    private String airConditioner; // "top" | "wall" | "stand" | "none"
+    private String bunner; // "induction" | "gas" | "false"
+    private String airConditioner; // "top" | "wall" | "stand" | "false"
     private Boolean refrigerator;
     private Boolean sink;
     private Boolean tv;
@@ -27,10 +26,10 @@ public class Option {
     private Boolean closet;
     private Boolean shoeRack;
     private Boolean bidet;
-    private Boolean interphone;
+    private Boolean interPhone;
     private Boolean parking;
     private Boolean security;
-    private Boolean deilveryBox;
+    private Boolean deliveryBox;
     private Boolean buildingEntrance;
     private Boolean washingMachine;
 }

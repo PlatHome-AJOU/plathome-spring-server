@@ -7,12 +7,12 @@ public enum Floor {
     FIRST("1층"),
     SECOND("2층"),
     THIRD("3층"),
-    FORTH("4층"),
+    FOURTH("4층"),
     FIFTH("5층"),
     SIXTH("6층"),
-    SEVEN_UPPER("7층 이상"),
+    SEVENTH_UPPER("7층 이상"),
     TOP("옥탑방"),
-    UPDER("반지하");
+    UNDER("반지하");
 
     private final String description;
 

@@ -13,7 +13,7 @@ import java.time.LocalDate;
 
 @Builder
 public record EstateForm(
-        @NotNull long memberId,
+        @NotNull Long memberId,
         @NotBlank @Size(max = 255) String location,
         @NotNull Area area,
         @NotNull RoomType roomType,
@@ -22,12 +22,12 @@ public record EstateForm(
         @NotNull String contractUrl,
         @NotNull LocalDate contractTerm,
         @NotNull Option option,
-        @NotNull @DecimalMin("0.0") @Digits(integer=3, fraction=2) double squareFeet,
-        @NotNull @DecimalMin("-180.0") @DecimalMax("180.0") double lng,
-        @NotNull @DecimalMin("-90.0") @DecimalMax("90.0") double lat,
-        @NotNull @Min(0) int deposit,
-        @NotNull @Min(0) int maintenanceFee,
-        @NotNull @Min(0) int monthlyRent
+        @NotNull @DecimalMin("0.0") @Digits(integer=3, fraction=2) Double squareFeet,
+        @NotNull @DecimalMin("-180.0") @DecimalMax("180.0") Double lng,
+        @NotNull @DecimalMin("-90.0") @DecimalMax("90.0") Double lat,
+        @NotNull @Min(0) Integer deposit,
+        @NotNull @Min(0) Integer maintenanceFee,
+        @NotNull @Min(0) Integer monthlyRent
 ) {
 
     public static EstateFormBuilder of() {
