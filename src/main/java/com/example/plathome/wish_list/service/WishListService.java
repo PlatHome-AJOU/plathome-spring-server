@@ -1,9 +1,9 @@
 package com.example.plathome.wish_list.service;
+
 import com.example.plathome.estate.real.domain.Estate;
 import com.example.plathome.estate.real.dto.response.EstateResponse;
 import com.example.plathome.estate.real.exception.NotFoundEstateException;
 import com.example.plathome.estate.real.repository.EstateRepository;
-import com.example.plathome.global.exception.NotFoundException;
 import com.example.plathome.wish_list.domain.WishList;
 import com.example.plathome.wish_list.dto.WishListResponse;
 import com.example.plathome.wish_list.exception.DuplicateWishListException;
@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @RequiredArgsConstructor

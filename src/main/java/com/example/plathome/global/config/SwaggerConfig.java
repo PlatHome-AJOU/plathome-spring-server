@@ -47,5 +47,4 @@ public class SwaggerConfig {
                         .addSecuritySchemes("refreshToken", refreshTokenScheme))
                 .security(Arrays.asList(securityRequirement));
     }
-
 }
