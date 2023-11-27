@@ -2,6 +2,7 @@ package com.example.plathome.member.service;
 
 
 import com.example.plathome.login.jwt.dto.MemberWithTokenDto;
+import com.example.plathome.login.jwt.dto.response.MemberResponse;
 import com.example.plathome.member.domain.Member;
 import com.example.plathome.member.domain.MemberSession;
 import com.example.plathome.member.exception.NotFoundMemberException;
@@ -10,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -25,10 +28,9 @@ public class MemberService {
                 .orElseThrow(NotFoundMemberException::new);
     }
 
-    public String getNickname(long memberId) {
+    public Member findUserById(long memberId) {
         return memberRepository.findById(memberId)
-                .map(Member::getNickname)
-                .orElseThrow(NotFoundMemberException::new);
+                .orElseThrow(() -> new NotFoundMemberException());
     }
 
     @Transactional
