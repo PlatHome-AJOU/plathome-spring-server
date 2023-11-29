@@ -8,6 +8,7 @@ import com.example.plathome.estate.requested.service.ThumbNailService;
 import com.example.plathome.login.argumentresolver_interceptor.argumentresolver.Admin;
 import com.example.plathome.login.argumentresolver_interceptor.argumentresolver.Login;
 import com.example.plathome.member.domain.MemberSession;
+import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -27,7 +28,7 @@ public class RequestedController {
 
     @PostMapping("/auth/contract")
     public String saveContract(
-            @Login MemberSession memberSession,
+            @Parameter(hidden = true) @Login MemberSession memberSession,
             @RequestPart MultipartFile file
     ) {
         requestedService.saveContract(memberSession, file);
@@ -36,7 +37,7 @@ public class RequestedController {
 
     @PostMapping("/auth/form")
     public String saveForm(
-            @Login MemberSession memberSession,
+            @Parameter(hidden = true) @Login MemberSession memberSession,
             @RequestBody @Valid RequestedForm requestedForm
     ) {
         requestedService.saveForm(memberSession, requestedForm);
@@ -45,14 +46,14 @@ public class RequestedController {
 
     @GetMapping("/auth/all")
     public List<RequestedResponse> getAll(
-            @Admin MemberSession memberSession
+            @Parameter(hidden = true) @Admin MemberSession memberSession
     ) {
         return requestedService.getAll();
     }
 
     @PatchMapping("/auth/contract")
     public String updateContract(
-            @Login MemberSession memberSession,
+            @Parameter(hidden = true) @Login MemberSession memberSession,
             @RequestPart MultipartFile file
     ) {
         requestedService.updateContract(memberSession, file);
@@ -61,7 +62,7 @@ public class RequestedController {
 
     @PatchMapping("/auth/form")
     public String updateForm(
-            @Login MemberSession memberSession,
+            @Parameter(hidden = true) @Login MemberSession memberSession,
             @RequestBody @Valid RequestedForm requestedForm
     ) {
         requestedService.updateForm(memberSession, requestedForm);
@@ -70,7 +71,7 @@ public class RequestedController {
 
     @DeleteMapping("/auth/{memberId}")
     public String delete(
-            @Admin MemberSession memberSession,
+            @Parameter(hidden = true) @Admin MemberSession memberSession,
             @PathVariable long memberId
     ) {
         requestedService.delete(memberId);
@@ -79,7 +80,7 @@ public class RequestedController {
 
     @PostMapping("/auth/thumb-nail")
     public LocalDateTime saveThumbNail(
-            @Login MemberSession memberSession,
+            @Parameter(hidden = true) @Login MemberSession memberSession,
             @RequestPart MultipartFile file
     ) {
         return thumbNailService.saveThumbNail(memberSession, file);
@@ -87,7 +88,7 @@ public class RequestedController {
 
     @DeleteMapping("/auth/thumb-nail")
     public String deleteThumbNail(
-            @Login MemberSession memberSession,
+            @Parameter(hidden = true) @Login MemberSession memberSession,
             @RequestBody @Valid DateTimeForm dateTimeForm
     ) {
         thumbNailService.deleteThumbNail(memberSession, dateTimeForm.fileName());
@@ -96,7 +97,7 @@ public class RequestedController {
 
     @GetMapping("/auth/{requestedId}")
     public RequestedResponse getOne(
-            @Admin MemberSession memberSession,
+            @Parameter(hidden = true) @Admin MemberSession memberSession,
             @PathVariable Long requestedId
     ) {
         return requestedService.getOne(requestedId);

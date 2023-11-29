@@ -12,8 +12,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-
 @Slf4j
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -28,14 +26,13 @@ public class MemberService {
                 .orElseThrow(NotFoundMemberException::new);
     }
 
-    public MemberResponse findUserById(long memberId) {
-        Member member =  memberRepository.findById(memberId)
-                .orElseThrow(() -> new NotFoundMemberException());
+    public MemberResponse getUserById(long memberId) {
+        Member member = memberRepository.findById(memberId).orElseThrow(NotFoundMemberException::new);
 
         return MemberResponse.builder()
+                .id(member.getId())
                 .nickname(member.getNickname())
                 .email(member.getEmail())
-                .id(member.getId())
                 .build();
     }
 

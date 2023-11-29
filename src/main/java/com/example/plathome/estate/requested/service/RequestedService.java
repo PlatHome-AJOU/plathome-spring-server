@@ -51,10 +51,10 @@ public class RequestedService {
         String url = s3Service.getContractUrl(memberSession.email(), CONTRACT_FOLDER);
         List<String> thumbNailUrls = s3Service.getThumbNailUrls(ROOM_FOLDER + memberSession.email());
         thumbNailUrls.forEach(s -> {
-            ThumbNail thumbNailUrl = ThumbNail.builder()
+            ThumbNail thumbNail = ThumbNail.builder()
                     .memberId(memberSession.id())
                     .url(s).build();
-            thumbNailRepository.save(thumbNailUrl);
+            thumbNailRepository.save(thumbNail);
         });
         Requested requested = requestedForm.toEntity(memberSession.id(), url);
         requestedRepository.save(requested);

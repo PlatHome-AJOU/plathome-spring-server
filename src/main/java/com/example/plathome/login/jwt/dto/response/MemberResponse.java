@@ -6,10 +6,9 @@ import lombok.Builder;
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public record MemberResponse(
+        long id,
         String nickname,
-        String email,
-
-        long id
+        String email
 ) {
     public static MemberResponseBuilder of() {
         return MemberResponse.builder();
@@ -17,6 +16,7 @@ public record MemberResponse(
 
     public static MemberResponse from(MemberWithTokenDto dto) {
         return MemberResponse.builder()
+                .id(dto.id())
                 .nickname(dto.nickname())
                 .email(dto.email())
                 .build();

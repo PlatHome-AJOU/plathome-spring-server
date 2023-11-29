@@ -6,6 +6,7 @@ import com.example.plathome.estate_report.service.EstateReportService;
 import com.example.plathome.login.argumentresolver_interceptor.argumentresolver.Admin;
 import com.example.plathome.login.argumentresolver_interceptor.argumentresolver.Login;
 import com.example.plathome.member.domain.MemberSession;
+import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +21,7 @@ public class EstateReportController {
 
     @PostMapping("/auth")
     public String report(
-            @Login MemberSession memberSession,
+            @Parameter(hidden = true) @Login MemberSession memberSession,
             @RequestBody @Valid EstateReportForm estateReportForm
     ) {
         estateReportService.report(memberSession, estateReportForm);
@@ -29,7 +30,7 @@ public class EstateReportController {
 
     @GetMapping("/auth/{estateReportId}")
     public EstateReportResponse getOne(
-            @Admin MemberSession memberSession,
+            @Parameter(hidden = true) @Admin MemberSession memberSession,
             @PathVariable long estateReportId
     ) {
         return estateReportService.getById(estateReportId);
@@ -37,14 +38,14 @@ public class EstateReportController {
 
     @GetMapping("/auth")
     public List<EstateReportResponse> getAll(
-            @Admin MemberSession memberSession
+            @Parameter(hidden = true) @Admin MemberSession memberSession
     ) {
         return estateReportService.getAll();
     }
 
     @DeleteMapping("/auth/{estateReportId}")
     public String delete(
-            @Admin MemberSession memberSession,
+            @Parameter(hidden = true) @Admin MemberSession memberSession,
             @PathVariable long estateReportId
     ) {
         estateReportService.delete(estateReportId);

@@ -9,6 +9,7 @@ import com.example.plathome.login.jwt.dto.response.TokenResponse;
 import com.example.plathome.login.jwt.service.JwtLoginService;
 import com.example.plathome.member.domain.MemberSession;
 import com.example.plathome.member.service.MemberService;
+import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -25,13 +26,13 @@ public class LoginController {
 
     @GetMapping("/auth/token")
     public TokenResponse refresh(
-            @Login MemberSession memberSession,
+            @Parameter(hidden = true) @Login MemberSession memberSession,
             HttpServletResponse response) {
         return TokenResponse.from(jwtLoginService.refresh(memberSession, response));
     }
 
     @GetMapping("/auth")
-    public MemberResponse get(@Login MemberSession memberSession) {
+    public MemberResponse get(@Parameter(hidden = true) @Login MemberSession memberSession) {
         return MemberResponse.from(memberService.getBySession(memberSession));
     }
 
@@ -50,7 +51,9 @@ public class LoginController {
     }
 
     @GetMapping("/auth/logout")
-    public String logout(@Login MemberSession memberSession, HttpServletRequest request) {
+    public String logout(
+            @Parameter(hidden = true) @Login MemberSession memberSession,
+            HttpServletRequest request) {
         jwtLoginService.logout(memberSession);
         return "success";
     }

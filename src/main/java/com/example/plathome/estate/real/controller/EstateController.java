@@ -12,6 +12,7 @@ import com.example.plathome.login.argumentresolver_interceptor.argumentresolver.
 import com.example.plathome.login.argumentresolver_interceptor.argumentresolver.Login;
 import com.example.plathome.member.domain.MemberSession;
 import com.example.plathome.wish_list.service.WishListService;
+import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +29,7 @@ public class EstateController {
 
     @PostMapping("/auth")
     public String register(
-            @Admin MemberSession memberSession,
+            @Parameter(hidden = true) @Admin MemberSession memberSession,
             @RequestBody @Valid EstateForm estateForm
     ) {
         estateService.register(estateForm);
@@ -52,7 +53,7 @@ public class EstateController {
 
     @DeleteMapping("/auth/{estateId}")
     public String delete(
-            @Login MemberSession memberSession,
+            @Parameter(hidden = true) @Login MemberSession memberSession,
             @PathVariable long estateId
     ) {
         estateService.delete(memberSession, estateId);
@@ -61,7 +62,7 @@ public class EstateController {
 
     @PatchMapping("/auth/{estateId}")
     public String update(
-            @Login MemberSession memberSession,
+            @Parameter(hidden = true) @Login MemberSession memberSession,
             @RequestBody @Valid UpdateEstateForm updateEstateForm,
             @PathVariable long estateId
     ) {

@@ -4,6 +4,7 @@ import com.example.plathome.login.argumentresolver_interceptor.argumentresolver.
 import com.example.plathome.member.domain.MemberSession;
 import com.example.plathome.wish_list.dto.WishListResponse;
 import com.example.plathome.wish_list.service.WishListService;
+import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,17 +20,16 @@ public class WishListController {
 
     @PostMapping("/estate/{estateId}")
     public ResponseEntity<Void> addToWishList(
-            @Login MemberSession memberSession,
+            @Parameter(hidden = true) @Login MemberSession memberSession,
             @PathVariable Long estateId
     ) {
-
         wishListService.addToWishList(memberSession.id(), estateId);
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{wishListId}")
     public ResponseEntity<Void> deleteWishList(
-            @Login MemberSession memberSession,
+            @Parameter(hidden = true) @Login MemberSession memberSession,
             @PathVariable Long wishListId
     ) {
 
@@ -39,7 +39,7 @@ public class WishListController {
 
     @GetMapping
     public ResponseEntity<List<WishListResponse>> getWishList(
-            @Login MemberSession memberSession
+            @Parameter(hidden = true) @Login MemberSession memberSession
     ) {
         List<WishListResponse> wishList = wishListService.getWishListByMemberId(memberSession.id());
         return ResponseEntity.ok(wishList);
