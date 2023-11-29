@@ -21,60 +21,106 @@ import static org.springframework.util.StringUtils.hasText;
 @Repository
 public class EstateRepositoryImpl implements EstateRepositoryCustom{
     private final JPAQueryFactory queryFactory;
+
+
+
     @Override
     public List<Estate> filterSearch(Filter filter) {
+         BooleanExpression areaFilter = null;
+         BooleanExpression depositFilter = null;
+         BooleanExpression floorFilter = null;
+         BooleanExpression monthlyFeeFilter = null;
+         BooleanExpression rentTypeFilter = null;
+         BooleanExpression roomSizeFilter = null;
+         BooleanExpression roomTypeFilter = null;
+         BooleanExpression optionFilter = null;
+
+        areaFilter = chainBooleanExpression(areaFilter, gwanggyo(filter.area().gwanggyo()));
+        areaFilter = chainBooleanExpression(areaFilter, ingyedong(filter.area().gwanggyo()));
+        areaFilter = chainBooleanExpression(areaFilter, uman(filter.area().uman()));
+        areaFilter = chainBooleanExpression(areaFilter, woncheon(filter.area().woncheon()));
+        areaFilter = chainBooleanExpression(areaFilter, maetan(filter.area().maetan()));
+
+        System.out.println( areaFilter);
+
+        depositFilter = chainBooleanExpression(depositFilter,
+                depositBetween(filter.deposit().min(), filter.deposit().max()));
+
+        floorFilter = chainBooleanExpression(floorFilter, first(filter.floor().first()));
+        floorFilter = chainBooleanExpression(floorFilter, second(filter.floor().second()));
+        floorFilter = chainBooleanExpression(floorFilter, third(filter.floor().third()));
+        floorFilter = chainBooleanExpression(floorFilter, fourth(filter.floor().fourth()));
+        floorFilter = chainBooleanExpression(floorFilter, fifth(filter.floor().fifth()));
+        floorFilter = chainBooleanExpression(floorFilter, sixth(filter.floor().sixth()));
+        floorFilter = chainBooleanExpression(floorFilter, seventhUpper(filter.floor().seventhUpper()));
+        floorFilter = chainBooleanExpression(floorFilter, top(filter.floor().top()));
+        floorFilter = chainBooleanExpression(floorFilter, under(filter.floor().under()));
+
+        monthlyFeeFilter = chainBooleanExpression(monthlyFeeFilter,
+                monthlyFeeBetween(filter.monthlyFee().min(), filter.monthlyFee().max()));
+
+        rentTypeFilter = chainBooleanExpression(rentTypeFilter, monthly(filter.rentType().monthly()));
+        rentTypeFilter = chainBooleanExpression(rentTypeFilter, jeonse(filter.rentType().jeonse()));
+
+        roomSizeFilter = chainBooleanExpression(roomSizeFilter,
+                roomSizeBetween(filter.roomSize().min(), filter.roomSize().max()));
+
+        roomTypeFilter = chainBooleanExpression(roomTypeFilter, studio(filter.roomType().studio()));
+        roomTypeFilter = chainBooleanExpression(roomTypeFilter, twoThreeRoom(filter.roomType().two_threeRoom()));
+        roomTypeFilter = chainBooleanExpression(roomTypeFilter, officetel(filter.roomType().officetel()));
+        roomTypeFilter = chainBooleanExpression(roomTypeFilter, apartment(filter.roomType().apartment()));
+
+        optionFilter = chainBooleanExpression(optionFilter, elevator(filter.option().elevator()));
+        optionFilter = chainBooleanExpression(optionFilter, park(filter.option().park()));
+        optionFilter = chainBooleanExpression(optionFilter, cctv(filter.option().cctv()));
+        optionFilter = chainBooleanExpression(optionFilter, doorLock(filter.option().doorLock()));
+        optionFilter = chainBooleanExpression(optionFilter, pet(filter.option().pet()));
+        optionFilter = chainBooleanExpression(optionFilter, veranda(filter.option().veranda()));
+        optionFilter = chainBooleanExpression(optionFilter, bunner(filter.option().bunner()));
+        optionFilter = chainBooleanExpression(optionFilter, airConditioner(filter.option().airConditioner()));
+        optionFilter = chainBooleanExpression(optionFilter, refrigerator(filter.option().refrigerator()));
+        optionFilter = chainBooleanExpression(optionFilter, sink(filter.option().sink()));
+        optionFilter = chainBooleanExpression(optionFilter, tv(filter.option().tv()));
+        optionFilter = chainBooleanExpression(optionFilter, internet(filter.option().internet()));
+        optionFilter = chainBooleanExpression(optionFilter, bed(filter.option().bed()));
+        optionFilter = chainBooleanExpression(optionFilter, desk(filter.option().desk()));
+        optionFilter = chainBooleanExpression(optionFilter, microwave(filter.option().microwave()));
+        optionFilter = chainBooleanExpression(optionFilter, closet(filter.option().closet()));
+        optionFilter = chainBooleanExpression(optionFilter, shoeRack(filter.option().shoeRack()));
+        optionFilter = chainBooleanExpression(optionFilter, bidet(filter.option().bidet()));
+        optionFilter = chainBooleanExpression(optionFilter, interPhone(filter.option().interPhone()));
+        optionFilter = chainBooleanExpression(optionFilter, parking(filter.option().parking()));
+        optionFilter = chainBooleanExpression(optionFilter, security(filter.option().security()));
+        optionFilter = chainBooleanExpression(optionFilter, deliveryBox(filter.option().deliveryBox()));
+        optionFilter = chainBooleanExpression(optionFilter, buildingEntrance(filter.option().buildingEntrance()));
+        optionFilter = chainBooleanExpression(optionFilter, washingMachine(filter.option().washingMachine()));
+        optionFilter = chainBooleanExpression(optionFilter, elevator(filter.option().elevator()));
+        optionFilter = chainBooleanExpression(optionFilter, elevator(filter.option().elevator()));
+
         return queryFactory
                 .select(estate)
                 .from(estate)
                 .where(
-                        gwanggyo(filter.area().gwanggyo())
-                                .or(ingyedong(filter.area().ingyedong()))
-                                .or(uman(filter.area().uman()))
-                                .or(woncheon(filter.area().woncheon()))
-                                .or(maetan(filter.area().maetan()))
-                                .or(depositBetween(filter.deposit().min(), filter.deposit().max()))
-                                .or(first(filter.floor().first()))
-                                .or(second(filter.floor().second()))
-                                .or(third(filter.floor().third()))
-                                .or(fourth(filter.floor().fourth()))
-                                .or(fifth(filter.floor().fifth()))
-                                .or(sixth(filter.floor().sixth()))
-                                .or(seventhUpper(filter.floor().seventhUpper()))
-                                .or(top(filter.floor().top()))
-                                .or(under(filter.floor().under()))
-                                .or(monthlyFeeBetween(filter.monthlyFee().min(), filter.monthlyFee().max()))
-                                .or(monthly(filter.rentType().monthly()))
-                                .or(jeonse(filter.rentType().jeonse()))
-                                .or(roomSizeBetween(filter.roomSize().min(), filter.roomSize().max()))
-                                .or(studio(filter.roomType().studio()))
-                                .or(twoThreeRoom(filter.roomType().two_threeRoom()))
-                                .or(officetel(filter.roomType().officetel()))
-                                .or(apartment(filter.roomType().apartment()))
-                                .or(elevator(filter.option().elevator()))
-                                .or(park(filter.option().park()))
-                                .or(cctv(filter.option().cctv()))
-                                .or(doorLock(filter.option().doorLock()))
-                                .or(pet(filter.option().pet()))
-                                .or(veranda(filter.option().veranda()))
-                                .or(bunner(filter.option().bunner()))
-                                .or(airConditioner(filter.option().airConditioner()))
-                                .or(refrigerator(filter.option().refrigerator()))
-                                .or(sink(filter.option().sink()))
-                                .or(tv(filter.option().tv()))
-                                .or(internet(filter.option().internet()))
-                                .or(bed(filter.option().bed()))
-                                .or(desk(filter.option().desk()))
-                                .or(microwave(filter.option().microwave()))
-                                .or(closet(filter.option().closet()))
-                                .or(shoeRack(filter.option().shoeRack()))
-                                .or(bidet(filter.option().bidet()))
-                                .or(interPhone(filter.option().interPhone()))
-                                .or(parking(filter.option().parking()))
-                                .or(security(filter.option().security()))
-                                .or(deliveryBox(filter.option().deliveryBox()))
-                                .or(buildingEntrance(filter.option().buildingEntrance()))
-                                .or(washingMachine(filter.option().washingMachine())))
+                        areaFilter,
+                        depositFilter,
+                        floorFilter,
+                        monthlyFeeFilter,
+                        rentTypeFilter,
+                        roomSizeFilter,
+                        roomTypeFilter,
+                        optionFilter
+                )
                 .fetch();
+    }
+
+    private BooleanExpression chainBooleanExpression(BooleanExpression filter, BooleanExpression booleanExpression) {
+        if (filter != null) {
+            if (booleanExpression != null) return filter.or(booleanExpression);
+            else return filter;
+        } else {
+            if(booleanExpression != null) return booleanExpression;
+            else return null;
+        }
     }
 
     /** Area */
@@ -296,5 +342,4 @@ public class EstateRepositoryImpl implements EstateRepositoryCustom{
     private BooleanExpression washingMachine(boolean washingMachine) {
         return washingMachine ? estate.option.washingMachine.eq(true) : null;
     }
-
 }

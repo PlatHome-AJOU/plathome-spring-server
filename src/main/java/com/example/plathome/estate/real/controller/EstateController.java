@@ -70,12 +70,10 @@ public class EstateController {
     }
 
 
-
     @PostMapping("/no-auth/map/filter")
     public List<MapInfoEstateResponse> getMapInfoByFilter(
             @RequestBody @Valid Filter filter) {
-        return estateFilterService.mapFilter(filter);
-    }
+        return estateFilterService.mapFilter(filter);   }
 
     @PostMapping("/no-auth/board/filter")
     public List<SimpleEstateResponse> getBoardInfoByFilter(
