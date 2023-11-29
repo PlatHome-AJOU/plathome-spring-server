@@ -9,6 +9,7 @@ import com.example.plathome.schedule.service.ScheduleService;
 import com.example.plathome.user_report.dto.request.UserReportForm;
 import com.example.plathome.user_report.dto.response.UserReportResponse;
 import com.example.plathome.user_report.service.UserReportService;
+import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +25,7 @@ public class ScheduleController {
 
     @PostMapping("/auth")
     public ResponseEntity<List<Schedule>> createSchedule(
-            @Login MemberSession memberSession,
+            @Parameter(hidden = true) @Login MemberSession memberSession,
             @RequestBody CreateSchedulesDto dto
     ) {
         List<Schedule> createdSchedules = scheduleService.reportSchedules(memberSession.id(), dto);
@@ -33,7 +34,7 @@ public class ScheduleController {
 
     @GetMapping("/auth/{roomId}")
     public ResponseEntity<List<Schedule>> createSchedule(
-            @Login MemberSession memberSession,
+            @Parameter(hidden = true) @Login MemberSession memberSession,
             @PathVariable String roomId
     ) {
         List<Schedule> availableTimes = scheduleService.getAvailableTimes(memberSession, roomId);

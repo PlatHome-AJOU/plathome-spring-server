@@ -6,6 +6,7 @@ import com.example.plathome.member.domain.MemberSession;
 import com.example.plathome.user_report.dto.request.UserReportForm;
 import com.example.plathome.user_report.dto.response.UserReportResponse;
 import com.example.plathome.user_report.service.UserReportService;
+import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +21,7 @@ public class UserReportController {
 
     @PostMapping("/auth")
     public String report(
-            @Login MemberSession memberSession,
+            @Parameter(hidden = true) @Login MemberSession memberSession,
             @RequestBody @Valid UserReportForm userReportForm
     ) {
         userReportService.report(memberSession, userReportForm);
@@ -29,7 +30,7 @@ public class UserReportController {
 
     @GetMapping("/auth/{userReportId}")
     public UserReportResponse getOne(
-            @Admin MemberSession memberSession,
+            @Parameter(hidden = true) @Admin MemberSession memberSession,
             @PathVariable long userReportId
     ) {
         return userReportService.getById(userReportId);
@@ -37,14 +38,14 @@ public class UserReportController {
 
     @GetMapping("/auth")
     public List<UserReportResponse> getAll(
-            @Admin MemberSession memberSession
+            @Parameter(hidden = true) @Admin MemberSession memberSession
     ) {
         return userReportService.getAll();
     }
 
     @DeleteMapping("/auth/{userReportId}")
     public String delete(
-            @Admin MemberSession memberSession,
+            @Parameter(hidden = true) @Admin MemberSession memberSession,
             @PathVariable long userReportId
     ) {
         userReportService.delete(userReportId);
