@@ -4,6 +4,7 @@ import com.example.plathome.estate.common.Floor;
 import com.example.plathome.estate.common.Option;
 import com.example.plathome.estate.common.RentalType;
 import com.example.plathome.estate.common.RoomType;
+import com.example.plathome.estate.real.domain.Estate;
 import com.example.plathome.estate.real.domain.constant.Area;
 import com.example.plathome.estate.real.dto.response.EstateResponse;
 import lombok.Builder;
@@ -14,6 +15,7 @@ import java.time.LocalDate;
 public record WishListResponse(
         long memberId,
         String location,
+        String thumbNailUrl,
         Area area,
         RoomType roomType,
         RentalType rentalType,
@@ -30,32 +32,20 @@ public record WishListResponse(
         return WishListResponse.builder();
     }
 
-
-    public static WishListResponse customfrom(EstateResponse estateResponse){
+    public static WishListResponse from(Estate entity) {
         return WishListResponse.of()
-                .location(estateResponse.location())
-                .area(estateResponse.area())
-                .monthlyRent(estateResponse.monthlyRent())
-                .maintenanceFee(estateResponse.maintenanceFee())
-                .squareFeet(estateResponse.squareFeet())
-                .deposit(estateResponse.deposit())
-                .roomType(estateResponse.roomType())
-                .build();
-    }
-
-    public static WishListResponse from(EstateResponse estateResponse) {
-        return WishListResponse.of()
-                .memberId(estateResponse.memberId())
-                .location(estateResponse.location())
-                .area(estateResponse.area())
-                .roomType(estateResponse.roomType())
-                .rentalType(estateResponse.rentalType())
-                .floor(estateResponse.floor())
-                .contractTerm(estateResponse.contractTerm())
-                .option(estateResponse.option())
-                .squareFeet(estateResponse.squareFeet())
-                .deposit(estateResponse.deposit())
-                .maintenanceFee(estateResponse.maintenanceFee())
-                .monthlyRent(estateResponse.monthlyRent()).build();
+                .memberId(entity.getMemberId())
+                .location(entity.getLocation())
+                .thumbNailUrl(entity.getThumbNailUrl())
+                .area(entity.getArea())
+                .roomType(entity.getRoomType())
+                .rentalType(entity.getRentalType())
+                .floor(entity.getFloor())
+                .contractTerm(entity.getContractTerm())
+                .option(entity.getOption())
+                .squareFeet(entity.getSquareFeet())
+                .deposit(entity.getDeposit())
+                .maintenanceFee(entity.getMaintenanceFee())
+                .monthlyRent(entity.getMonthlyRent()).build();
     }
 }

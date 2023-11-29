@@ -10,6 +10,7 @@ import jakarta.validation.constraints.*;
 import lombok.Builder;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 @Builder
 public record EstateForm(
@@ -19,7 +20,9 @@ public record EstateForm(
         @NotNull RoomType roomType,
         @NotNull RentalType rentalType,
         @NotNull Floor floor,
-        @NotNull String contractUrl,
+        @NotBlank String contractUrl,
+        @NotBlank @Size(max = 16777215) String context,
+        @NotBlank String thumbNailUrl,
         @NotNull LocalDate contractTerm,
         @NotNull Option option,
         @NotNull @DecimalMin("0.0") @Digits(integer=3, fraction=2) Double squareFeet,
@@ -43,6 +46,8 @@ public record EstateForm(
                 .rentalType(this.rentalType())
                 .floor(this.floor())
                 .contractUrl(this.contractUrl())
+                .context(this.context())
+                .thumbNailUrl(this.thumbNailUrl())
                 .contractTerm(this.contractTerm())
                 .option(this.option())
                 .squareFeet(this.squareFeet())

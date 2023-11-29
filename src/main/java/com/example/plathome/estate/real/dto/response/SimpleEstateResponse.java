@@ -8,7 +8,8 @@ import lombok.Builder;
 public record SimpleEstateResponse(
         long memberId,
         String location,
-        RentalType rentalType
+        RentalType rentalType,
+        String thumbNailUrl
 ) {
 
     public static SimpleEstateResponseBuilder of() {
@@ -19,6 +20,7 @@ public record SimpleEstateResponse(
         return SimpleEstateResponse.of()
                 .memberId(entity.getMemberId())
                 .location(entity.getLocation())
-                .rentalType(entity.getRentalType()).build();
+                .rentalType(entity.getRentalType())
+                .thumbNailUrl(entity.getThumbNailUrl()).build();
     }
 }

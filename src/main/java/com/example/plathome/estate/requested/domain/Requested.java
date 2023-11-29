@@ -25,7 +25,13 @@ public class Requested extends AuditingFields{
 
     private Long memberId;
 
+    @Column(length = 100)
+    private String contractUrl;
     private String location;
+
+    @Column(columnDefinition = "MEDIUMTEXT")
+    private String context;
+
 
     @Enumerated(EnumType.STRING)
     private RoomType roomType;
@@ -36,8 +42,7 @@ public class Requested extends AuditingFields{
     @Enumerated(EnumType.STRING)
     private Floor floor;
 
-    @Column(length = 100)
-    private String contractUrl;
+
 
     private LocalDate contractTerm;
 
@@ -50,9 +55,10 @@ public class Requested extends AuditingFields{
     private int monthlyRent;
 
     @Builder
-    public Requested(Long memberId, String location, RoomType roomType, RentalType rentalType, Floor floor, String contractUrl, LocalDate contractTerm, Option option, double squareFeet, int deposit, int maintenanceFee, int monthlyRent) {
+    public Requested(Long memberId, String location, String context, RoomType roomType, RentalType rentalType, Floor floor, String contractUrl, LocalDate contractTerm, Option option, double squareFeet, int deposit, int maintenanceFee, int monthlyRent) {
         this.memberId = memberId;
         this.location = location;
+        this.context = context;
         this.roomType = roomType;
         this.rentalType = rentalType;
         this.floor = floor;
@@ -65,8 +71,9 @@ public class Requested extends AuditingFields{
         this.monthlyRent = monthlyRent;
     }
 
-    public void updateForm(String location, RoomType roomType, RentalType rentalType, Floor floor, LocalDate contractTerm, Option option, double squareFeet, int deposit, int maintenanceFee, int monthlyRent) {
+    public void updateForm(String location, String context, RoomType roomType, RentalType rentalType, Floor floor, LocalDate contractTerm, Option option, double squareFeet, int deposit, int maintenanceFee, int monthlyRent) {
         this.location = location;
+        this.context = context;
         this.roomType = roomType;
         this.rentalType = rentalType;
         this.floor = floor;

@@ -9,7 +9,9 @@ import com.example.plathome.estate.real.dto.response.SimpleEstateResponse;
 import com.example.plathome.estate.real.exception.DuplicationEstateException;
 import com.example.plathome.estate.real.exception.NotFoundEstateException;
 import com.example.plathome.estate.real.repository.EstateRepository;
+import com.example.plathome.estate.requested.domain.ThumbNail;
 import com.example.plathome.estate.requested.repository.RequestedRepository;
+import com.example.plathome.estate.requested.repository.ThumbNailRepository;
 import com.example.plathome.member.domain.MemberSession;
 import com.example.plathome.member.exception.ForbiddenMemberException;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +19,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -25,6 +32,7 @@ import java.util.Optional;
 public class EstateService {
     private final EstateRepository estateRepository;
     private final RequestedRepository requestedRepository;
+    private final ThumbNailRepository thumbNailRepository;
 
     @Transactional
     public void register(EstateForm estateForm) {
@@ -53,9 +61,11 @@ public class EstateService {
     }
 
     public EstateResponse getDetail(long estateId) {
-        return estateRepository.findById(estateId)
-                .map(EstateResponse::from)
-                .orElseThrow(NotFoundEstateException::new);
+        Estate estate = estateRepository.findById(estateId).orElseThrow(NotFoundEstateException::new);
+        Set<String> thumbNailUrls = thumbNailRepository.findByMemberId(estate.getMemberId()).stream()
+                .map(ThumbNail::getUrl)
+                .collect(Collectors.toUnmodifiableSet());
+        return EstateResponse.from(estate, thumbNailUrls);
     }
 
     @Transactional
@@ -70,6 +80,7 @@ public class EstateService {
         Estate estate = estateRepository.findById(estateId).orElseThrow(NotFoundEstateException::new);
         this.isValidUser(memberSession.id(), estate.getMemberId());
         estate.update(
+                updateEstateForm.context(),
                 updateEstateForm.contractTerm(),
                 updateEstateForm.option(),
                 updateEstateForm.squareFeet(),
