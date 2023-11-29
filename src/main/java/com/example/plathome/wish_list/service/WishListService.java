@@ -31,8 +31,7 @@ public class WishListService {
             Estate estate = estateRepository.findById(wishListItem.getEstateId())
                     .orElseThrow(() -> new NotFoundEstateException());
 
-            EstateResponse estateResponse = EstateResponse.from(estate);
-            WishListResponse wishListResponse = WishListResponse.customfrom(estateResponse);
+            WishListResponse wishListResponse = WishListResponse.from(estate);
 
             responseList.add(wishListResponse);
         }

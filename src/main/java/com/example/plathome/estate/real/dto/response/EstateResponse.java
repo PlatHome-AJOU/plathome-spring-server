@@ -9,11 +9,14 @@ import com.example.plathome.estate.real.domain.constant.Area;
 import lombok.Builder;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 @Builder
 public record EstateResponse(
         long memberId,
         String location,
+        String context,
+        Set<String> thumbNailUrls,
         Area area,
         RoomType roomType,
         RentalType rentalType,
@@ -30,10 +33,12 @@ public record EstateResponse(
         return EstateResponse.builder();
     }
 
-    public static EstateResponse from(Estate entity) {
+    public static EstateResponse from(Estate entity, Set<String> thumbNailUrls) {
         return EstateResponse.of()
                 .memberId(entity.getMemberId())
                 .location(entity.getLocation())
+                .context(entity.getContext())
+                .thumbNailUrls(thumbNailUrls)
                 .area(entity.getArea())
                 .roomType(entity.getRoomType())
                 .rentalType(entity.getRentalType())

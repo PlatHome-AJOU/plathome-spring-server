@@ -1,16 +1,20 @@
 package com.example.plathome.estate.requested.controller;
 
+import com.example.plathome.estate.requested.dto.request.DateTimeForm;
 import com.example.plathome.estate.requested.dto.request.RequestedForm;
 import com.example.plathome.estate.requested.dto.response.RequestedResponse;
 import com.example.plathome.estate.requested.service.RequestedService;
+import com.example.plathome.estate.requested.service.ThumbNailService;
 import com.example.plathome.login.argumentresolver_interceptor.argumentresolver.Admin;
 import com.example.plathome.login.argumentresolver_interceptor.argumentresolver.Login;
 import com.example.plathome.member.domain.MemberSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RequestMapping("/api/requested")
@@ -19,13 +23,14 @@ import java.util.List;
 public class RequestedController {
 
     private final RequestedService requestedService;
+    private final ThumbNailService thumbNailService;
 
-    @PostMapping("/auth/file")
-    public String saveFile(
+    @PostMapping("/auth/contract")
+    public String saveContract(
             @Login MemberSession memberSession,
             @RequestPart MultipartFile file
     ) {
-        requestedService.saveFile(memberSession, file);
+        requestedService.saveContract(memberSession, file);
         return "success";
     }
 
@@ -38,19 +43,19 @@ public class RequestedController {
         return "success";
     }
 
-    @GetMapping("/auth")
+    @GetMapping("/auth/all")
     public List<RequestedResponse> getAll(
             @Admin MemberSession memberSession
     ) {
         return requestedService.getAll();
     }
 
-    @PatchMapping("/auth/file")
-    public String updateFile(
+    @PatchMapping("/auth/contract")
+    public String updateContract(
             @Login MemberSession memberSession,
             @RequestPart MultipartFile file
     ) {
-        requestedService.updateFile(memberSession, file);
+        requestedService.updateContract(memberSession, file);
         return "success";
     }
 
@@ -72,5 +77,28 @@ public class RequestedController {
         return "success";
     }
 
+    @PostMapping("/auth/thumb-nail")
+    public LocalDateTime saveThumbNail(
+            @Login MemberSession memberSession,
+            @RequestPart MultipartFile file
+    ) {
+        return thumbNailService.saveThumbNail(memberSession, file);
+    }
 
+    @DeleteMapping("/auth/thumb-nail")
+    public String deleteThumbNail(
+            @Login MemberSession memberSession,
+            @RequestBody @Valid DateTimeForm dateTimeForm
+    ) {
+        thumbNailService.deleteThumbNail(memberSession, dateTimeForm.fileName());
+        return "success";
+    }
+
+    @GetMapping("/auth/{requestedId}")
+    public RequestedResponse getOne(
+            @Admin MemberSession memberSession,
+            @PathVariable Long requestedId
+    ) {
+        return requestedService.getOne(requestedId);
+    }
 }

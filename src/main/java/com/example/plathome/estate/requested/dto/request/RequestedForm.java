@@ -13,6 +13,7 @@ import java.time.LocalDate;
 @Builder
 public record RequestedForm(
         @NotBlank @Size(max = 255) String location,
+        @NotBlank @Size(max = 16777215) String context,
         @NotNull RoomType roomType,
         @NotNull RentalType rentalType,
         @NotNull Floor floor,
@@ -32,6 +33,7 @@ public record RequestedForm(
         return Requested.builder()
                 .memberId(memberId)
                 .location(this.location())
+                .context(this.context())
                 .roomType(this.roomType())
                 .rentalType(this.rentalType())
                 .floor(this.floor())

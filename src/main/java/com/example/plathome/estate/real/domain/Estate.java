@@ -42,6 +42,9 @@ public class Estate extends AuditingFields{
 
     @Column(length = 100)
     private String contractUrl;
+    @Column(columnDefinition = "MEDIUMTEXT")
+    private String context;
+    private String thumbNailUrl;
 
     private LocalDate contractTerm;
 
@@ -57,7 +60,7 @@ public class Estate extends AuditingFields{
     private int monthlyRent;
 
     @Builder
-    public Estate(Long memberId, String location, Area area, RoomType roomType, RentalType rentalType, Floor floor, String contractUrl, LocalDate contractTerm, Option option, double squareFeet, double lng, double lat, int deposit, int maintenanceFee, int monthlyRent) {
+    public Estate(Long memberId, String location, Area area, RoomType roomType, RentalType rentalType, Floor floor, String contractUrl, String context, String thumbNailUrl, LocalDate contractTerm, Option option, double squareFeet, double lng, double lat, int deposit, int maintenanceFee, int monthlyRent) {
         this.memberId = memberId;
         this.location = location;
         this.area = area;
@@ -65,6 +68,8 @@ public class Estate extends AuditingFields{
         this.rentalType = rentalType;
         this.floor = floor;
         this.contractUrl = contractUrl;
+        this.context = context;
+        this.thumbNailUrl = thumbNailUrl;
         this.contractTerm = contractTerm;
         this.option = option;
         this.squareFeet = squareFeet;
@@ -75,7 +80,8 @@ public class Estate extends AuditingFields{
         this.monthlyRent = monthlyRent;
     }
 
-    public void update(LocalDate contractTerm, Option option, double squareFeet, int deposit, int maintenanceFee, int monthlyRent) {
+    public void update(String context, LocalDate contractTerm, Option option, double squareFeet, int deposit, int maintenanceFee, int monthlyRent) {
+        this.context = context;
         this.contractTerm = contractTerm;
         this.option = option;
         this.squareFeet = squareFeet;
