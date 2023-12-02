@@ -1,6 +1,6 @@
 package com.example.plathome.member.domain;
 
-import com.example.plathome.member.domain.constant.RoleType;
+import com.example.plathome.member.domain.types.RoleType;
 import lombok.Builder;
 
 @Builder

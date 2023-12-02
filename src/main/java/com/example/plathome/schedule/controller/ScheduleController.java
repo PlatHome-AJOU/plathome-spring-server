@@ -1,16 +1,11 @@
 package com.example.plathome.schedule.controller;
 
-import com.example.plathome.login.argumentresolver_interceptor.argumentresolver.Admin;
 import com.example.plathome.login.argumentresolver_interceptor.argumentresolver.Login;
 import com.example.plathome.member.domain.MemberSession;
 import com.example.plathome.schedule.domain.Schedule;
 import com.example.plathome.schedule.dto.CreateSchedulesDto;
 import com.example.plathome.schedule.service.ScheduleService;
-import com.example.plathome.user_report.dto.request.UserReportForm;
-import com.example.plathome.user_report.dto.response.UserReportResponse;
-import com.example.plathome.user_report.service.UserReportService;
 import io.swagger.v3.oas.annotations.Parameter;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

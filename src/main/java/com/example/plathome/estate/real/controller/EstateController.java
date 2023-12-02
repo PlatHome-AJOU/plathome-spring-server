@@ -11,10 +11,8 @@ import com.example.plathome.estate.real.service.EstateService;
 import com.example.plathome.login.argumentresolver_interceptor.argumentresolver.Admin;
 import com.example.plathome.login.argumentresolver_interceptor.argumentresolver.Login;
 import com.example.plathome.member.domain.MemberSession;
-import com.example.plathome.wish_list.service.WishListService;
 import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

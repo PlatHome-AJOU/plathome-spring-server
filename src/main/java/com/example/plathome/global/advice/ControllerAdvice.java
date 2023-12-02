@@ -1,6 +1,6 @@
 package com.example.plathome.global.advice;
 
-import com.example.plathome.global.dto.MethodArgumentExceptionResponse;
+import com.example.plathome.global.error.dto.MethodArgumentExceptionResponse;
 import com.example.plathome.global.error.ErrorCode;
 import com.example.plathome.global.exception.*;
 import org.hibernate.TypeMismatchException;
@@ -34,7 +34,7 @@ public class ControllerAdvice {
     public ResponseEntity<ErrorCode> bindingExceptionHandler(BindingException ex) {
         ErrorCode errorCode = ErrorCode.builder()
                 .errorCode(BAD_REQUEST)
-                .message(BINDING_ERROR)
+                .message(ERROR_REQUEST_BINDING)
                 .build();
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorCode);
     }
@@ -107,7 +107,7 @@ public class ControllerAdvice {
     public ResponseEntity<ErrorCode> methodArgumentNotConversionException(MethodArgumentNotConversionException ex) {
         ErrorCode errorCode = ErrorCode.builder()
                 .errorCode(BAD_REQUEST)
-                .message(ex.getMessage())
+                .message(MethodArgumentNotConversionException.MESSAGE)
                 .build();
         return ResponseEntity.status(BAD_REQUEST).body(errorCode);
     }

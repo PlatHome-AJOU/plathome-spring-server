@@ -14,7 +14,7 @@ import static com.example.plathome.estate.common.RentalType.JEONSE;
 import static com.example.plathome.estate.common.RentalType.MONTHLY;
 import static com.example.plathome.estate.common.RoomType.*;
 import static com.example.plathome.estate.real.domain.QEstate.estate;
-import static com.example.plathome.estate.real.domain.constant.Area.*;
+import static com.example.plathome.estate.real.domain.types.Area.*;
 import static org.springframework.util.StringUtils.hasText;
 
 @RequiredArgsConstructor
