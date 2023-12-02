@@ -5,7 +5,7 @@ import com.example.plathome.estate.common.Option;
 import com.example.plathome.estate.common.RentalType;
 import com.example.plathome.estate.common.RoomType;
 import com.example.plathome.estate.real.domain.Estate;
-import com.example.plathome.estate.real.domain.constant.Area;
+import com.example.plathome.estate.real.domain.types.Area;
 import lombok.Builder;
 
 import java.time.LocalDate;

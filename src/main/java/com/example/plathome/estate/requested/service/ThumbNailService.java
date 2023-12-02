@@ -10,7 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 
-import static com.example.plathome.estate.requested.common.ThumbNailStaticField.ROOM_FOLDER;
+import static com.example.plathome.estate.requested.constant.RequestedStaticField.ROOM_FOLDER;
 
 @Transactional(readOnly = true)
 @RequiredArgsConstructor

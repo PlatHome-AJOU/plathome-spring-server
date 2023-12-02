@@ -1,24 +1,24 @@
 package com.example.plathome.login.argumentresolver_interceptor.interceptor;
 
 
-import com.example.plathome.login.argumentresolver_interceptor.service.JwtMemberService;
-import com.example.plathome.login.jwt.domain.UserContext;
-import com.example.plathome.login.jwt.service.JwtValidateService;
+import com.example.plathome.login.domain.UserContext;
+import com.example.plathome.login.service.JwtValidateService;
 import com.example.plathome.member.domain.MemberSession;
+import com.example.plathome.member.service.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.servlet.HandlerInterceptor;
 
-import static com.example.plathome.login.jwt.common.JwtStaticField.REFRESH_URL;
+import static com.example.plathome.login.constant.JwtStaticField.REFRESH_URL;
 
 
 @Slf4j
 @RequiredArgsConstructor
 public class JwtLoginCheckInterceptor implements HandlerInterceptor {
 
-    private final JwtMemberService jwtMemberService;
+    private final MemberService memberService;
     private final JwtValidateService jwtValidateService;
 
     @Override
@@ -26,7 +26,7 @@ public class JwtLoginCheckInterceptor implements HandlerInterceptor {
         String requestURI = request.getRequestURI();
         log.info("MEMBER 로그인 인증 인터 셉터 실행 [{}]", requestURI);
         String stringMemberId = this.getMemberId(request);
-        MemberSession memberSession = jwtMemberService.getMemberSessionById(Long.parseLong(stringMemberId));
+        MemberSession memberSession = memberService.getMemberSessionById(Long.parseLong(stringMemberId));
         request.setAttribute("MemberSession", memberSession);
         UserContext.set(memberSession.nickname());
         log.info("MEMBER 로그인 확인 성공");

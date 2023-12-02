@@ -9,38 +9,40 @@ public class ErrorStaticField {
     public static final int OK = 200;
     public static final int CREATED = 201;
 
+    //member related
+    public static final String ERROR_MEMBER_NOT_FOUND = "오류: 해당 회원을 찾을 수 없습니다.";
+    public static final String ERROR_MEMBER_DUPLICATE_EMAIL = "오류: 이미 등록된 이메일 주소입니다.";
+    public static final String ERROR_MEMBER_DUPLICATE_NICKNAME = "오류: 이미 사용 중인 닉네임입니다.";
+    public static final String ERROR_MEMBER_UNAUTHORIZED = "오류: 로그인이 필요한 서비스입니다.";
+    public static final String ERROR_MEMBER_INVALID_ID = "오류: 유효하지 않은 아이디입니다.";
+    public static final String ERROR_MEMBER_INVALID_PASSWORD = "오류: 비밀번호가 일치하지 않습니다.";
+    public static final String ERROR_MEMBER_FORBIDDEN = "오류: 해당 회원은 이 서비스에 접근할 권한이 없습니다.";
 
-    //member
-    public static final String MEMBER_NOT_FOUND = "존재하지 않는 회원입니다.";
-    public static final String DUP_EMAIL = "이미 존재하는 이메일 입니다.";
-    public static final String DUP_NICKNAME = "이미 존재하는 닉네임 입니다.";
-    public static final String MEMBER_UNAUTHORIZED = "Member 로그인이 필요한 서비스 입니다.";
-    public static final String INVALID_ID = "존재하지 않는 아이디 입니다.";
-    public static final String INVALID_PASSWORD = "비밀번호가 올바르지 않습니다.";
+    // Request related
+    public static final String ERROR_REQUEST_BINDING = "오류: Form 형식이 올바르지 않습니다.";
+    public static final String ERROR_REQUEST_BODY_NOT_FOUND = "오류: ReqeustBody에 필요한 정보가 누락되었습니다.";
+    public static final String ERROR_REQUEST_CONVERSION = "오류: 요청 매개변수의 형식이 올바르지 않습니다";
+    public static final String ERROR_REQUEST_INVALID_EMAIL_FORM = "오류: 이메일 형식이 올바르지 않습니다. 아주대 이메일을 사용해주세요. - @ajou.ac.kr";
 
-    //request
-    public static final String BINDING_ERROR = "잘못된 Form 형식입니다.";
-    public static final String REQUEST_BODY_NOT_FOUND = "ReqeustBody에 입력된 내용이 없습니다.";
-    public static final String INVALID_REFRESH_TOKEN = "Refresh 토큰 인증에 실패하였습니다.";
-    public static final String INVALID_ACCESS_TOKEN = "Access 토큰 인증에 실패하였습니다.";
-    public static final String EXPIRED_REFRESH_TOKEN = "Refresh 토큰만료! 재로그인 하세요.";
-    public static final String EXPIRED_ACCESS_TOKEN = "Access 토큰만료! 재시도 하세요.";
-    public static final String CONVERSION_ERROR = "변환 불가능한 타입이 URL에 입력되었습니다";
-    public static final String EMAIL_FORM_ERROR = "Email should end with @ajou.ac.kr";
-    public static final String EXPIRED_AUTH_CODE = "인증번호 만료! 재인증 하세요.";
-    public static final String INVALID_AUTH_CODE = "이메일 인증번호 인증에 실패하였습니다.";
-    public static final String MEMBER_FORBIDDEN = "접근권한이 없는 회원입니다.";
-    public static final String DUP_REQUESTED = "한번에 하나의 매물만 등록요청이 가능합니다.";
-    public static final String REQUESTED_NOT_FOUND = "오류: 요청된 매물을 찾을 수 없습니다.";
-    public static final String ESTATE_NOT_FOUND = "오류: 등록된 매물을 찾을 수 없습니다.";
-    public static final String DUP_ESTATE = "오류: 회원은 하나의 매물만 등록할 수 있습니다.";
-    public static final String USER_REPORT_NOT_FOUND = "오류: 회원 신고 내역을 찾을 수 없습니다.";
-    public static final String ESTATE_REPORT_NOT_FOUND = "오류: 매물 신고 내역을 찾을 수 없습니다.";
+    // Login related
+    public static final String ERROR_LOGIN_INVALID_REFRESH_TOKEN = "오류: Refresh 토큰이 유효하지 않습니다.";
+    public static final String ERROR_LOGIN_INVALID_ACCESS_TOKEN = "오류: Access 토큰이 유효하지 않습니다.";
+    public static final String ERROR_LOGIN_EXPIRED_REFRESH_TOKEN = "오류: Refresh 토큰이 만료되었습니다. 다시 로그인해주세요.";
+    public static final String ERROR_LOGIN_EXPIRED_ACCESS_TOKEN = "오류: Access 토큰이 만료되었습니다. 다시 시도해주세요.";
+    public static final String ERROR_LOGIN_EXPIRED_AUTH_CODE = "오류: 인증 번호가 만료되었습니다. 다시 인증해주세요.";
+    public static final String ERROR_LOGIN_INVALID_AUTH_CODE = "오류: 인증 번호가 일치하지 않습니다.";
 
-    //chat
-    public static final String ROOM_NOT_FOUND = "채팅방을 찾을 수 없습니다.";
-    public static final String INVALID_SOCKET_SESSION = "소켓 세션이 유효하지 않습니다.";
+    // Requested estate related
+    public static final String ERROR_ESTATE_REQUEST_DUPLICATE = "오류: 한 회원당 요청 가능한 매물은 하나뿐입니다.";
+    public static final String ERROR_ESTATE_REQUEST_NOT_FOUND = "오류: 요청하신 매물을 찾을 수 없습니다.";
 
+    // Real estate related
+    public static final String ERROR_ESTATE_NOT_FOUND = "오류: 등록된 매물을 찾을 수 없습니다.";
+    public static final String ERROR_ESTATE_DUPLICATE = "오류: 한 회원당 등록 가능한 매물은 하나뿐입니다.";
 
+    // User report related
+    public static final String ERROR_REPORT_USER_NOT_FOUND = "오류: 해당 회원의 신고 내역을 찾을 수 없습니다.";
 
+    // Estate report related
+    public static final String ERROR_REPORT_ESTATE_NOT_FOUND = "오류: 해당 매물의 신고 내역을 찾을 수 없습니다.";
 }

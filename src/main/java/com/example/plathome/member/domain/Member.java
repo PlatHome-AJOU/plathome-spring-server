@@ -1,7 +1,7 @@
 package com.example.plathome.member.domain;
 
 import com.example.plathome.global.domain.AuditingFields;
-import com.example.plathome.member.domain.constant.RoleType;
+import com.example.plathome.member.domain.types.RoleType;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;

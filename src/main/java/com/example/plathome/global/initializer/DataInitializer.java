@@ -1,7 +1,7 @@
 package com.example.plathome.global.initializer;
 
 import com.example.plathome.member.domain.Member;
-import com.example.plathome.member.domain.constant.RoleType;
+import com.example.plathome.member.domain.types.RoleType;
 import com.example.plathome.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;

@@ -1,16 +1,16 @@
 package com.example.plathome.estate.requested.service;
 
-import com.example.plathome.estate.requested.domain.ThumbNail;
-import com.example.plathome.estate.requested.repository.ThumbNailRepository;
-import com.example.plathome.global.service.S3Service;
-import com.example.plathome.member.domain.Member;
-import com.example.plathome.member.domain.MemberSession;
 import com.example.plathome.estate.requested.domain.Requested;
+import com.example.plathome.estate.requested.domain.ThumbNail;
 import com.example.plathome.estate.requested.dto.request.RequestedForm;
 import com.example.plathome.estate.requested.dto.response.RequestedResponse;
 import com.example.plathome.estate.requested.exception.DuplicationRequestedException;
 import com.example.plathome.estate.requested.exception.NotFoundRequestedException;
 import com.example.plathome.estate.requested.repository.RequestedRepository;
+import com.example.plathome.estate.requested.repository.ThumbNailRepository;
+import com.example.plathome.global.service.S3Service;
+import com.example.plathome.member.domain.Member;
+import com.example.plathome.member.domain.MemberSession;
 import com.example.plathome.member.exception.NotFoundMemberException;
 import com.example.plathome.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,16 +18,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.lang.reflect.MalformedParameterizedTypeException;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-import static com.example.plathome.estate.requested.common.RequestedStaticField.*;
-import static com.example.plathome.estate.requested.common.ThumbNailStaticField.ROOM_FOLDER;
+import static com.example.plathome.estate.requested.constant.RequestedStaticField.CONTRACT_FOLDER;
+import static com.example.plathome.estate.requested.constant.RequestedStaticField.ROOM_FOLDER;
 
 @RequiredArgsConstructor
 @Transactional(readOnly = true)

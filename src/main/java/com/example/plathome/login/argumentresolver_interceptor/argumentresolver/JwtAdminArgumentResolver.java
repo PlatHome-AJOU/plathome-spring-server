@@ -1,8 +1,7 @@
 package com.example.plathome.login.argumentresolver_interceptor.argumentresolver;
 
-import com.example.plathome.global.exception.UnauthorizedException;
 import com.example.plathome.member.domain.MemberSession;
-import com.example.plathome.member.domain.constant.RoleType;
+import com.example.plathome.member.domain.types.RoleType;
 import com.example.plathome.member.exception.ForbiddenMemberException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
