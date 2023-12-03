@@ -58,7 +58,7 @@ public class LoginService {
         }
     }
 
-    public TokenResponse login(LoginForm loginForm, HttpServletRequest request, HttpServletResponse response) {
+    public TokenResponse login(LoginForm loginForm) {
         String email = loginForm.email();
         Member member = memberRepository.findByEmail(email).orElseThrow(NotFoundMemberException::new);
         if (passwordEncoder.matches(loginForm.password(), member.getPassword())) {

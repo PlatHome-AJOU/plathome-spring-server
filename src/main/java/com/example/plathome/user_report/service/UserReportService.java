@@ -1,6 +1,8 @@
 package com.example.plathome.user_report.service;
 
 import com.example.plathome.member.domain.MemberSession;
+import com.example.plathome.member.exception.NotFoundMemberException;
+import com.example.plathome.member.repository.MemberRepository;
 import com.example.plathome.user_report.dto.request.UserReportForm;
 import com.example.plathome.user_report.dto.response.UserReportResponse;
 import com.example.plathome.user_report.exception.NotFoundUserReportException;
@@ -16,9 +18,11 @@ import java.util.List;
 @Service
 public class UserReportService {
     private final UserReportRepository userReportRepository;
+    private final MemberRepository memberRepository;
 
     @Transactional
     public void report(MemberSession memberSession, UserReportForm userReportForm) {
+        memberRepository.findById(userReportForm.targetMemberId()).orElseThrow(NotFoundMemberException::new);
         userReportRepository.save(userReportForm.toEntity(memberSession.id()));
     }
 

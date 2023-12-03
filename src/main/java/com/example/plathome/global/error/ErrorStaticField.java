@@ -23,6 +23,7 @@ public class ErrorStaticField {
     public static final String ERROR_REQUEST_BODY_NOT_FOUND = "오류: ReqeustBody에 필요한 정보가 누락되었습니다.";
     public static final String ERROR_REQUEST_CONVERSION = "오류: 요청 매개변수의 형식이 올바르지 않습니다";
     public static final String ERROR_REQUEST_INVALID_EMAIL_FORM = "오류: 이메일 형식이 올바르지 않습니다. 아주대 이메일을 사용해주세요. - @ajou.ac.kr";
+    public static final String ERROR_REQUEST_INVALID_TYPE_INPUT = "오류: 유효하지 않은 타입이 입력되었습니다.";
 
     // Login related
     public static final String ERROR_LOGIN_INVALID_REFRESH_TOKEN = "오류: Refresh 토큰이 유효하지 않습니다.";

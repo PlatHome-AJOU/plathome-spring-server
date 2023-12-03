@@ -40,12 +40,8 @@ public class LoginController {
     }
 
     @PostMapping("/no-auth/login")
-    public TokenResponse login(
-            @RequestBody @Valid LoginForm loginForm,
-            HttpServletRequest request,
-            HttpServletResponse response
-    ) {
-        return loginService.login(loginForm, request, response);
+    public TokenResponse login(@RequestBody @Valid LoginForm loginForm) {
+        return loginService.login(loginForm);
     }
 
     @GetMapping("/auth/logout")

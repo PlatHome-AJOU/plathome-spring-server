@@ -1,5 +1,8 @@
 package com.example.plathome.estate_report.service;
 
+import com.example.plathome.estate.real.domain.Estate;
+import com.example.plathome.estate.real.exception.NotFoundEstateException;
+import com.example.plathome.estate.real.repository.EstateRepository;
 import com.example.plathome.estate_report.dto.request.EstateReportForm;
 import com.example.plathome.estate_report.dto.response.EstateReportResponse;
 import com.example.plathome.estate_report.exception.NotFoundEstateReportException;
@@ -16,9 +19,12 @@ import java.util.List;
 @Service
 public class EstateReportService {
     private final EstateReportRepository estateReportRepository;
+    private final EstateRepository estateRepository;
 
     @Transactional
     public void report(MemberSession memberSession, EstateReportForm estateReportForm) {
+        Estate estate = estateRepository.findById(estateReportForm.estateId())
+                .orElseThrow(NotFoundEstateException::new);
         estateReportRepository.save(estateReportForm.toEntity(memberSession.id()));
     }
 

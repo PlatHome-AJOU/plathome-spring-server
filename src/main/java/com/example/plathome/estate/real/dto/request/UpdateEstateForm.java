@@ -8,6 +8,7 @@ import java.time.LocalDate;
 
 @Builder
 public record UpdateEstateForm(
+        @NotNull Long estateId,
         @NotBlank @Size(max = 16777215) String context,
         @NotNull LocalDate contractTerm,
         Option option,
