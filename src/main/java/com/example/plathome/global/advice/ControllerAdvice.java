@@ -1,7 +1,7 @@
 package com.example.plathome.global.advice;
 
-import com.example.plathome.global.error.dto.MethodArgumentExceptionResponse;
 import com.example.plathome.global.error.ErrorCode;
+import com.example.plathome.global.error.dto.MethodArgumentExceptionResponse;
 import com.example.plathome.global.exception.*;
 import org.hibernate.TypeMismatchException;
 import org.springframework.http.HttpStatus;
@@ -24,7 +24,7 @@ public class ControllerAdvice {
     public ResponseEntity<ErrorCode> bindingExceptionHandler(TypeMismatchException ex) {
         ErrorCode errorCode = ErrorCode.builder()
                 .errorCode(BAD_REQUEST)
-                .message(ex.getMessage())
+                .message(ERROR_REQUEST_INVALID_TYPE_INPUT)
                 .build();
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorCode);
     }

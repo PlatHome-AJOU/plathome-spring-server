@@ -5,8 +5,8 @@ import lombok.Builder;
 
 @Builder
 public record EstateReportResponse(
-        Long memberId,
-        Long estateId,
+        long memberId,
+        long estateId,
         String context
 ) {
     public static EstateReportResponseBuilder of() {

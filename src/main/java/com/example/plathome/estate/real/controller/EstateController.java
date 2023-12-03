@@ -41,7 +41,7 @@ public class EstateController {
 
     @GetMapping("/no-auth/board")
     public List<SimpleEstateResponse> getSimple() {
-        return estateService.getAllSimpleResponse();
+        return estateService.getAllSimpleInfoResponse();
     }
 
     @GetMapping("/no-auth/{estateId}")
@@ -61,10 +61,9 @@ public class EstateController {
     @PatchMapping("/auth/{estateId}")
     public String update(
             @Parameter(hidden = true) @Login MemberSession memberSession,
-            @RequestBody @Valid UpdateEstateForm updateEstateForm,
-            @PathVariable long estateId
+            @RequestBody @Valid UpdateEstateForm updateEstateForm
     ) {
-        estateService.update(memberSession, estateId, updateEstateForm);
+        estateService.update(memberSession, updateEstateForm);
         return "success";
     }
 

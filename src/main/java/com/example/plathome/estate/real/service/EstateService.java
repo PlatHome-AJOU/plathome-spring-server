@@ -19,12 +19,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import static java.util.stream.Collectors.toList;
 
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -54,7 +51,7 @@ public class EstateService {
                 .toList();
     }
 
-    public List<SimpleEstateResponse> getAllSimpleResponse() {
+    public List<SimpleEstateResponse> getAllSimpleInfoResponse() {
         return estateRepository.findAll().stream()
                 .map(SimpleEstateResponse::from)
                 .toList();
@@ -76,8 +73,8 @@ public class EstateService {
     }
 
     @Transactional
-    public void update(MemberSession memberSession, long estateId, UpdateEstateForm updateEstateForm) {
-        Estate estate = estateRepository.findById(estateId).orElseThrow(NotFoundEstateException::new);
+    public void update(MemberSession memberSession, UpdateEstateForm updateEstateForm) {
+        Estate estate = estateRepository.findById(updateEstateForm.estateId()).orElseThrow(NotFoundEstateException::new);
         this.isValidUser(memberSession.id(), estate.getMemberId());
         estate.update(
                 updateEstateForm.context(),
