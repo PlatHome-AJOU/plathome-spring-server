@@ -1,8 +1,8 @@
 package com.example.plathome.estate_report.service;
 
-import com.example.plathome.estate.real.domain.Estate;
-import com.example.plathome.estate.real.exception.NotFoundEstateException;
-import com.example.plathome.estate.real.repository.EstateRepository;
+import com.example.plathome.real_estate.domain.Estate;
+import com.example.plathome.real_estate.exception.NotFoundEstateException;
+import com.example.plathome.real_estate.repository.EstateRepository;
 import com.example.plathome.estate_report.dto.request.EstateReportForm;
 import com.example.plathome.estate_report.dto.response.EstateReportResponse;
 import com.example.plathome.estate_report.exception.NotFoundEstateReportException;

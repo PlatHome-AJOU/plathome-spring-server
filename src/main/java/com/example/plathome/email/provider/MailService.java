@@ -1,6 +1,6 @@
 package com.example.plathome.email.provider;
 
-import com.example.plathome.email.constant.EmailStaticField;
+import com.example.plathome.global.constant.EmailStaticField;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;

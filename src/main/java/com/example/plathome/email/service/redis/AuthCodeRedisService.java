@@ -1,6 +1,6 @@
 package com.example.plathome.email.service.redis;
 
-import com.example.plathome.email.constant.EmailStaticField;
+import com.example.plathome.global.constant.EmailStaticField;
 import com.example.plathome.global.service.RedisService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;

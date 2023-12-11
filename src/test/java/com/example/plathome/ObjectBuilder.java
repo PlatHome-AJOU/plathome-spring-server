@@ -1,17 +1,17 @@
 package com.example.plathome;
 
 
-import com.example.plathome.estate.common.Floor;
-import com.example.plathome.estate.common.Option;
-import com.example.plathome.estate.common.RentalType;
-import com.example.plathome.estate.common.RoomType;
-import com.example.plathome.estate.real.domain.Estate;
-import com.example.plathome.estate.real.domain.types.Area;
-import com.example.plathome.estate.real.dto.request.EstateForm;
-import com.example.plathome.estate.real.dto.request.UpdateEstateForm;
-import com.example.plathome.estate.real.dto.search.Filter;
-import com.example.plathome.estate.real.dto.search.filter.*;
-import com.example.plathome.estate.requested.domain.ThumbNail;
+import com.example.plathome.global.domain.estate.common.Floor;
+import com.example.plathome.global.domain.estate.common.Option;
+import com.example.plathome.global.domain.estate.common.RentalType;
+import com.example.plathome.global.domain.estate.common.RoomType;
+import com.example.plathome.real_estate.domain.Estate;
+import com.example.plathome.real_estate.domain.types.Area;
+import com.example.plathome.real_estate.dto.request.EstateForm;
+import com.example.plathome.real_estate.dto.request.UpdateEstateForm;
+import com.example.plathome.real_estate.dto.search.Filter;
+import com.example.plathome.real_estate.dto.search.filter.*;
+import com.example.plathome.requested_estate.domain.ThumbNail;
 import com.example.plathome.estate_report.domain.EstateReport;
 import com.example.plathome.estate_report.dto.request.EstateReportForm;
 import com.example.plathome.login.dto.request.LoginForm;
@@ -30,7 +30,7 @@ import java.util.Base64;
 import java.util.Date;
 import java.util.UUID;
 
-import static com.example.plathome.login.constant.JwtStaticField.*;
+import static com.example.plathome.global.constant.JwtStaticField.*;
 
 
 public class ObjectBuilder {
