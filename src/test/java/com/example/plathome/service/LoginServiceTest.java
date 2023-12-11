@@ -25,7 +25,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
 
-import static com.example.plathome.login.constant.JwtStaticField.BEARER;
+import static com.example.plathome.global.constant.JwtStaticField.BEARER;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.BDDMockito.*;

@@ -11,8 +11,8 @@ import org.springframework.context.annotation.Configuration;
 
 import java.util.Arrays;
 
-import static com.example.plathome.login.constant.JwtStaticField.ACCESS_HEADER;
-import static com.example.plathome.login.constant.JwtStaticField.REFRESH_HEADER;
+import static com.example.plathome.global.constant.JwtStaticField.ACCESS_HEADER;
+import static com.example.plathome.global.constant.JwtStaticField.REFRESH_HEADER;
 
 @OpenAPIDefinition(
         info = @Info(title = "PlatHome API 명세서",

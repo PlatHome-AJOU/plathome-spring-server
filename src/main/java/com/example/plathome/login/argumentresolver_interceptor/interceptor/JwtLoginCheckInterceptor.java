@@ -11,7 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.servlet.HandlerInterceptor;
 
-import static com.example.plathome.login.constant.JwtStaticField.REFRESH_URL;
+import static com.example.plathome.global.constant.JwtStaticField.REFRESH_URL;
 
 
 @Slf4j

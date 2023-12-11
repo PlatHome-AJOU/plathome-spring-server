@@ -1,7 +1,7 @@
 package com.example.plathome.login.service;
 
 
-import com.example.plathome.login.constant.JwtStaticField;
+import com.example.plathome.global.constant.JwtStaticField;
 import com.example.plathome.login.domain.AccessSecretKey;
 import com.example.plathome.login.domain.RefreshSecretKey;
 import com.example.plathome.login.exception.ExpiredAccessTokenException;

@@ -1,9 +1,8 @@
 package com.example.plathome.wish_list.service;
 
-import com.example.plathome.estate.real.domain.Estate;
-import com.example.plathome.estate.real.dto.response.EstateResponse;
-import com.example.plathome.estate.real.exception.NotFoundEstateException;
-import com.example.plathome.estate.real.repository.EstateRepository;
+import com.example.plathome.real_estate.domain.Estate;
+import com.example.plathome.real_estate.exception.NotFoundEstateException;
+import com.example.plathome.real_estate.repository.EstateRepository;
 import com.example.plathome.wish_list.domain.WishList;
 import com.example.plathome.wish_list.dto.WishListResponse;
 import com.example.plathome.wish_list.exception.DuplicateWishListException;

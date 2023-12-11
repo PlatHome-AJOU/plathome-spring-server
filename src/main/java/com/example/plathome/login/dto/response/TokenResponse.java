@@ -2,7 +2,7 @@ package com.example.plathome.login.dto.response;
 
 import lombok.Builder;
 
-import static com.example.plathome.login.constant.JwtStaticField.BEARER;
+import static com.example.plathome.global.constant.JwtStaticField.BEARER;
 
 @Builder
 public record TokenResponse (

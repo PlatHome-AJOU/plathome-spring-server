@@ -2,13 +2,13 @@ package com.example.plathome.service;
 
 
 import com.example.plathome.ObjectBuilder;
-import com.example.plathome.estate.real.domain.Estate;
-import com.example.plathome.estate.real.dto.response.MapInfoEstateResponse;
-import com.example.plathome.estate.real.dto.response.SimpleEstateResponse;
-import com.example.plathome.estate.real.dto.search.Filter;
-import com.example.plathome.estate.real.repository.EstateRepository;
-import com.example.plathome.estate.real.service.EstateFilterService;
-import com.example.plathome.estate.requested.repository.ThumbNailRepository;
+import com.example.plathome.real_estate.domain.Estate;
+import com.example.plathome.real_estate.dto.response.MapInfoEstateResponse;
+import com.example.plathome.real_estate.dto.response.SimpleEstateResponse;
+import com.example.plathome.real_estate.dto.search.Filter;
+import com.example.plathome.real_estate.repository.EstateRepository;
+import com.example.plathome.real_estate.service.EstateFilterService;
+import com.example.plathome.requested_estate.repository.ThumbNailRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

@@ -1,6 +1,6 @@
 package com.example.plathome.email.controller;
 
-import com.example.plathome.email.constant.EmailStaticField;
+import com.example.plathome.global.constant.EmailStaticField;
 import com.example.plathome.email.service.MailMemberService;
 import com.example.plathome.email.dto.request.MailForm;
 import jakarta.validation.Valid;
