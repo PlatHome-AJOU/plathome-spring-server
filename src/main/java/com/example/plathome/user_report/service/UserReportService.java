@@ -1,11 +1,13 @@
 package com.example.plathome.user_report.service;
 
+import com.example.plathome.member.domain.Member;
 import com.example.plathome.member.domain.MemberSession;
 import com.example.plathome.member.exception.NotFoundMemberException;
 import com.example.plathome.member.repository.MemberRepository;
 import com.example.plathome.user_report.dto.request.UserReportForm;
 import com.example.plathome.user_report.dto.response.UserReportResponse;
 import com.example.plathome.user_report.exception.NotFoundUserReportException;
+import com.example.plathome.user_report.exception.OwnUserReportException;
 import com.example.plathome.user_report.repository.UserReportRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,9 +24,16 @@ public class UserReportService {
 
     @Transactional
     public void report(MemberSession memberSession, UserReportForm userReportForm) {
-        memberRepository.findById(userReportForm.targetMemberId()).orElseThrow(NotFoundMemberException::new);
+        Member member = memberRepository.findById(userReportForm.targetMemberId()).orElseThrow(NotFoundMemberException::new);
+        getValidateUser(memberSession.id(), member.getId());
         userReportRepository.save(userReportForm.toEntity(memberSession.id()));
     }
+    private static void getValidateUser(long memberId, long expectedId) {
+        if (memberId == expectedId) {
+            throw new OwnUserReportException();
+        }
+    }
+
 
     public UserReportResponse getById(long userReportId) {
         return userReportRepository.findById(userReportId)
