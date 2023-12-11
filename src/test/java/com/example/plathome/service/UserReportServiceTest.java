@@ -1,6 +1,8 @@
 package com.example.plathome.service;
 
 import com.example.plathome.ObjectBuilder;
+import com.example.plathome.estate_report.dto.request.EstateReportForm;
+import com.example.plathome.estate_report.exception.OwnEstateReportException;
 import com.example.plathome.member.domain.MemberSession;
 import com.example.plathome.member.exception.NotFoundMemberException;
 import com.example.plathome.member.repository.MemberRepository;
@@ -8,6 +10,7 @@ import com.example.plathome.user_report.domain.UserReport;
 import com.example.plathome.user_report.dto.request.UserReportForm;
 import com.example.plathome.user_report.dto.response.UserReportResponse;
 import com.example.plathome.user_report.exception.NotFoundUserReportException;
+import com.example.plathome.user_report.exception.OwnUserReportException;
 import com.example.plathome.user_report.repository.UserReportRepository;
 import com.example.plathome.user_report.service.UserReportService;
 import org.junit.jupiter.api.DisplayName;
@@ -32,11 +35,11 @@ class UserReportServiceTest extends ObjectBuilder {
     @Mock private UserReportRepository userReportRepository;
     @Mock private MemberRepository memberRepository;
 
-    @DisplayName("매물신고: input - MemberSession & UserReportForm | output - void")
+    @DisplayName("회원 신고: 타인 신고 - 200")
     @Test
     void givenMemberSessionAndUserReportForm_whenReportingUser_thenReturnsSuccess(){
         //given
-        MemberSession memberSession = createMemberSession(ID);
+        MemberSession memberSession = createMemberSession(ID_2);
         UserReportForm userReportForm = createUserReportForm();
         given(memberRepository.findById(userReportForm.targetMemberId())).willReturn(Optional.of(createMember()));
         given(userReportRepository.save(any(UserReport.class))).willReturn(any(UserReport.class));
@@ -49,11 +52,11 @@ class UserReportServiceTest extends ObjectBuilder {
         then(userReportRepository).should().save(any(UserReport.class));
     }
 
-    @DisplayName("매물신고: input - MemberSession & Wrong UserReportForm | output - 404")
+    @DisplayName("회원 신고: 존재하지 않는 회원일 경우 - 404")
     @Test
-    void givenMemberSessionAndWrongUserReportForm_whenReportingUser_thenReturnsNotFoundException(){
+    void givenNonExistentMemberId_whenReportingUser_thenReturnsNotFoundException(){
         //given
-        MemberSession memberSession = createMemberSession(ID);
+        MemberSession memberSession = createMemberSession(ID_1);
         UserReportForm userReportForm = createUserReportForm();
         given(memberRepository.findById(userReportForm.targetMemberId())).willReturn(Optional.empty());
 
@@ -63,36 +66,50 @@ class UserReportServiceTest extends ObjectBuilder {
         then(userReportRepository).shouldHaveNoInteractions();
     }
 
-    @DisplayName("단일조회: input - UserReportId | output - UserReportResponse")
+    @DisplayName("회원 신고: 본인 신고 - 403")
+    @Test
+    void givenOwnMemberId_whenReportingEstate_thenThrowsOwnEstateReportException(){
+        //given
+        MemberSession memberSession = createMemberSession(ID_1);
+        UserReportForm userReportForm = createUserReportForm();
+        given(memberRepository.findById(userReportForm.targetMemberId())).willReturn(Optional.of(createMember()));
+
+        //when & then
+        assertThrows(OwnUserReportException.class, () -> sut.report(memberSession, userReportForm));
+        then(memberRepository).should().findById(userReportForm.targetMemberId());
+        then(userReportRepository).shouldHaveNoInteractions();
+    }
+
+    @DisplayName("회원 신고 단일 조회: 주어진 회원 신고 ID로 조회 시, 회원 신고 내역 응답 반환 - 200")
     @Test
     void givenUserReportId_whenGettingById_thenReturnsUserReportResponse(){
         //given
         UserReport userReport = createUserReport();
-        given(userReportRepository.findById(ID)).willReturn(Optional.of(userReport));
+        given(userReportRepository.findById(ID_1)).willReturn(Optional.of(userReport));
 
         //when
-        UserReportResponse userReportResponse = sut.getById(ID);
+        UserReportResponse userReportResponse = sut.getById(ID_1);
 
         //then
         assertThat(userReportResponse)
                 .hasFieldOrPropertyWithValue("reportMemberId", userReport.getReportMemberId())
                 .hasFieldOrPropertyWithValue("targetMemberId", userReport.getTargetMemberId())
                 .hasFieldOrPropertyWithValue("context", userReport.getContext());
-        then(userReportRepository).should().findById(ID);
+        then(userReportRepository).should().findById(ID_1);
     }
 
-    @DisplayName("단일조회: input - Wrong UserReportId | output - 404")
+    @DisplayName("회원 신고 단일 조회: 존재하지 않는 회원 신고 내역 일 경우 - 404")
     @Test
-    void givenWrongUserReportId_whenGettingById_thenReturnsNotFoundException(){
+    void givenNonExistentUserReportId_whenGettingById_thenReturnsNotFoundException(){
         //given
-        given(userReportRepository.findById(ID)).willReturn(Optional.empty());
+        given(userReportRepository.findById(ID_1)).willReturn(Optional.empty());
 
         //when & then
-        assertThrows(NotFoundUserReportException.class, () -> sut.getById(ID));
-        then(userReportRepository).should().findById(ID);
+        assertThrows(NotFoundUserReportException.class, () -> sut.getById(ID_1));
+        then(userReportRepository).should().findById(ID_1);
     }
 
-    @DisplayName("모두조회: input - Nothing | output - List<UserReportResponse>")
+    @DisplayName("회원 신고 전체 조회: 전체 조회 - 200")
     @Test
     void givenNothing_whenGettingAll_thenReturnsUserReportResponseList(){
         //given
@@ -109,16 +126,16 @@ class UserReportServiceTest extends ObjectBuilder {
         then(userReportRepository).should().findAll();
     }
 
-    @DisplayName("신고내역삭제: input - UserReportId | output - void")
+    @DisplayName("회원 신고 삭제: 회원 신고 ID로 삭제 - 204")
     @Test
-    void givenUserReportId_whenDeleting_thenReturnsSuccess() {
+    void givenUserReportId_whenDeleting_thenReturnsNoContent() {
         //given
-        willDoNothing().given(userReportRepository).deleteById(ID);
+        willDoNothing().given(userReportRepository).deleteById(ID_1);
 
         //when
-        sut.delete(ID);
+        sut.delete(ID_1);
 
         //then
-        then(userReportRepository).should().deleteById(ID);
+        then(userReportRepository).should().deleteById(ID_1);
     }
 }

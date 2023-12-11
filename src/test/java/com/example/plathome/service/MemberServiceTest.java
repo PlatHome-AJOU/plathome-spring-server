@@ -29,11 +29,11 @@ class MemberServiceTest extends ObjectBuilder {
     @Mock
     private MemberRepository memberRepository;
     
-    @DisplayName("본인조회: input - MemberSession | output - MemberResponse")
+    @DisplayName("본인 조회: 올바른 MemberSession으로 본인을 조회한 경우 - 200")
     @Test
     void givenMemberSession_whenRequestingMemberInfo_thenReturnsMemberResponse(){
         //given
-        MemberSession memberSession = createMemberSession(ID);
+        MemberSession memberSession = createMemberSession(ID_1);
         given(memberRepository.findByEmail(EMAIL)).willReturn(Optional.ofNullable(createMember()));
 
         //when
@@ -41,17 +41,17 @@ class MemberServiceTest extends ObjectBuilder {
 
         //then
         assertThat(memberResponse)
-                .hasFieldOrPropertyWithValue("id", ID)
+                .hasFieldOrPropertyWithValue("id", ID_1)
                 .hasFieldOrPropertyWithValue("nickname", NICKNAME)
                 .hasFieldOrPropertyWithValue("email", EMAIL);
         then(memberRepository).should().findByEmail(EMAIL);
     }
 
-    @DisplayName("본인조회: input - Wrong MemberSession | output - 404")
+    @DisplayName("본인 조회: 존재하지 않는 Email로 MemberSession이 들어온 경우 - 404")
     @Test
-    void givenWrongMemberSession_whenRequestingMemberInfo_thenReturnsNotFoundException(){
+    void givenNonExistentEmail_whenRequestingMemberInfo_thenReturnsNotFoundException(){
         //given
-        MemberSession memberSession = createMemberSession(ID);
+        MemberSession memberSession = createMemberSession(ID_1);
         given(memberRepository.findByEmail(EMAIL)).willReturn(Optional.empty());
 
         //when & then
@@ -59,11 +59,11 @@ class MemberServiceTest extends ObjectBuilder {
         then(memberRepository).should().findByEmail(EMAIL);
     }
 
-    @DisplayName("타인조회: input - MemberId | output - MemberResponse")
+    @DisplayName("타인 조회: MemberId로 회원을 조회한 경우 - 200")
     @Test
     void givenMemberId_whenRequestingMemberInfo_thenReturnsMemberResponse(){
         //given
-        long memberId = ID;
+        long memberId = ID_1;
         given(memberRepository.findById(memberId)).willReturn(Optional.of(createMember()));
 
         //when
@@ -71,17 +71,17 @@ class MemberServiceTest extends ObjectBuilder {
 
         //then
         assertThat(memberResponse)
-                .hasFieldOrPropertyWithValue("id", ID)
+                .hasFieldOrPropertyWithValue("id", ID_1)
                 .hasFieldOrPropertyWithValue("nickname", NICKNAME)
                 .hasFieldOrPropertyWithValue("email", EMAIL);
         then(memberRepository).should().findById(memberId);
     }
 
-    @DisplayName("타인조회: input - Wrong MemberId | output - 404")
+    @DisplayName("타인 조회: 존재하지 않는 MemberId로 회원을 조회한 경우 - 404")
     @Test
-    void givenWrongMemberId_whenRequestingMemberInfo_thenReturnsNotFoundException(){
+    void givenNonExistentMemberId_whenRequestingMemberInfo_thenReturnsNotFoundException(){
         //given
-        long memberId = ID;
+        long memberId = ID_1;
         given(memberRepository.findById(memberId)).willReturn(Optional.empty());
 
         //when & then
@@ -89,11 +89,11 @@ class MemberServiceTest extends ObjectBuilder {
         then(memberRepository).should().findById(memberId);
     }
 
-    @DisplayName("인터셉터: input - MemberId | output - MemberSession")
+    @DisplayName("인터 셉터: MemberId로 MemberSession을 조회하는 경우 - 200")
     @Test
     void givenMemberId_whenRequestingMemberSession_thenReturnsMemberSession(){
         //given
-        long memberId = ID;
+        long memberId = ID_1;
         given(memberRepository.findById(memberId)).willReturn(Optional.of(createMember()));
 
         //when
@@ -101,7 +101,7 @@ class MemberServiceTest extends ObjectBuilder {
 
         //then
         assertThat(memberSession)
-                .hasFieldOrPropertyWithValue("id", ID)
+                .hasFieldOrPropertyWithValue("id", ID_1)
                 .hasFieldOrPropertyWithValue("nickname", NICKNAME)
                 .hasFieldOrPropertyWithValue("email", EMAIL)
                 .hasFieldOrPropertyWithValue("password", PASSWORD)
@@ -109,11 +109,11 @@ class MemberServiceTest extends ObjectBuilder {
         then(memberRepository).should().findById(memberId);
     }
 
-    @DisplayName("인터셉터: input - Wrong MemberId | output - 404")
+    @DisplayName("인터 셉터: 존재하지 않는 MemberId로 MemberSession을 조회하는 경우 - 404")
     @Test
-    void givenWrongMemberId_whenRequestingMemberSession_thenReturnsNotFoundException(){
+    void givenNonExistentMemberId_whenRequestingMemberSession_thenReturnsNotFoundException(){
         //given
-        long memberId = ID;
+        long memberId = ID_1;
         given(memberRepository.findById(memberId)).willReturn(Optional.empty());
 
         //when & then
@@ -121,11 +121,11 @@ class MemberServiceTest extends ObjectBuilder {
         then(memberRepository).should().findById(memberId);
     }
 
-    @DisplayName("회원삭제: input - MemberId | output - Void")
+    @DisplayName("회원 삭제: 회원 탈퇴를 진행할 경우 - 200")
     @Test
     void givenMemberSession_whenDeletingMember_thenSuccess(){
         //given
-        MemberSession memberSession = createMemberSession(ID);
+        MemberSession memberSession = createMemberSession(ID_1);
         willDoNothing().given(memberRepository).deleteById(memberSession.id());
 
         //when

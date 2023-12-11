@@ -32,7 +32,7 @@ class JwtValidateServiceTest extends ObjectBuilder {
     @Mock private AccessSecretKey accessSecretKey;
     @Mock private RefreshSecretKey refreshSecretKey;
     
-    @DisplayName("AcessToken 검증: input - HttpServletRequest | output StringMemberId")
+    @DisplayName("AcessToken 검증: 유효한 토큰이 들어왔을 경우 - 200")
     @Test
     void givenHttpServletRequest_whenValidationAccessToken_thenReturnsStringMemberId(){
       //given
@@ -48,9 +48,9 @@ class JwtValidateServiceTest extends ObjectBuilder {
         then(accessSecretKey).should().getDecoded();
     }
 
-    @DisplayName("AcessToken 검증: input - HttpServletRequest With Invalid Token | output 401")
+    @DisplayName("AcessToken 검증: 유효하지 않은 토큰이 들어왔을 경우 - 401")
     @Test
-    void givenHttpServletRequestWithInvalidToken_whenValidationAccessToken_thenReturnsUnAuthorizedException(){
+    void givenInvalidAccessToken_whenValidationAccessToken_thenReturnsUnAuthorizedException(){
         //given
         String accessToken = createAccessToken(WRONG_SECRET_KEY);
         MockHttpServletRequest request = createHttpRequestWithToken(ACCESS_HEADER, accessToken);
@@ -61,9 +61,9 @@ class JwtValidateServiceTest extends ObjectBuilder {
         then(accessSecretKey).should().getDecoded();
     }
 
-    @DisplayName("AcessToken 검증: input - HttpServletRequest With Expired Token | output 401")
+    @DisplayName("AcessToken 검증: 만료된 토큰이 들어왔을 경우 - 401")
     @Test
-    void givenHttpServletRequestWithExpiredToken_whenValidationAccessToken_thenReturnsUnAuthorizedException(){
+    void givenExpiredAccessToken_whenValidationAccessToken_thenReturnsUnAuthorizedException(){
         //given
         String expiredAccessToken = createExpiredAccessToken(SECRET_KEY);
         MockHttpServletRequest request = createHttpRequestWithToken(ACCESS_HEADER, expiredAccessToken);
@@ -74,7 +74,7 @@ class JwtValidateServiceTest extends ObjectBuilder {
         then(accessSecretKey).should().getDecoded();
     }
 
-    @DisplayName("RefreshToken 검증: input - HttpServletRequest | output StringMemberId")
+    @DisplayName("RefreshToken 검증: 유효한 토큰이 들어왔을 경우 - 200")
     @Test
     void givenHttpServletRequest_whenValidationRefreshToken_thenReturnsStringMemberId(){
         //given
@@ -94,9 +94,9 @@ class JwtValidateServiceTest extends ObjectBuilder {
         then(refreshTokenRedisService).should().getData(String.valueOf(1L));
     }
 
-    @DisplayName("RefreshToken 검증: input - HttpServletRequest With Invalid Token | output 401")
+    @DisplayName("RefreshToken 검증: 유효하지 않은 토큰이 들어왔을 경우 - 401")
     @Test
-    void givenHttpServletRequestWithInvalidToken_whenValidationRefreshToken_thenReturnsUnAuthorizedException(){
+    void givenInvalidRefreshToken_whenValidationRefreshToken_thenReturnsUnAuthorizedException(){
         //given
         String refreshToken = createRefreshToken(WRONG_SECRET_KEY);
         MockHttpServletRequest request = createHttpRequestWithToken(REFRESH_HEADER ,refreshToken);
@@ -108,9 +108,9 @@ class JwtValidateServiceTest extends ObjectBuilder {
         then(refreshTokenRedisService).shouldHaveNoInteractions();
     }
 
-    @DisplayName("RefreshToken 검증: input - HttpServletRequest With Expired Token | output 401")
+    @DisplayName("RefreshToken 검증:  만료된 토큰이 들어왔을 경우 - 401")
     @Test
-    void givenHttpServletRequestWithExpiredToken_whenValidationRefreshToken_thenReturnsUnAuthorizedException(){
+    void givenExpiredRefreshToken_whenValidationRefreshToken_thenReturnsUnAuthorizedException(){
         //given
         String expiredRefreshToken = createExpiredRefreshToken(SECRET_KEY);
         MockHttpServletRequest request = createHttpRequestWithToken(REFRESH_HEADER, expiredRefreshToken);
