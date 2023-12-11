@@ -34,8 +34,8 @@ import static com.example.plathome.global.constant.JwtStaticField.*;
 
 
 public class ObjectBuilder {
-    protected static final long ID = 1L;
-    protected static final long WRONG_ID = 2L;
+    protected static final long ID_1 = 1L;
+    protected static final long ID_2 = 2L;
     protected static final String NICKNAME = "nickname";
     protected static final String EMAIL = "email@ajou.ac.kr";
     protected static final String WRONG_EMAIL = "email";
@@ -62,7 +62,7 @@ public class ObjectBuilder {
 
     protected static Member createMember() {
         return Member.of()
-                .id(ID)
+                .id(ID_1)
                 .nickname(NICKNAME)
                 .email(EMAIL)
                 .password(PASSWORD)
@@ -158,7 +158,7 @@ public class ObjectBuilder {
 
     protected static EstateForm createEstateForm() {
         return EstateForm.of()
-                .memberId(ID)
+                .memberId(ID_1)
                 .location(LOCATION)
                 .area(AREA)
                 .roomType(ROOM_TYPE)
@@ -179,7 +179,7 @@ public class ObjectBuilder {
 
     protected static Estate createEstate() {
         return Estate.builder()
-                .memberId(ID)
+                .memberId(ID_1)
                 .location(LOCATION)
                 .area(AREA)
                 .roomType(ROOM_TYPE)
@@ -200,13 +200,13 @@ public class ObjectBuilder {
 
     protected static ThumbNail createThumbNail() {
         return ThumbNail.builder()
-                .memberId(ID)
+                .memberId(ID_1)
                 .url(THUMBNAIL_URL).build();
     }
 
     protected static UpdateEstateForm createUpdateEstateForm() {
         return UpdateEstateForm.of()
-                .estateId(ID)
+                .estateId(ID_1)
                 .context(CONTEXT)
                 .contractTerm(CONTRACT_TERM)
                 .option(createOption())
@@ -230,27 +230,27 @@ public class ObjectBuilder {
 
     protected static EstateReportForm createEstateReportForm() {
         return EstateReportForm.of()
-                .estateId(ID)
+                .estateId(ID_1)
                 .context(CONTEXT).build();
     }
 
     protected static EstateReport createEstateReport() {
         return EstateReport.builder()
-                .memberId(ID)
-                .estateId(ID)
+                .memberId(ID_1)
+                .estateId(ID_1)
                 .context(CONTEXT).build();
     }
 
     protected static UserReportForm createUserReportForm() {
         return UserReportForm.of()
-                .targetMemberId(ID)
+                .targetMemberId(ID_1)
                 .context(CONTEXT).build();
     }
 
     protected static UserReport createUserReport() {
         return UserReport.builder()
-                .reportMemberId(ID)
-                .targetMemberId(WRONG_ID)
+                .reportMemberId(ID_1)
+                .targetMemberId(ID_2)
                 .context(CONTEXT).build();
     }
     private static Option createOption() {

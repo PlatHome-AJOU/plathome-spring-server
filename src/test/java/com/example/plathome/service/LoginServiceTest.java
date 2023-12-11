@@ -40,7 +40,7 @@ class LoginServiceTest extends ObjectBuilder {
     @Mock private RefreshTokenRedisService refreshTokenRedisService;
     @Mock private MailMemberService mailMemberService;
 
-    @DisplayName("회원가입: input - SignUpForm | output - MemberResponse")
+    @DisplayName("회원 가입: 올바른 입력 값이 들어온 경우 - 200")
     @Test
     void givenSignUpForm_whenSingingUp_thenReturnsMemberResponse(){
         //given
@@ -64,9 +64,9 @@ class LoginServiceTest extends ObjectBuilder {
         then(memberRepository).should().save(any(Member.class));
     }
 
-    @DisplayName("회원가입: input - SignUpForm With Dup Email | output - 400")
+    @DisplayName("회원 가입: 이미 존재하는 이메일을 입력한 경우 - 400")
     @Test
-    void givenSignUpFormWithDuplicationEmail_whenSingingUp_thenReturnsDuplicationException(){
+    void givenDuplicationEmail_whenSingingUp_thenReturnsDuplicationException(){
         //given
         SignUpForm signUpForm = createSignUpForm();
         Member member = createMember();
@@ -80,9 +80,9 @@ class LoginServiceTest extends ObjectBuilder {
         then(mailMemberService).shouldHaveNoInteractions();
     }
 
-    @DisplayName("회원가입: input - SignUpForm With Dup Nickname | output - 400")
+    @DisplayName("회원 가입: 이미 존재하는 닉네임을 입력한 경우 - 400")
     @Test
-    void givenSignUpFormWithDuplicationNickname_whenSingingUp_thenReturnsDuplicationExceptions(){
+    void givenDuplicationNickname_whenSingingUp_thenReturnsDuplicationExceptions(){
         //given
         SignUpForm wrongEmailSignUpForm = createWrongEmailSignUpForm();
         Member member = createMember();
@@ -96,7 +96,7 @@ class LoginServiceTest extends ObjectBuilder {
         then(mailMemberService).shouldHaveNoInteractions();
     }
 
-    @DisplayName("로그인: input - LoginForm | output - TokensResponse")
+    @DisplayName("로그인: 올바른 입력 값이 들어온 경우 - 200")
     @Test
     void givenLoginForm_whenLogin_thenReturnsTokenResponse(){
         //given
@@ -124,9 +124,9 @@ class LoginServiceTest extends ObjectBuilder {
         then(refreshTokenRedisService).should().setData(member.getId().toString(), refreshToken);
     }
 
-    @DisplayName("로그인: input - LoginForm With Wrong Email | output - 404")
+    @DisplayName("로그인: 존재하지 않는 이메일을 입력한 경우 - 404")
     @Test
-    void givenLoginFormWithWrongEmail_whenLogin_thenReturnsNotFoundException(){
+    void givenNonExistentEmail_whenLogin_thenReturnsNotFoundException(){
         //given
         LoginForm loginForm = createLoginForm();
         given(memberRepository.findByEmail(loginForm.email())).willReturn(Optional.empty());
@@ -139,9 +139,9 @@ class LoginServiceTest extends ObjectBuilder {
         then(refreshTokenRedisService).shouldHaveNoInteractions();
     }
 
-    @DisplayName("로그인: input - LoginForm With Wrong Password | output - 405")
+    @DisplayName("로그인: 잘못된 비밀 번호를 입력한 경우 - 405")
     @Test
-    void givenLoginFormWithWrongPassword_whenLogin_thenReturnsNotMatchException(){
+    void givenWrongPassword_whenLogin_thenReturnsNotMatchException(){
         //given
         LoginForm loginForm = createLoginForm();
         Member member = createMember();
@@ -156,11 +156,11 @@ class LoginServiceTest extends ObjectBuilder {
         then(refreshTokenRedisService).shouldHaveNoInteractions();
     }
 
-    @DisplayName("재발급: input - MemberSession | output - TokenResponse")
+    @DisplayName("재발급: 올바른 MemberSession으로 토큰 재 발급을 시도한 경우 - 200")
     @Test
     void givenMemberSession_whenRefreshing_thenReturnsTokenResponse(){
         //given
-        MemberSession memberSession = createMemberSession(ID);
+        MemberSession memberSession = createMemberSession(ID_1);
         String stringMemberId = String.valueOf(memberSession.id());
         String accessToken = createAccessToken(SECRET_KEY);
         String refreshToken = createRefreshToken(SECRET_KEY);
@@ -180,11 +180,11 @@ class LoginServiceTest extends ObjectBuilder {
         then(refreshTokenRedisService).should().setData(stringMemberId, refreshToken);
     }
 
-    @DisplayName("로그아웃: input - MemberSession | output - void")
+    @DisplayName("로그 아웃: 올바른 MemberSession으로 로그 아웃을 시도할 경우 - 200")
     @Test
-    void givenMemberSession_whenLogout_thenReturnsSuccess() {
+    void givenMemberSession_whenLogout_thenReturnsNoContent() {
         //given
-        MemberSession memberSession = createMemberSession(ID);
+        MemberSession memberSession = createMemberSession(ID_1);
         willDoNothing().given(refreshTokenRedisService).deleteData(memberSession.email());
 
         //when

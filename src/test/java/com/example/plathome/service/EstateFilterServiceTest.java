@@ -16,6 +16,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -29,7 +30,7 @@ class EstateFilterServiceTest extends ObjectBuilder {
     @Mock private EstateRepository estateRepository;
     @Mock private ThumbNailRepository thumbNailRepository;
 
-    @DisplayName("지도 필터검색: input - Filter | output - List<MapInfoEstateResponse>")
+    @DisplayName("지도 필터 검색: 매칭되는 매물 존재 - 200")
     @Test
     void givenFilter_whenFilteringInMap_thenReturnsMapInfoEstateResponseList(){
         //given
@@ -47,7 +48,23 @@ class EstateFilterServiceTest extends ObjectBuilder {
         then(estateRepository).should().filterSearch(filter);
     }
 
-    @DisplayName("게시판 필터검색: input - Filter | output - List<SimpleEstateResponse>")
+    @DisplayName("지도 필터 검색: 매칭되는 매물 없음 - 200")
+    @Test
+    void givenFilter_whenNoMatchingEstate_thenReturnsEmptyList(){
+        //given
+        Filter filter = createFilter();
+        given(estateRepository.filterSearch(filter)).willReturn(Collections.emptyList());
+
+        //when
+        List<MapInfoEstateResponse> mapInfoEstateResponseList = sut.mapFilter(filter);
+
+        //then
+        assertThat(mapInfoEstateResponseList)
+                .isEmpty();
+        then(estateRepository).should().filterSearch(filter);
+    }
+
+    @DisplayName("게시판 필터 검색: 매칭되는 매물 존재 - 200")
     @Test
     void givenFilter_whenFilteringInBoard_thenReturnsSimpleEstateResponseList(){
         //given
@@ -62,6 +79,22 @@ class EstateFilterServiceTest extends ObjectBuilder {
         assertThat(simpleEstateResponseList)
                 .hasSize(1)
                 .extracting(SimpleEstateResponse::memberId).containsExactly(estate.getMemberId());
+        then(estateRepository).should().filterSearch(filter);
+    }
+
+    @DisplayName("게시판 필터 검색: 매칭되는 매물 없음 - 200")
+    @Test
+    void givenFilter_whenNoMatchingEstateInBoard_thenReturnsEmptyList(){
+        //given
+        Filter filter = createFilter();
+        given(estateRepository.filterSearch(filter)).willReturn(Collections.emptyList());
+
+        //when
+        List<SimpleEstateResponse> simpleEstateResponseList = sut.boardFilter(filter);
+
+        //then
+        assertThat(simpleEstateResponseList)
+                .isEmpty();
         then(estateRepository).should().filterSearch(filter);
     }
 }
