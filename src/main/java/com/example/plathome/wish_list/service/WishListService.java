@@ -6,6 +6,7 @@ import com.example.plathome.real_estate.repository.EstateRepository;
 import com.example.plathome.wish_list.domain.WishList;
 import com.example.plathome.wish_list.dto.WishListResponse;
 import com.example.plathome.wish_list.exception.DuplicateWishListException;
+import com.example.plathome.wish_list.exception.NotFoundWishListException;
 import com.example.plathome.wish_list.exception.UnAuthorizedWishListException;
 import com.example.plathome.wish_list.repository.WishListRepository;
 import lombok.RequiredArgsConstructor;
@@ -59,10 +60,13 @@ public class WishListService {
     public void deleteWishList(Long id, Long memberId){
         Optional<WishList> existingWishList = wishListRepository.findById(id);
 
-        if (existingWishList.isPresent() && existingWishList.get().getMemberId() == memberId) {
-            throw new  UnAuthorizedWishListException("해당 유저의 찜목록이 아니므로 삭제할 수 없습니다.");
+        if (existingWishList.isEmpty()) {
+            throw new NotFoundWishListException();
         }
 
+        if (existingWishList.get().getMemberId() != memberId) {
+            throw new  UnAuthorizedWishListException("해당 유저의 찜목록이 아니므로 삭제할 수 없습니다.");
+        }
         wishListRepository.deleteById(id);
     }
 }
