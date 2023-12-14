@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.codec.binary.StringUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import static com.example.plathome.global.constant.JwtStaticField.REFRESH_URL;
@@ -23,6 +24,10 @@ public class JwtLoginCheckInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler){
+        if(StringUtils.equals(request.getMethod(), "OPTIONS")){
+            return true;
+        }
+
         String requestURI = request.getRequestURI();
         log.info("MEMBER 로그인 인증 인터 셉터 실행 [{}]", requestURI);
         String stringMemberId = this.getMemberId(request);
