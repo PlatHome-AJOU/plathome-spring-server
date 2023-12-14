@@ -2,13 +2,13 @@ package com.example.plathome.service;
 
 
 import com.example.plathome.ObjectBuilder;
-import com.example.plathome.estate.real.domain.Estate;
-import com.example.plathome.estate.real.dto.response.MapInfoEstateResponse;
-import com.example.plathome.estate.real.dto.response.SimpleEstateResponse;
-import com.example.plathome.estate.real.dto.search.Filter;
-import com.example.plathome.estate.real.repository.EstateRepository;
-import com.example.plathome.estate.real.service.EstateFilterService;
-import com.example.plathome.estate.requested.repository.ThumbNailRepository;
+import com.example.plathome.real_estate.domain.Estate;
+import com.example.plathome.real_estate.dto.response.MapInfoEstateResponse;
+import com.example.plathome.real_estate.dto.response.SimpleEstateResponse;
+import com.example.plathome.real_estate.dto.search.Filter;
+import com.example.plathome.real_estate.repository.EstateRepository;
+import com.example.plathome.real_estate.service.EstateFilterService;
+import com.example.plathome.requested_estate.repository.ThumbNailRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,6 +16,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -29,7 +30,7 @@ class EstateFilterServiceTest extends ObjectBuilder {
     @Mock private EstateRepository estateRepository;
     @Mock private ThumbNailRepository thumbNailRepository;
 
-    @DisplayName("지도 필터검색: input - Filter | output - List<MapInfoEstateResponse>")
+    @DisplayName("지도 필터 검색: 매칭되는 매물 존재 - 200")
     @Test
     void givenFilter_whenFilteringInMap_thenReturnsMapInfoEstateResponseList(){
         //given
@@ -47,7 +48,23 @@ class EstateFilterServiceTest extends ObjectBuilder {
         then(estateRepository).should().filterSearch(filter);
     }
 
-    @DisplayName("게시판 필터검색: input - Filter | output - List<SimpleEstateResponse>")
+    @DisplayName("지도 필터 검색: 매칭되는 매물 없음 - 200")
+    @Test
+    void givenFilter_whenNoMatchingEstate_thenReturnsEmptyList(){
+        //given
+        Filter filter = createFilter();
+        given(estateRepository.filterSearch(filter)).willReturn(Collections.emptyList());
+
+        //when
+        List<MapInfoEstateResponse> mapInfoEstateResponseList = sut.mapFilter(filter);
+
+        //then
+        assertThat(mapInfoEstateResponseList)
+                .isEmpty();
+        then(estateRepository).should().filterSearch(filter);
+    }
+
+    @DisplayName("게시판 필터 검색: 매칭되는 매물 존재 - 200")
     @Test
     void givenFilter_whenFilteringInBoard_thenReturnsSimpleEstateResponseList(){
         //given
@@ -62,6 +79,22 @@ class EstateFilterServiceTest extends ObjectBuilder {
         assertThat(simpleEstateResponseList)
                 .hasSize(1)
                 .extracting(SimpleEstateResponse::memberId).containsExactly(estate.getMemberId());
+        then(estateRepository).should().filterSearch(filter);
+    }
+
+    @DisplayName("게시판 필터 검색: 매칭되는 매물 없음 - 200")
+    @Test
+    void givenFilter_whenNoMatchingEstateInBoard_thenReturnsEmptyList(){
+        //given
+        Filter filter = createFilter();
+        given(estateRepository.filterSearch(filter)).willReturn(Collections.emptyList());
+
+        //when
+        List<SimpleEstateResponse> simpleEstateResponseList = sut.boardFilter(filter);
+
+        //then
+        assertThat(simpleEstateResponseList)
+                .isEmpty();
         then(estateRepository).should().filterSearch(filter);
     }
 }

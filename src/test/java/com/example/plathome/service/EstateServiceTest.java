@@ -2,18 +2,18 @@ package com.example.plathome.service;
 
 
 import com.example.plathome.ObjectBuilder;
-import com.example.plathome.estate.real.domain.Estate;
-import com.example.plathome.estate.real.dto.request.EstateForm;
-import com.example.plathome.estate.real.dto.request.UpdateEstateForm;
-import com.example.plathome.estate.real.dto.response.EstateResponse;
-import com.example.plathome.estate.real.dto.response.MapInfoEstateResponse;
-import com.example.plathome.estate.real.dto.response.SimpleEstateResponse;
-import com.example.plathome.estate.real.exception.DuplicationEstateException;
-import com.example.plathome.estate.real.exception.NotFoundEstateException;
-import com.example.plathome.estate.real.repository.EstateRepository;
-import com.example.plathome.estate.real.service.EstateService;
-import com.example.plathome.estate.requested.repository.RequestedRepository;
-import com.example.plathome.estate.requested.repository.ThumbNailRepository;
+import com.example.plathome.real_estate.domain.Estate;
+import com.example.plathome.real_estate.dto.request.EstateForm;
+import com.example.plathome.real_estate.dto.request.UpdateEstateForm;
+import com.example.plathome.real_estate.dto.response.EstateResponse;
+import com.example.plathome.real_estate.dto.response.MapInfoEstateResponse;
+import com.example.plathome.real_estate.dto.response.SimpleEstateResponse;
+import com.example.plathome.real_estate.exception.DuplicationEstateException;
+import com.example.plathome.real_estate.exception.NotFoundEstateException;
+import com.example.plathome.real_estate.repository.EstateRepository;
+import com.example.plathome.real_estate.service.EstateService;
+import com.example.plathome.requested_estate.repository.RequestedRepository;
+import com.example.plathome.requested_estate.repository.ThumbNailRepository;
 import com.example.plathome.member.domain.MemberSession;
 import com.example.plathome.member.exception.ForbiddenMemberException;
 import org.junit.jupiter.api.DisplayName;
@@ -40,7 +40,7 @@ class EstateServiceTest extends ObjectBuilder {
     @Mock private RequestedRepository requestedRepository;
     @Mock private ThumbNailRepository thumbNailRepository;
 
-    @DisplayName("매물등록: input - EstateForm | output - void")
+    @DisplayName("매물 등록: 관리자가 매물 등록을 승인할 경우 - 200")
     @Test
     void givenEstateForm_whenRegistering_thenReturnsSuccess() {
         //given
@@ -58,9 +58,9 @@ class EstateServiceTest extends ObjectBuilder {
         then(requestedRepository).should().deleteByMemberId(estateForm.memberId());
     }
 
-    @DisplayName("매물등록: input - EstateForm With Dup MemberId | output - 400")
+    @DisplayName("매물 등록: 이미 매물을 올린 회원일 경우 - 400")
     @Test
-    void givenEstateFormWithDupMemberId_whenRegistering_thenReturnsDuplicationException() {
+    void givenDuplicationMemberId_whenRegistering_thenReturnsDuplicationException() {
         //given
         EstateForm estateForm = createEstateForm();
         Estate estate = createEstate();
@@ -73,7 +73,7 @@ class EstateServiceTest extends ObjectBuilder {
         then(requestedRepository).shouldHaveNoInteractions();
     }
 
-    @DisplayName("지도조회: input - Nothing | output - List<MapInfoEstateResponse>")
+    @DisplayName("지도 조회: 매물이 존재하는 경우 - 200")
     @Test
     void givenNothing_whenGettingAllMapInfo_thenReturnsMapInfoEstateResponseList() {
         //given
@@ -90,7 +90,7 @@ class EstateServiceTest extends ObjectBuilder {
         then(estateRepository).should().findAll();
     }
 
-    @DisplayName("게시판조회: input - Nothing | output - List<SimpleEstateResponse>")
+    @DisplayName("게시판 조회: 매물이 존재하는 경우 - 200")
     @Test
     void givenNothing_whenGettingAllSimpleInfo_thenReturnsSimpleEstateResponseList() {
         //given
@@ -107,11 +107,11 @@ class EstateServiceTest extends ObjectBuilder {
         then(estateRepository).should().findAll();
     }
 
-    @DisplayName("상세조회: input - EstateId | output - EstateResponse")
+    @DisplayName("매물 상세 조회: 매물ID로 조회할 경우 - 200")
     @Test
     void givenEstateId_whenGettingDetail_thenReturnsEstateResponse() {
         //given
-        long estateId = ID;
+        long estateId = ID_1;
         Estate estate = createEstate();
         given(estateRepository.findById(estateId)).willReturn(Optional.of(estate));
         given(thumbNailRepository.findByMemberId(estate.getMemberId())).willReturn(List.of(createThumbNail()));
@@ -127,11 +127,11 @@ class EstateServiceTest extends ObjectBuilder {
         then(thumbNailRepository).should().findByMemberId(estate.getMemberId());
     }
 
-    @DisplayName("상세조회: input - Wrong EstateId | output - 404")
+    @DisplayName("매물 상세 조회: 매물ID에 매칭되는 매물이 존재하지 않을 경우 - 404")
     @Test
-    void givenWrongEstateId_whenGettingDetail_thenReturnsNotFoundException() {
+    void givenNonExistentEstateId_whenGettingDetail_thenReturnsNotFoundException() {
         //given
-        long estateId = ID;
+        long estateId = ID_1;
         given(estateRepository.findById(estateId)).willReturn(Optional.empty());
 
         //when & then
@@ -140,90 +140,86 @@ class EstateServiceTest extends ObjectBuilder {
         then(thumbNailRepository).shouldHaveNoInteractions();
     }
 
-    @DisplayName("매물 삭제: input - MemberSession & EstateId | output - void")
+    @DisplayName("매물 삭제: 본인의 매물을 삭제 요청을 할 경우 - 200")
     @Test
     void givenMemberSessionAndEstateId_whenDeletingEstate_thenReturnsSuccess() {
         //given
-        MemberSession memberSession = createMemberSession(ID);
-        given(estateRepository.findById(ID)).willReturn(Optional.of(createEstate()));
-        willDoNothing().given(estateRepository).deleteById(ID);
+        MemberSession memberSession = createMemberSession(ID_1);
+        given(estateRepository.findById(ID_1)).willReturn(Optional.of(createEstate()));
+        willDoNothing().given(estateRepository).deleteById(ID_1);
 
         //when
-        sut.delete(memberSession, ID);
+        sut.delete(memberSession, ID_1);
 
         //then
-        then(estateRepository).should().findById(ID);
-        then(estateRepository).should().deleteById(ID);
+        then(estateRepository).should().findById(ID_1);
+        then(estateRepository).should().deleteById(ID_1);
     }
 
-    @DisplayName("매물 삭제: input - Wrong MemberSession & EstateId | output - 404")
+    @DisplayName("매물 삭제: 매물ID에 매칭되는 매물이 존재하지 않는 경우 - 404 ")
     @Test
-    void givenWrongMemberSessionAndEstateId_whenDeletingEstate_thenReturnsNotFoundException() {
+    void givenNonExistentEstateId_whenDeletingEstate_thenReturnsNotFoundException() {
         //given
-        MemberSession memberSession = createMemberSession(ID);
-        given(estateRepository.findById(ID)).willReturn(Optional.empty());
+        MemberSession memberSession = createMemberSession(ID_1);
+        given(estateRepository.findById(ID_1)).willReturn(Optional.empty());
 
-        //when
-        assertThrows(NotFoundEstateException.class, () -> sut.delete(memberSession, ID));
-
-        //then
-        then(estateRepository).should().findById(ID);
+        //when & then
+        assertThrows(NotFoundEstateException.class, () -> sut.delete(memberSession, ID_1));
+        then(estateRepository).should().findById(ID_1);
         then(estateRepository).shouldHaveNoMoreInteractions();
     }
 
-    @DisplayName("매물 삭제: input - Forbidden MemberSession & EstateId | output - 403")
+    @DisplayName("매물 삭제: 타인의 매물을 삭제하려는 경우 - 403")
     @Test
-    void givenForbiddenMemberSessionAndEstateId_whenDeletingEstate_thenReturnsForbiddenException() {
+    void givenForbiddenMemberId_whenDeletingEstate_thenReturnsForbiddenException() {
         //given
-        MemberSession memberSession = createMemberSession(WRONG_ID);
-        given(estateRepository.findById(ID)).willReturn(Optional.of(createEstate()));
+        MemberSession memberSession = createMemberSession(ID_2);
+        given(estateRepository.findById(ID_1)).willReturn(Optional.of(createEstate()));
 
-        //when
-        assertThrows(ForbiddenMemberException.class, () -> sut.delete(memberSession, ID));
-
-        //then
-        then(estateRepository).should().findById(ID);
+        //when & then
+        assertThrows(ForbiddenMemberException.class, () -> sut.delete(memberSession, ID_1));
+        then(estateRepository).should().findById(ID_1);
         then(estateRepository).shouldHaveNoMoreInteractions();
     }
 
-    @DisplayName("매물 수정: input - MemberSession & UpdateEstateForm | output - void")
+    @DisplayName("매물 수정: 본인의 매물을 수정하려는 경우 - 200")
     @Test
     void givenMemberSessionAndUpdateEstateForm_whenUpdatingEstate_thenReturnsSuccess() {
         //given
-        MemberSession memberSession = createMemberSession(ID);
+        MemberSession memberSession = createMemberSession(ID_1);
         UpdateEstateForm updateEstateForm = createUpdateEstateForm();
-        given(estateRepository.findById(ID)).willReturn(Optional.of(createEstate()));
+        given(estateRepository.findById(ID_1)).willReturn(Optional.of(createEstate()));
 
         //when
         sut.update(memberSession, updateEstateForm);
 
         //then
-        then(estateRepository).should().findById(ID);
+        then(estateRepository).should().findById(ID_1);
     }
 
-    @DisplayName("매물 수정: input - Wrong MemberSession & UpdateEstateForm | output - 404")
+    @DisplayName("매물 수정: 매물ID에 매핑되는 매물이 존재하지 않을 경우 - 404")
     @Test
-    void givenWrongMemberSessionAndUpdateEstateForm_whenUpdatingEstate_thenReturnsNotFoundException() {
+    void givenNonExistentEstateId_whenUpdatingEstate_thenReturnsNotFoundException() {
         //given
-        MemberSession memberSession = createMemberSession(ID);
+        MemberSession memberSession = createMemberSession(ID_1);
         UpdateEstateForm updateEstateForm = createUpdateEstateForm();
-        given(estateRepository.findById(ID)).willReturn(Optional.empty());
+        given(estateRepository.findById(ID_1)).willReturn(Optional.empty());
 
         //when & then
         assertThrows(NotFoundEstateException.class, () -> sut.update(memberSession, updateEstateForm));
-        then(estateRepository).should().findById(ID);
+        then(estateRepository).should().findById(ID_1);
     }
 
-    @DisplayName("매물 수정: input - Forbidden MemberSession & UpdateEstateForm | output - 403")
+    @DisplayName("매물 수정: 타인의 매물을 수정하려는 경우 - 403")
     @Test
-    void givenForbiddenMemberSessionAndUpdateEstateForm_whenUpdatingEstate_thenReturnsForbiddenException() {
+    void givenForbiddenMemberId_whenUpdatingEstate_thenReturnsForbiddenException() {
         //given
-        MemberSession memberSession = createMemberSession(WRONG_ID);
+        MemberSession memberSession = createMemberSession(ID_2);
         UpdateEstateForm updateEstateForm = createUpdateEstateForm();
-        given(estateRepository.findById(ID)).willReturn(Optional.of(createEstate()));
+        given(estateRepository.findById(ID_1)).willReturn(Optional.of(createEstate()));
 
         //when & then
         assertThrows(ForbiddenMemberException.class, () -> sut.update(memberSession, updateEstateForm));
-        then(estateRepository).should().findById(ID);
+        then(estateRepository).should().findById(ID_1);
     }
 }

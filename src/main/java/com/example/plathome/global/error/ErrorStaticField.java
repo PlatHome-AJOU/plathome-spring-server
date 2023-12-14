@@ -42,8 +42,11 @@ public class ErrorStaticField {
     public static final String ERROR_ESTATE_DUPLICATE = "오류: 한 회원당 등록 가능한 매물은 하나뿐입니다.";
 
     // User report related
-    public static final String ERROR_REPORT_USER_NOT_FOUND = "오류: 해당 회원의 신고 내역을 찾을 수 없습니다.";
+    public static final String ERROR_USER_REPORT_NOT_FOUND = "오류: 해당 회원의 신고 내역을 찾을 수 없습니다.";
+    public static final String ERROR_USER_REPORT_OWN_REPORT = "오류: 본인은 신고 할 수 없습니다.";
 
     // Estate report related
-    public static final String ERROR_REPORT_ESTATE_NOT_FOUND = "오류: 해당 매물의 신고 내역을 찾을 수 없습니다.";
+    public static final String ERROR_ESTATE_REPORT_NOT_FOUND = "오류: 해당 매물의 신고 내역을 찾을 수 없습니다.";
+    public static final String ERROR_ESTATE_REPORT_OWN_REPORT = "오류: 자신의 매물은 신고 할 수 없습니다.";
+
 }

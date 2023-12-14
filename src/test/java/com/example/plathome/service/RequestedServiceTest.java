@@ -1,6 +1,5 @@
 package com.example.plathome.service;
 
-
 import com.example.plathome.estate.requested.repository.RequestedRepository;
 import com.example.plathome.estate.requested.repository.ThumbNailRepository;
 import com.example.plathome.estate.requested.service.RequestedService;
@@ -12,7 +11,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-@DisplayName("비니지스 로직 - 등록 요청 매물")
+@DisplayName("비지니스 로직 - 등록 요청 매물")
 @ExtendWith(MockitoExtension.class)
 class RequestedServiceTest {
     @InjectMocks private RequestedService sut;

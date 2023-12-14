@@ -1,11 +1,12 @@
 package com.example.plathome.estate_report.service;
 
-import com.example.plathome.estate.real.domain.Estate;
-import com.example.plathome.estate.real.exception.NotFoundEstateException;
-import com.example.plathome.estate.real.repository.EstateRepository;
+import com.example.plathome.real_estate.domain.Estate;
+import com.example.plathome.real_estate.exception.NotFoundEstateException;
+import com.example.plathome.real_estate.repository.EstateRepository;
 import com.example.plathome.estate_report.dto.request.EstateReportForm;
 import com.example.plathome.estate_report.dto.response.EstateReportResponse;
 import com.example.plathome.estate_report.exception.NotFoundEstateReportException;
+import com.example.plathome.estate_report.exception.OwnEstateReportException;
 import com.example.plathome.estate_report.repository.EstateReportRepository;
 import com.example.plathome.member.domain.MemberSession;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +26,14 @@ public class EstateReportService {
     public void report(MemberSession memberSession, EstateReportForm estateReportForm) {
         Estate estate = estateRepository.findById(estateReportForm.estateId())
                 .orElseThrow(NotFoundEstateException::new);
+        getValidateUser(memberSession.id(), estate.getMemberId());
         estateReportRepository.save(estateReportForm.toEntity(memberSession.id()));
+    }
+
+    private static void getValidateUser(long memberId, long expectedId) {
+        if (memberId == expectedId) {
+            throw new OwnEstateReportException();
+        }
     }
 
     public EstateReportResponse getById(long estateReportId) {

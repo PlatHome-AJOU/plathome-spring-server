@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.UUID;
 
-import static com.example.plathome.login.constant.JwtStaticField.*;
+import static com.example.plathome.global.constant.JwtStaticField.*;
 
 
 @RequiredArgsConstructor

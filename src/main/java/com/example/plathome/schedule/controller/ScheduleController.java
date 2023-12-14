@@ -6,6 +6,7 @@ import com.example.plathome.schedule.domain.Schedule;
 import com.example.plathome.schedule.dto.CreateSchedulesDto;
 import com.example.plathome.schedule.service.ScheduleService;
 import io.swagger.v3.oas.annotations.Parameter;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +22,7 @@ public class ScheduleController {
     @PostMapping("/auth")
     public ResponseEntity<List<Schedule>> createSchedule(
             @Parameter(hidden = true) @Login MemberSession memberSession,
-            @RequestBody CreateSchedulesDto dto
+            @RequestBody @Valid CreateSchedulesDto dto
     ) {
         List<Schedule> createdSchedules = scheduleService.reportSchedules(memberSession.id(), dto);
         return ResponseEntity.ok(createdSchedules);

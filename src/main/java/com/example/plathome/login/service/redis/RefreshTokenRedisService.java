@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.concurrent.TimeUnit;
 
-import static com.example.plathome.login.constant.JwtStaticField.REFRESH_TOKEN_EXPIRATION;
+import static com.example.plathome.global.constant.JwtStaticField.REFRESH_TOKEN_EXPIRATION;
 
 @Component
 public class RefreshTokenRedisService implements RedisService {
