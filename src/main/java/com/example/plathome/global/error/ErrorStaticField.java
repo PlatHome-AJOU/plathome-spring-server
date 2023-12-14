@@ -49,4 +49,7 @@ public class ErrorStaticField {
     public static final String ERROR_ESTATE_REPORT_NOT_FOUND = "오류: 해당 매물의 신고 내역을 찾을 수 없습니다.";
     public static final String ERROR_ESTATE_REPORT_OWN_REPORT = "오류: 자신의 매물은 신고 할 수 없습니다.";
 
+    //wish list related
+    public static final String ERROR_WISH_LIST_NOT_FOUND = "오류: 해당 찜 목록이 존재하지 않습니다.";
+
 }
